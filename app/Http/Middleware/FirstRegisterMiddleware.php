@@ -2,7 +2,8 @@
 
 namespace App\Http\Middleware;
 use Illuminate\Support\Facades\Session;
-
+use App\Models\Franchise;
+use Auth;
 use Closure;
 
 class FirstRegisterMiddleware
@@ -16,7 +17,10 @@ class FirstRegisterMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(Session::get('hasFranchise')){
+
+        $user = Auth::user();
+        $franchise = Franchise::where('user_id',$user->id)->count();
+        if($franchise>0){
             return $next($request);
         }return redirect('register\franchise');
     }
