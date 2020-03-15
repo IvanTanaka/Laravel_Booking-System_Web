@@ -24,4 +24,9 @@
         color: #FF7266;
         font-weight: 600;
     }
+
+    .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+      color: #ffffff !important;
+      background-color: #FF7266 !important;
+    }
 </style>
