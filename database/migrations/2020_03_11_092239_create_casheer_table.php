@@ -14,9 +14,9 @@ class CreateCasheerTable extends Migration
     public function up()
     {
         Schema::create('casheer', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('franchise_id');
-            $table->integer('branch_id');
+            $table->uuid('id');
+            $table->string('franchise_id');
+            $table->string('branch_id');
             $table->string('email');
             $table->string('password');
             $table->rememberToken();

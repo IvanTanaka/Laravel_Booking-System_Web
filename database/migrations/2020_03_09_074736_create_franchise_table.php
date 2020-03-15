@@ -15,9 +15,10 @@ class CreateFranchiseTable extends Migration
     public function up()
     {
         Schema::create('franchise', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('user_id');
+            $table->uuid('id');
+            $table->string('user_id')->unique();
             $table->string('name');
+            $table->string('image_url')->nullable();
             $table->enum('type',ServiceType::getAllKeys());
             $table->timestamps();
         });

@@ -23,12 +23,14 @@ class FranchiseController extends Controller
 
         $user = Auth::user();
         $franchise =  new Franchise();
+        $franchise->id = uniqid();
         $franchise->user_id = $user->id;
         $franchise->name = $request->franchise_name;
         $franchise->type = $request->franchise_type;
         $franchise->save();
 
         $branch = new Branch();
+        $branch->id = uniqid();
         $branch->franchise_id = $franchise->id;
         $branch->name = $request->franchise_name;
         $branch->address = $request->store_address;
