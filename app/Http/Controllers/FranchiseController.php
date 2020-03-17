@@ -28,7 +28,7 @@ class FranchiseController extends Controller
         $franchise->name = $request->franchise_name;
         $franchise->type = $request->franchise_type;
         $franchise->save();
-
+        
         $branch = new Branch();
         $branch->id = uniqid();
         $branch->franchise_id = $franchise->id;

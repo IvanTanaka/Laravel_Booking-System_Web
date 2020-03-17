@@ -15,6 +15,14 @@
 </head>
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+    </nav>
        
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-primary elevation-4 sidebar-light-orange">

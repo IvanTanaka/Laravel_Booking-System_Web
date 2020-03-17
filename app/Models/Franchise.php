@@ -3,23 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Webpatser\Uuid\Uuid;
+use function App\Helpers\generateUuid;
 
 class Franchise extends Model
 {
     //
     protected $table="franchise";
+    protected $primaryKey ="id";
+    public $incrementing = false;
     protected $keyType = 'string';
     public static function boot()
     {
          parent::boot();
          self::creating(function($model){
-             $model->id = self::generateUuid();
+             $model->id = generateUuid();
          });
-    }
-    public static function generateUuid()
-    {
-         return Uuid::generate();
     }
 
     public function branches(){

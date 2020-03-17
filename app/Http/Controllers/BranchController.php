@@ -19,9 +19,9 @@ class BranchController extends Controller
         //
         if ($request->ajax()) {
             $user = Auth::user();
-            $data = Branch::with(['franchise' => function($userId) use($user){
-                        $userId->where('user_id',$user->id);
-                    }])
+            $data = Branch::whereHas('franchise', function($query) use($user){
+                        $query->where('user_id','=',$user->id);
+                    })
                     ->latest()->get();
 
 

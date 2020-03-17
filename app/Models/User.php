@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Webpatser\Uuid\Uuid;
+use function App\Helpers\generateUuid;
 class User extends Authenticatable
 {
     use Notifiable;
@@ -43,12 +43,8 @@ class User extends Authenticatable
     {
          parent::boot();
          self::creating(function($model){
-             $model->id = self::generateUuid();
+             $model->id = generateUuid();
          });
-    }
-    public static function generateUuid()
-    {
-         return Uuid::generate();
     }
 
     public function franchise(){
