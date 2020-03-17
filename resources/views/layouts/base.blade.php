@@ -10,7 +10,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <title>Membee | Store</title>
-  
+  @yield('head')
   @include('layouts.head')
 </head>
 <body class="hold-transition sidebar-mini">
@@ -94,7 +94,7 @@
   <!-- ./wrapper -->
   
   <!-- REQUIRED SCRIPTS -->
-  
   @include('layouts.script')
+  @yield('script')
 </body>
 </html>

@@ -19,14 +19,14 @@
   <link rel="stylesheet" href="/dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-<style>
+  <style>
     .logo{
-        color: #FF7266;
-        font-weight: 600;
+      color: #FF7266;
+      font-weight: 600;
     }
-
+    
     .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
       color: #ffffff !important;
       background-color: #FF7266 !important;
     }
-</style>
+  </style>

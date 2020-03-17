@@ -50,4 +50,8 @@ class User extends Authenticatable
     {
          return Uuid::generate();
     }
+
+    public function franchise(){
+        return $this->hasOne('App\Models\Franchise');
+    }
 }

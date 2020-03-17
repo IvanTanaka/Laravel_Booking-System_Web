@@ -21,4 +21,13 @@ class Franchise extends Model
     {
          return Uuid::generate();
     }
+
+    public function branches(){
+        return $this->hasMany('App\Models\Branch');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }

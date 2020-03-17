@@ -21,4 +21,10 @@ class Branch extends Model
     {
          return Uuid::generate();
     }
+
+
+    public function franchise()
+    {
+        return $this->belongsTo('App\Models\Franchise');
+    }
 }
