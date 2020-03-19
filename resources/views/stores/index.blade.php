@@ -75,6 +75,7 @@
         <!-- /.row -->
     </div><!-- /.container-fluid -->
 </div>
+<!-- /.content -->
 <div class="modal fade" id="deleteConfirmation" aria-hidden="true">
     <form id="deleteId" action="" method="post">
         <div class="modal-dialog">
@@ -102,7 +103,7 @@
         <!-- /.modal-dialog -->
     </form>
 </div>
-<!-- /.content -->
+<!-- /.modal -->
 @endsection
 
 @section('script')

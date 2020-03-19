@@ -46,7 +46,7 @@ class BranchController extends Controller
                             .' Edit'
                             .'</button>'
                             .'</a>';
-                            $action = $editBtn.$viewBtn.$deleteBtn;
+                            $action = $editBtn.$deleteBtn;
                             return $action;
                     })
                     ->rawColumns(['action'])
@@ -85,6 +85,8 @@ class BranchController extends Controller
     public function show($id)
     {
         //
+        $branch = Branch::with('franchise')->find($id);
+        return view('stores.show', compact('branch'));
     }
 
     /**
