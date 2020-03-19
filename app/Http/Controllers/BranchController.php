@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Branch;
 use Auth;
 use DataTables;
+use function App\Helpers\convertToTime;
 
 class BranchController extends Controller
 {
@@ -98,6 +99,8 @@ class BranchController extends Controller
     public function edit($id)
     {
         //
+        $branch = Branch::with('franchise')->find($id);
+        return view('stores.edit', compact('branch'));
     }
 
     /**
@@ -110,6 +113,17 @@ class BranchController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $branch = Branch::find($id);
+        $branch->name = $request->store_name;
+        $branch->address = $request->store_address;
+        $branch->phone_number = $request->store_phone_number;
+        $branch->open_time = convertToTime($request->store_open_time);
+        $branch->close_time = convertToTime($request->store_close_time);
+        $branch->update();
+
+
+        return redirect()->route('stores.index')
+                        ->with('success','Store updated successfully.');
     }
 
     /**

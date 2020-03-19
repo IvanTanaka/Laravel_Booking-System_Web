@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Enums\ServiceType;
 use App\Models\Franchise;
 use App\Models\Branch;
+use function App\Helpers\convertToTime;
 use Auth;
 
 class FranchiseController extends Controller
@@ -35,8 +36,8 @@ class FranchiseController extends Controller
         $branch->name = $request->franchise_name;
         $branch->address = $request->store_address;
         $branch->phone_number = $request->store_phone_number;
-        $branch->open_time =date("H:i:s", strtotime($request->store_open_time));
-        $branch->close_time = date("H:i:s", strtotime($request->store_close_time));
+        $branch->open_time = convertToTime($request->store_open_time);
+        $branch->close_time = convertToTime($request->store_close_time);
         $branch->save();
 
         return redirect('login')->with('alert-success','Register success.');
