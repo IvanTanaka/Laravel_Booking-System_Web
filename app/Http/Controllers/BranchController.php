@@ -64,6 +64,7 @@ class BranchController extends Controller
     public function create()
     {
         //
+        return view('stores.create');
     }
 
     /**
@@ -75,6 +76,19 @@ class BranchController extends Controller
     public function store(Request $request)
     {
         //
+        $user = Auth::user();
+        $user->with('franchise')->get();
+        $branch = new Branch;
+        $branch->franchise_id = $user->franchise->id;
+        $branch->name = $request->store_name;
+        $branch->address = $request->store_address;
+        $branch->phone_number = $request->store_phone_number;
+        $branch->open_time = convertToTime($request->store_open_time);
+        $branch->close_time = convertToTime($request->store_close_time);
+        $branch->save();
+
+        return redirect()->route('stores.index')
+                        ->with('success','Store added successfully.');
     }
 
     /**

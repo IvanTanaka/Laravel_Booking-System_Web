@@ -18,6 +18,9 @@
         <div class="row mb-2">
             <div class="col-sm-12">
                 <h1 class="m-0 text-dark">Stores</h1>
+                <div class="float-right">
+                <a href="{{route('stores.create')}}" class="btn btn-success"><i class="fas fa-plus"></i> Add Store</a>
+                </div>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->

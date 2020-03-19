@@ -56,7 +56,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{url('stores')}}" class="{{ request()->is('stores') ? 'active' : '' }} nav-link">
+                <a href="{{url('stores')}}" class="{{ request()->is('stores*') ? 'active' : '' }} nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Stores</p>
                 </a>
