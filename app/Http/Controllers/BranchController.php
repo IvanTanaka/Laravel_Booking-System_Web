@@ -28,16 +28,12 @@ class BranchController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-                            $deleteBtn = '<form style="display:inline-block !important;"action="'.url('stores/'.$row->id).'" method="post">'
-                            .'<div class="p-1">'
-                            .'<button class="btn btn-danger btn-small" type="submit">'
+                            $deleteBtn = '<a class="p-1">'
+                            .'<button class="btn btn-danger btn-small" data-target="#deleteConfirmation" data-toggle="modal" data-id="'.$row->id.'" data-name="'.$row->name.'">'
                             .'<i class="fas fa-trash" style="width:20px"></i>'
                             .' Delete'
                             .'</button>'
-                            .'<input type="hidden" name="_method" value="DELETE" />'
-                            .csrf_field()
-                            .'</div>'
-                            .'</form>';
+                            .'</a>';
                             $viewBtn = '<a href="'.url('stores/'.$row->id).'" class="p-1">'
                             .'<button class="btn btn-primary btn-small">'
                             .'<i class="fas fa-eye" style="width:20px"></i>'
@@ -123,5 +119,18 @@ class BranchController extends Controller
     public function destroy($id)
     {
         //
+        $messageType = "error";
+        $message = "Franchise must at least have one store.";
+        $user = Auth::user();
+        $branchAmount = Branch::whereHas("franchise", function($query) use($user){
+            $query -> where("user_id", $user->id);
+        })->count();
+        if($branchAmount>1){
+            $branch = Branch::delete($id);
+            $messageType = 'success';
+            $message = 'Store deleted successfully.';
+        }
+        return redirect()->route('stores.index')
+                        ->with($messageType, $message);
     }
 }
