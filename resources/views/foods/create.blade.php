@@ -1,13 +1,16 @@
 @extends('layouts.base')
 
 @section('head')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js" defer></script>
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" defer></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" defer></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js" defer></script>
-
+<style>
+  input[type='number'] {
+    -moz-appearance:textfield;
+  }
+  
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+</style>
 @endsection
 
 @section('content')
@@ -17,7 +20,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-12">
-        <h1 class="m-0 text-dark">Create Store</h1>
+        <h1 class="m-0 text-dark">Create Food or Beverages</h1>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
@@ -29,7 +32,7 @@
 <div class="content">
   <div class="container-fluid">
     
-    <form action="{{ route('stores.store') }}" method="POST">
+    <form action="{{ route('foods.store') }}" method="POST" enctype='multipart/form-data'>
       @csrf
       <div class="row">
         @if ($message = Session::get('error'))
@@ -59,47 +62,40 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label for="store_name">Branch Name</label>
+                    <label for="food_name">Name</label>
                     <div class="input-group">
-                      <input type="text" class="form-control" im-insert="true" id="store_name" name="store_name" required placeholder="Cab. Diponegoro, Cab. Cemara">
+                      <input type="text" class="form-control" im-insert="true" id="food_name" name="food_name" required>
                     </div>
                     <!-- /.input group -->
                   </div>
                   <div class="form-group">
-                    <label for="store_address">Address</label>
-                    <textarea id="store_address" class="form-control" rows="4" name="store_address"></textarea>
-                  </div>
-                  <div class="form-group">
-                    <label for="store_phone_number">Phone Number</label>
+                    <label for="food_price">Price</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                        <span class="input-group-text">Rp </span>
                       </div>
-                      <input type="tel" class="form-control" im-insert="true" id="store_phone_number" name="store_phone_number" required autocomplete="phone_number">
+                      <input type="number" class="form-control" im-insert="true" id="food_price" name="food_price" required autocomplete="phone_number">
                     </div>
                     <!-- /.input group -->
+                  </div>
+                  <div class="form-group">
+                    <label for="food_description">Description</label>
+                    <textarea id="food_description" class="form-control" rows="4" name="food_description"></textarea>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label for="store_open_time">Open Time</label>
-                    <div class="input-group date" id="store_open_time" data-target-input="nearest" name="store_open_time">
-                      <input type="text" class="form-control datetimepicker-input" data-target="#store_open_time" name="store_open_time">
-                      <div class="input-group-append" data-target="#store_open_time" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="far fa-clock"></i></div>
-                      </div>
+                    <label for="food_image">Food or Beverages Image</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="food_image" name="food_image">
+                        <label class="custom-file-label" for="food_image" accept="image/jpg, image/png, image/jpeg">Choose image</label>  
+                      </div>  
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="store_close_time">Close Time</label>
-                    <div class="input-group date" id="store_close_time" data-target-input="nearest" name="store_close_time">
-                      <input type="text" class="form-control datetimepicker-input" data-target="#store_close_time" name="store_close_time">
-                      <div class="input-group-append" data-target="#store_close_time" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="far fa-clock"></i></div>
-                      </div>
-                    </div>
+                    <img id="food_image_container" src="\assets\images\empty_image.png" alt="food image" style="height:300px; width:300px;" class="img-thumbnail"/>
                   </div>
-                  
                 </div>
               </div>
             </div>
@@ -123,4 +119,29 @@
   </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
+@endsection
+
+@section('script')
+<!-- bs-custom-file-input -->
+<script src="/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    bsCustomFileInput.init();
+  });
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#food_image_container').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#food_image").change(function(){
+      readURL(this);
+  });
+</script>
 @endsection

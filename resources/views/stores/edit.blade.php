@@ -60,9 +60,9 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label for="store_name">Name</label>
+                    <label for="store_name">Branch Name</label>
                     <div class="input-group">
-                      <input type="text" class="form-control" im-insert="true" id="store_name" name="store_name" required value="{{$branch->name}}">
+                      <input type="text" class="form-control" im-insert="true" id="store_name" name="store_name" required value="{{$branch->name}}" placeholder="Cab. Diponegoro, Cab. Cemara">
                     </div>
                     <!-- /.input group -->
                   </div>

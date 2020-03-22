@@ -50,15 +50,21 @@
               with font-awesome or any other icon font library -->
               
               <li class="nav-item">
-              <a href="{{url('/')}}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">
+                <a href="{{url('/')}}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">
                   <i class="fas fa-home nav-icon"></i>
                   <p>Dashboard</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{url('stores')}}" class="{{ request()->is('stores*') ? 'active' : '' }} nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Stores</p>
+                  <i class="fas fa-store nav-icon"></i>
+                  <p>Store Management</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{url('foods')}}" class="{{ request()->is('foods*') ? 'active' : '' }} nav-link">
+                  <i class="fas fa-utensils nav-icon"></i>
+                  <p>Menu Management</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -91,12 +97,12 @@
     
     <!-- Main Footer -->
     <footer class="main-footer">
-      <!-- To the right -->
+      {{-- <!-- To the right -->
       <div class="float-right d-none d-sm-inline">
         Anything you want
       </div>
       <!-- Default to the left -->
-      <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+      <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved. --}}
     </footer>
   </div>
   <!-- ./wrapper -->

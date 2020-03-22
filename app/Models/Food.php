@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use function App\Helpers\generateUuid;
 
-class Franchise extends Model
+class Food extends Model
 {
     //
-    protected $table="franchise";
+    protected $table = "food";
     protected $primaryKey ="id";
     public $incrementing = false;
     protected $keyType = 'string';
@@ -20,16 +20,9 @@ class Franchise extends Model
          });
     }
 
-    public function branches(){
-        return $this->hasMany('App\Models\Branch');
-    }
 
-    public function food(){
-        return $this->hasMany('App\Models\Food');
-    }
-
-    public function user()
+    public function franchise()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\Franchise');
     }
 }

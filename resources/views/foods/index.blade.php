@@ -17,9 +17,9 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-12">
-                <h1 class="m-0 text-dark">Store Management
+                <h1 class="m-0 text-dark">Menu Management
                 <span class="float-right">
-                <a href="{{route('stores.create')}}" class="btn btn-success"><i class="fas fa-plus"></i> Add Store</a>
+                <a href="{{route('foods.create')}}" class="btn btn-success"><i class="fas fa-plus"></i> Add Food or Beverages</a>
                 </span>
             </h1>
             </div><!-- /.col -->
@@ -54,15 +54,13 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body table-responsive p-2">
-                        <table class="table table-bordered data-table" id="store_table">
+                        <table class="table table-bordered data-table" id="food_table">
                             <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Name</th>
-                                    <th>Phone Number</th>
-                                    <th>Address</th>
-                                    <th>Opening Hour</th>
-                                    <th>Closing Hour</th>
+                                    <th>Price</th>
+                                    <th>Description</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -113,17 +111,15 @@
 @section('script')
 <script type="text/javascript">
     $(function () {
-        var table = $('#store_table').DataTable({
+        var table = $('#food_table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{url('stores')}}",
+            ajax: "{{url('foods')}}",
             columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'name', name: 'name'},
-            {data: 'phone_number', name: 'phone_number'},
-            {data: 'address', name: 'address'},
-            {data: 'open_time', name: 'open_time', searchable: false},
-            {data: 'close_time', name: 'close_time', searchable: false},
+            {data: 'price', name: 'price'},
+            {data: 'description', name: 'description'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
@@ -135,7 +131,7 @@
         modal    = $(this),
         id = link.data("id"),
         name = link.data("name");
-        modal.find("#deleteId").attr('action','stores/'+id);
+        modal.find("#deleteId").attr('action','foods/'+id);
         modal.find("#deleteName").text(name);
     });
 </script>
