@@ -88,9 +88,15 @@
                     <label for="food_image">Food or Beverages Image</label>
                     <div class="input-group">
                       <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="food_image" name="food_image">
-                        <label class="custom-file-label" for="food_image" accept="image/jpg, image/png, image/jpeg">Choose image</label>  
+                        <input type="file" class="custom-file-input" id="food_image" name="food_image" accept="image/jpg, image/png, image/jpeg">
+                        <label class="custom-file-label" for="food_image">Choose image</label>  
                       </div>  
+                      <div class="input-group-append">
+                        <input type="hidden" id="food_image_remove" name="food_image_remove" value="false">
+                        <button type="button" class="btn btn-danger" id="remove_image">Remove</button>
+                      </div>
+                      
+                      
                     </div>
                   </div>
                   <div class="form-group">
@@ -125,23 +131,31 @@
 <!-- bs-custom-file-input -->
 <script src="/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 <script type="text/javascript">
+  
+  $('#remove_image').click(function(){
+    $('#food_image_remove').val(true);
+    $('#food_image').val("");
+    $('#food_image_container').attr('src','/assets/images/empty_image.png');
+  });
+  
   $(document).ready(function () {
     bsCustomFileInput.init();
   });
   function readURL(input) {
     if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $('#food_image_container').attr('src', e.target.result);
-        }
-
-        reader.readAsDataURL(input.files[0]);
+      var reader = new FileReader();
+      
+      reader.onload = function (e) {
+        $('#food_image_container').attr('src', e.target.result);
+        $('#food_image_remove').val(false);
+      }
+      
+      reader.readAsDataURL(input.files[0]);
     }
   }
-
+  
   $("#food_image").change(function(){
-      readURL(this);
+    readURL(this);
   });
 </script>
 @endsection

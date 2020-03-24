@@ -29,6 +29,10 @@ class FoodController extends Controller
             
             return Datatables::of($data)
             ->addIndexColumn()
+            ->addColumn('price_format', function($row){
+                $formattedPrice = 'Rp '.number_format($row->price, 2, ',', '.');
+                return $formattedPrice;
+            })
             ->addColumn('action', function($row){
                 $deleteBtn = '<a class="p-1">'
                 .'<button class="btn btn-danger btn-small" data-target="#deleteConfirmation" data-toggle="modal" data-id="'.$row->id.'" data-name="'.$row->name.'">'
@@ -51,7 +55,7 @@ class FoodController extends Controller
                 $action = $editBtn.$viewBtn.$deleteBtn;
                 return $action;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'price_format'])
             ->make(true);
         }
         return view('foods.index');
@@ -114,6 +118,8 @@ class FoodController extends Controller
     public function show($id)
     {
         //
+        $food = Food::with('franchise')->find($id);
+        return view('foods.show', compact('food'));
     }
     
     /**
@@ -125,6 +131,8 @@ class FoodController extends Controller
     public function edit($id)
     {
         //
+        $food = Food::with('franchise')->find($id);
+        return view('foods.edit', compact('food'));
     }
     
     /**
@@ -137,6 +145,42 @@ class FoodController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = Auth::user();
+        $user->with('franchise')->get();
+        
+        $food = Food::find($id);
+        $food->name = $request->food_name;
+        $food->description = $request->food_description;
+        $food->price = $request->food_price;
+
+        $path = "public/images/".$user->franchise->id.'/'.'menu/';
+        $oldFileName = $food->image_path;
+        
+        $file = $request->file('food_image');
+        // Check if image file Exist then insert to database table
+        if($file!=null){
+            //Check if image is not remove then insert new image to database;
+            if($request->food_image_remove == "false"){
+                $food->image_path = generateUuid().$file->getClientOriginalExtension();
+            }else{
+                $food->image_path = null;
+            }
+        }elseif($request->food_image_remove == "true"){
+            $food->image_path = null;
+        }
+        $food->update();
+        
+        // Check if image file Exist save to storage
+        if($file!=null){
+            Storage::delete($path.$oldFileName);
+            $file->storeAs($path,$food->image_path);
+        }elseif($request->food_image_remove == "true"){
+            Storage::delete($path.$oldFileName);
+        }
+
+        
+        return redirect()->route('foods.index')
+        ->with('success','Store added successfully.');
     }
     
     /**
