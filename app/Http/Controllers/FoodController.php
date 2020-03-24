@@ -106,7 +106,7 @@ class FoodController extends Controller
         
         
         return redirect()->route('foods.index')
-        ->with('success','Store added successfully.');
+        ->with('success','Menu added successfully.');
     }
     
     /**
@@ -145,15 +145,12 @@ class FoodController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $user = Auth::user();
-        $user->with('franchise')->get();
-        
         $food = Food::find($id);
         $food->name = $request->food_name;
         $food->description = $request->food_description;
         $food->price = $request->food_price;
 
-        $path = "public/images/".$user->franchise->id.'/'.'menu/';
+        $path = "public/images/".$food->franchise_id.'/'.'menu/';
         $oldFileName = $food->image_path;
         
         $file = $request->file('food_image');
@@ -180,7 +177,7 @@ class FoodController extends Controller
 
         
         return redirect()->route('foods.index')
-        ->with('success','Store added successfully.');
+        ->with('success','Menu edited successfully.');
     }
     
     /**
@@ -192,5 +189,13 @@ class FoodController extends Controller
     public function destroy($id)
     {
         //
+        $food = Food::with('franchise')->find($id);
+        $path = "public/images/".$food->franchise_id.'/'.'menu/';
+        Storage::delete($path.$food->image_path);
+
+        $food->delete($id);
+
+        return redirect()->route('foods.index')
+                        ->with('success', 'Menu deleted successfully.');
     }
 }
