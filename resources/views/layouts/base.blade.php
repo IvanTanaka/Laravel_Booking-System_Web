@@ -12,6 +12,17 @@
   <title>Membee | Store</title>
   @yield('head')
   @include('layouts.head')
+  <style>
+    #profile-image {
+      width: 2.1rem;
+      height: 2.1rem;
+      border-radius: 50%;
+      background: #512DA8;
+      color: #fff;
+      text-align: center;
+      line-height: 2.1rem;
+    }
+  </style>
 </head>
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
@@ -23,7 +34,7 @@
         </li>
       </ul>
     </nav>
-       
+    
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-primary elevation-4 sidebar-light-orange">
       <!-- Brand Logo -->
@@ -35,8 +46,8 @@
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
-            <img src="/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <div id="profile-image" class="img-circle">
+            {{-- <img src="/dist/img/user2-160x160.jpg" class=" img-circle elevation-2" alt="User Image"> --}}
           </div>
           <div class="info">
             <a href="#" class="d-block">{{ Auth::user()->name }}</a>
@@ -98,17 +109,27 @@
     <!-- Main Footer -->
     <footer class="main-footer">
       {{-- <!-- To the right -->
-      <div class="float-right d-none d-sm-inline">
-        Anything you want
-      </div>
-      <!-- Default to the left -->
-      <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved. --}}
-    </footer>
-  </div>
-  <!-- ./wrapper -->
-  
-  <!-- REQUIRED SCRIPTS -->
-  @include('layouts.script')
-  @yield('script')
-</body>
-</html>
+        <div class="float-right d-none d-sm-inline">
+          Anything you want
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved. --}}
+      </footer>
+    </div>
+    <!-- ./wrapper -->
+    
+    <!-- REQUIRED SCRIPTS -->
+    @include('layouts.script')
+    @yield('script')
+    <script>
+      $(document).ready(function(){
+        var name = "{{Auth::user()->name}}";
+        var firstName = name.substring(0,name.indexOf(" "));
+        var lastName = name.substring(name.indexOf(" ")+1);
+        console.log(lastName);
+        var intials = firstName.charAt(0) + lastName.charAt(0);
+        var profileImage = $('#profile-image').text(intials);
+      });
+    </script>
+  </body>
+  </html>
