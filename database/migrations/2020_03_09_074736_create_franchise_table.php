@@ -18,7 +18,7 @@ class CreateFranchiseTable extends Migration
             $table->uuid('id')->primary();
             $table->string('user_id')->unique();
             $table->string('name');
-            $table->string('image_url')->nullable();
+            $table->string('image_path')->nullable();
             $table->enum('type',ServiceType::getAllKeys());
             $table->timestamps();
         });

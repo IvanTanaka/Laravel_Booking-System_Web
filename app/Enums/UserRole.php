@@ -2,13 +2,6 @@
 
 namespace App\Enums;
 
-/**
- * @method static self OWNER()
- * @method static self STORE()
- * @method static self CUSTOMER()
- * @method static self getAllKeys()
- */
-
 class UserRole{
     public const OWNER ="owner";
     public const STORE ="store";

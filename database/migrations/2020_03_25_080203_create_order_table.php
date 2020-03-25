@@ -3,8 +3,10 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\OrderStatus;
 
-class CreateFoodTable extends Migration
+
+class CreateOrderTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +15,15 @@ class CreateFoodTable extends Migration
      */
     public function up()
     {
-        Schema::create('food', function (Blueprint $table) {
+        Schema::create('order', function (Blueprint $table) {
             $table->uuid('id');
+            $table->string('user_id');
+            $table->string('branch_id');
+            $table->string('cashier_id');
             $table->string('franchise_id');
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->string('image_path')->nullable();
-            $table->integer('price');
+            $table->enum('status',OrderStatus::getAllKeys());
+            $table->integer('total');
+            $table->integer('point');
             $table->timestamps();
         });
     }
@@ -31,6 +35,6 @@ class CreateFoodTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('food');
+        Schema::dropIfExists('order');
     }
 }

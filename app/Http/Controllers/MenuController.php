@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Food;
+use App\Models\Menu;
 use Illuminate\Support\Facades\Storage;
 use Auth;
 use DataTables;
 use function App\Helpers\generateUuid;
 
-class FoodController extends Controller
+class MenuController extends Controller
 {
     /**
     * Display a listing of the resource.
@@ -21,7 +21,7 @@ class FoodController extends Controller
         //
         if ($request->ajax()) {
             $user = Auth::user();
-            $data = Food::whereHas('franchise', function($query) use($user){
+            $data = Menu::whereHas('franchise', function($query) use($user){
                 $query->where('user_id','=',$user->id);
             })
             ->latest()->get();
@@ -40,25 +40,25 @@ class FoodController extends Controller
                 .' Delete'
                 .'</button>'
                 .'</a>';
-                $viewBtn = '<a href="'.url('foods/'.$row->id).'" class="p-1">'
+                $viewBtn = '<a href="'.url('menus/'.$row->id).'" class="p-1">'
                 .'<button class="btn btn-primary btn-small">'
                 .'<i class="fas fa-eye" style="width:20px"></i>'
                 .' View'
                 .'</button>'
                 .'</a>';
-                $editBtn = '<a href="'.url('foods/' . $row->id . '/edit').'" class="p-1">'
+                $editBtn = '<a href="'.url('menus/' . $row->id . '/edit').'" class="p-1">'
                 .'<button class="btn btn-small btn-info">'
                 .'<i class="fas fa-edit" style="width:20px"x></i>'
                 .' Edit'
                 .'</button>'
                 .'</a>';
-                $action = $editBtn.$viewBtn.$deleteBtn;
+                $action = $editBtn.$deleteBtn;
                 return $action;
             })
             ->rawColumns(['action', 'price_format'])
             ->make(true);
         }
-        return view('foods.index');
+        return view('menus.index');
         
     }
     
@@ -70,7 +70,7 @@ class FoodController extends Controller
     public function create()
     {
         //
-        return view('foods.create');
+        return view('menus.create');
     }
     
     /**
@@ -84,28 +84,28 @@ class FoodController extends Controller
         $user = Auth::user();
         $user->with('franchise')->get();
         
-        $food = new Food;
-        $food->franchise_id = $user->franchise->id;
-        $food->name = $request->food_name;
-        $food->description = $request->food_description;
-        $food->price = $request->food_price;
+        $menu = new Menu;
+        $menu->franchise_id = $user->franchise->id;
+        $menu->name = $request->menu_name;
+        $menu->description = $request->menu_description;
+        $menu->price = $request->menu_price;
 
-        $file = $request->file('food_image');
+        $file = $request->file('menu_image');
         // Check if image file  Exist then insert to database table
         if($file!=null){
             $path = "public/images/".$user->franchise->id.'/'.'menu/';
-            $food->image_path = generateUuid().$file->getClientOriginalExtension();
+            $menu->image_path = generateUuid().$file->getClientOriginalExtension();
         }
 
-        $food->save();
+        $menu->save();
         
         // Check if image file Exist save to storage
         if($file!=null){
-            $file->storeAs($path,$food->image_path);
+            $file->storeAs($path,$menu->image_path);
         }
         
         
-        return redirect()->route('foods.index')
+        return redirect()->route('menus.index')
         ->with('success','Menu added successfully.');
     }
     
@@ -118,8 +118,8 @@ class FoodController extends Controller
     public function show($id)
     {
         //
-        $food = Food::with('franchise')->find($id);
-        return view('foods.show', compact('food'));
+        $menu = Menu::with('franchise')->find($id);
+        return view('menus.show', compact('menu'));
     }
     
     /**
@@ -131,8 +131,8 @@ class FoodController extends Controller
     public function edit($id)
     {
         //
-        $food = Food::with('franchise')->find($id);
-        return view('foods.edit', compact('food'));
+        $menu = Menu::with('franchise')->find($id);
+        return view('menus.edit', compact('menu'));
     }
     
     /**
@@ -145,38 +145,38 @@ class FoodController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $food = Food::find($id);
-        $food->name = $request->food_name;
-        $food->description = $request->food_description;
-        $food->price = $request->food_price;
+        $menu = Menu::find($id);
+        $menu->name = $request->menu_name;
+        $menu->description = $request->menu_description;
+        $menu->price = $request->menu_price;
 
-        $path = "public/images/".$food->franchise_id.'/'.'menu/';
-        $oldFileName = $food->image_path;
+        $path = "public/images/".$menu->franchise_id.'/'.'menu/';
+        $oldFileName = $menu->image_path;
         
-        $file = $request->file('food_image');
+        $file = $request->file('menu_image');
         // Check if image file Exist then insert to database table
         if($file!=null){
             //Check if image is not remove then insert new image to database;
-            if($request->food_image_remove == "false"){
-                $food->image_path = generateUuid().$file->getClientOriginalExtension();
+            if($request->menu_image_remove == "false"){
+                $menu->image_path = generateUuid().$file->getClientOriginalExtension();
             }else{
-                $food->image_path = null;
+                $menu->image_path = null;
             }
-        }elseif($request->food_image_remove == "true"){
-            $food->image_path = null;
+        }elseif($request->menu_image_remove == "true"){
+            $menu->image_path = null;
         }
-        $food->update();
+        $menu->update();
         
         // Check if image file Exist save to storage
         if($file!=null){
             Storage::delete($path.$oldFileName);
-            $file->storeAs($path,$food->image_path);
-        }elseif($request->food_image_remove == "true"){
+            $file->storeAs($path,$menu->image_path);
+        }elseif($request->menu_image_remove == "true"){
             Storage::delete($path.$oldFileName);
         }
 
         
-        return redirect()->route('foods.index')
+        return redirect()->route('menus.index')
         ->with('success','Menu edited successfully.');
     }
     
@@ -189,13 +189,13 @@ class FoodController extends Controller
     public function destroy($id)
     {
         //
-        $food = Food::with('franchise')->find($id);
-        $path = "public/images/".$food->franchise_id.'/'.'menu/';
-        Storage::delete($path.$food->image_path);
+        $menu = Menu::with('franchise')->find($id);
+        $path = "public/images/".$menu->franchise_id.'/'.'menu/';
+        Storage::delete($path.$menu->image_path);
 
-        $food->delete($id);
+        $menu->delete($id);
 
-        return redirect()->route('foods.index')
+        return redirect()->route('menus.index')
                         ->with('success', 'Menu deleted successfully.');
     }
 }

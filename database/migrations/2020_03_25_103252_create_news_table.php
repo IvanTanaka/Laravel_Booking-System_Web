@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCasheerTable extends Migration
+class CreateNewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateCasheerTable extends Migration
      */
     public function up()
     {
-        Schema::create('casheer', function (Blueprint $table) {
+        Schema::create('news', function (Blueprint $table) {
             $table->uuid('id');
+            $table->string('user_id');
             $table->string('franchise_id');
-            $table->string('branch_id');
-            $table->string('email');
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('image_path');
+            $table->text('description');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateCasheerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('casheer');
+        Schema::dropIfExists('news');
     }
 }

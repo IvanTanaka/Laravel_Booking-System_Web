@@ -16,10 +16,10 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
-    Route::middleware(['first_register'])->group(function () {
+    Route::middleware(['auth','first_register'])->group(function () {
         Route::get('/', 'HomeController@index')->name('home');
         Route::resource('stores','BranchController');
-        Route::resource('foods','FoodController');
+        Route::resource('menus','MenuController');
     });
     Route::get('/register/franchise', 'FranchiseController@create');
     Route::post('/register/franchise', 'FranchiseController@store');

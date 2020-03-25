@@ -19,7 +19,7 @@
             <div class="col-sm-12">
                 <h1 class="m-0 text-dark">Menu Management
                 <span class="float-right">
-                <a href="{{route('foods.create')}}" class="btn btn-success"><i class="fas fa-plus"></i> Add Food or Beverages</a>
+                <a href="{{route('menus.create')}}" class="btn btn-success"><i class="fas fa-plus"></i> Add menu or Beverages</a>
                 </span>
             </h1>
             </div><!-- /.col -->
@@ -54,7 +54,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body table-responsive p-2">
-                        <table class="table table-bordered data-table" id="food_table">
+                        <table class="table table-bordered data-table" id="menu_table">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -111,10 +111,10 @@
 @section('script')
 <script type="text/javascript">
     $(function () {
-        var table = $('#food_table').DataTable({
+        var table = $('#menu_table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{url('foods')}}",
+            ajax: "{{url('menus')}}",
             columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'name', name: 'name'},
@@ -131,7 +131,7 @@
         modal    = $(this),
         id = link.data("id"),
         name = link.data("name");
-        modal.find("#deleteId").attr('action','foods/'+id);
+        modal.find("#deleteId").attr('action','menus/'+id);
         modal.find("#deleteName").text(name);
     });
 </script>

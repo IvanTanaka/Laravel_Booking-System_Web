@@ -3,8 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\TopupStatus;
 
-class CreateWalletTable extends Migration
+class CreateTopupTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +14,12 @@ class CreateWalletTable extends Migration
      */
     public function up()
     {
-        Schema::create('wallet', function (Blueprint $table) {
+        Schema::create('topup', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('user_id');
             $table->integer('amount');
-            $table->integer('point');
+            $table->integer('price');
+            $table->enum('status',TopupStatus::getAllKeys());
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateWalletTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wallet');
+        Schema::dropIfExists('topup');
     }
 }

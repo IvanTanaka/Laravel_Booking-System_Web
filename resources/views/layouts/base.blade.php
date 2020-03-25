@@ -62,7 +62,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{url('foods')}}" class="{{ request()->is('foods*') ? 'active' : '' }} nav-link">
+                <a href="{{url('menus')}}" class="{{ request()->is('menus*') ? 'active' : '' }} nav-link">
                   <i class="fas fa-utensils nav-icon"></i>
                   <p>Menu Management</p>
                 </a>
