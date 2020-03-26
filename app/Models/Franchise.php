@@ -24,8 +24,8 @@ class Franchise extends Model
         return $this->hasMany('App\Models\Branch');
     }
 
-    public function food(){
-        return $this->hasMany('App\Models\Food');
+    public function menu(){
+        return $this->hasMany('App\Models\Menu');
     }
 
     public function user()

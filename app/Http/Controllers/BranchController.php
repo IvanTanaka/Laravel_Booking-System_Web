@@ -156,9 +156,13 @@ class BranchController extends Controller
             $query -> where("user_id", $user->id);
         })->count();
         if($branchAmount>1){
-            $branch = Branch::delete($id);
-            $messageType = 'success';
-            $message = 'Store deleted successfully.';
+            $branch = Branch::destroy($id);
+            if($branch){
+                $messageType = 'success';
+                $message = 'Store deleted successfully.';
+            }else{
+                $message = 'Some cashier is still connected to this store';
+            }
         }
         return redirect()->route('stores.index')
                         ->with($messageType, $message);

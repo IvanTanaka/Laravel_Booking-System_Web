@@ -79,6 +79,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{url('cashiers')}}" class="{{ request()->is('cashiers*') ? 'active' : '' }} nav-link">
+                  <i class="fas fa-cash-register nav-icon"></i>
+                  <p>Cashier Management</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 
                 <a class="nav-link" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
@@ -126,7 +132,6 @@
         var name = "{{Auth::user()->name}}";
         var firstName = name.substring(0,name.indexOf(" "));
         var lastName = name.substring(name.indexOf(" ")+1);
-        console.log(lastName);
         var intials = firstName.charAt(0) + lastName.charAt(0);
         var profileImage = $('#profile-image').text(intials);
       });

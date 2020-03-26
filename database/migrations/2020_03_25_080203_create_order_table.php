@@ -19,7 +19,7 @@ class CreateOrderTable extends Migration
             $table->uuid('id');
             $table->string('user_id');
             $table->string('branch_id');
-            $table->string('cashier_id');
+            $table->string('cashier_id')->nullable();
             $table->string('franchise_id');
             $table->enum('status',OrderStatus::getAllKeys());
             $table->integer('total');

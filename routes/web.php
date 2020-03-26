@@ -20,6 +20,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', 'HomeController@index')->name('home');
         Route::resource('stores','BranchController');
         Route::resource('menus','MenuController');
+        Route::resource('cashiers','CashierController');
     });
     Route::get('/register/franchise', 'FranchiseController@create');
     Route::post('/register/franchise', 'FranchiseController@store');

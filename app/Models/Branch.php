@@ -18,11 +18,26 @@ class Branch extends Model
          self::creating(function($model){
              $model->id = generateUuid();
          });
+
+        self::deleting(function($model) {
+            $relationMethods = ['cashiers'];
+
+            foreach ($relationMethods as $relationMethod) {
+                if ($model->$relationMethod()->count() > 0) {
+                    return false;
+                }
+            }
+        });
     }
 
 
     public function franchise()
     {
         return $this->belongsTo('App\Models\Franchise');
+    }
+
+    public function cashiers()
+    {
+        return $this->hasMany('App\Models\Cashier');
     }
 }
