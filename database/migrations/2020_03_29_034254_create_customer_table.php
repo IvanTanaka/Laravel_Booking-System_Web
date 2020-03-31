@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCashierTable extends Migration
+class CreateCustomerTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateCashierTable extends Migration
      */
     public function up()
     {
-        Schema::create('cashier', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('franchise_id');
-            $table->string('branch_id');
             $table->string('name');
-            $table->string('username')->unique();
+            $table->string('email')->unique();
+            $table->string('phone_number');
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('api_token', 100)->nullable()->default(null);
             $table->rememberToken();
@@ -33,6 +33,6 @@ class CreateCashierTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cashier');
+        Schema::dropIfExists('customer');
     }
 }

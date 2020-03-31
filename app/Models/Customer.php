@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use function App\Helpers\generateUuid;
-class User extends Authenticatable
+
+class Customer extends Authenticatable
 {
+    //
     use Notifiable;
 
     /**
@@ -15,8 +16,9 @@ class User extends Authenticatable
      *
      * @var array
      */
+    public $incrementing = false;
     protected $fillable = [
-        'id','name', 'email', 'password','phone_number'
+        'name', 'email', 'password','phone_number', "api_token"
     ];
 
     /**
@@ -25,7 +27,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password'
     ];
 
     /**
@@ -47,7 +49,4 @@ class User extends Authenticatable
          });
     }
 
-    public function franchise(){
-        return $this->hasOne('App\Models\Franchise');
-    }
 }

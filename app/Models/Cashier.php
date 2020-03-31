@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use function App\Helpers\generateUuid;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Cashier extends Model
+class Cashier extends Authenticatable
 {
     //
+    use Notifiable;
+
     protected $table = "cashier";
     protected $primaryKey ="id";
     public $incrementing = false;

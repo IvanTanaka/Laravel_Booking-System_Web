@@ -14,7 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::prefix('/v1')->group(function () {
+    Route::post('/register','APi\Customer\Auth\RegisterController@create');
+    Route::middleware('api_customer')->group(function(){
+
+    });
+});
+
+
+Route::middleware('api_cashier')->get('/cashier/user', function (Request $request) {
+    dd('here cashier');
     return $request->user();
 });
 //     Route::prefix('v1')->group(function(){

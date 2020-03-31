@@ -45,7 +45,9 @@
         ],
         "files": [
             "app/Helpers/UuidHelper.php",
-            "app/Helpers/ConverterHelper.php"
+            "app/Helpers/ConverterHelper.php",
+            "app/Helpers/RandomGeneratorHelper.php",
+            "app/Helpers/ApiHelper.php"
         ]
     },
     "autoload-dev": {
