@@ -68,18 +68,25 @@ class RegisterController extends Controller
      */
     protected function create(Request $request)
     {
-        $user =  Customer::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'phone_number' => $request['phone_number'],
-            'password' => Hash::make($request['password']),
-            "api_token" => random_str(100)
-        ]);
-        return api_response(true, 200, "User registered",[ 
-            "name" => $user->name,
-            "email" => $user->email,
-            "phone_number" => $user->phone_number,
-            "token" => $user->api_token
-        ]);
+        $customerEmail = Customer::where('email',$request->email)->count();
+
+        if($customerEmail==0){
+            $user =  Customer::create([
+                'name' => $request['name'],
+                'email' => strtolower($request['email']),
+                'phone_number' => $request['phone_number'],
+                'password' => Hash::make($request['password']),
+                "api_token" => random_str(100)
+            ]);
+            return api_response(true, 200, "User registered",[ 
+                "name" => $user->name,
+                "email" => $user->email,
+                "phone_number" => $user->phone_number,
+                "token" => $user->api_token
+            ]);
+        }else{
+            return api_response(false, 409, "This email is already registered");
+        }
+
     }
 }

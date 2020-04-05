@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/v1')->group(function () {
     Route::post('/register','APi\Customer\Auth\RegisterController@create');
+    Route::post('/login','APi\Customer\Auth\LoginController@login');
+    Route::post('/login-token','APi\Customer\Auth\LoginController@login_token');
     Route::middleware('api_customer')->group(function(){
 
     });
