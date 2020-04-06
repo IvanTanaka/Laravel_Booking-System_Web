@@ -8,7 +8,6 @@ use function App\Helpers\generateUuid;
 class Order extends Model
 {
     //
-    protected $table = "order";
     protected $primaryKey ="id";
     public $incrementing = false;
     protected $keyType = 'string';

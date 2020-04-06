@@ -8,7 +8,6 @@ use function App\Helpers\generateUuid;
 class News extends Model
 {
     //
-    protected $table = "news";
     protected $primaryKey ="id";
     public $incrementing = false;
     protected $keyType = 'string';

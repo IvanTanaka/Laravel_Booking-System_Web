@@ -11,7 +11,6 @@ class Cashier extends Authenticatable
     //
     use Notifiable;
 
-    protected $table = "cashier";
     protected $primaryKey ="id";
     public $incrementing = false;
     protected $keyType = 'string';

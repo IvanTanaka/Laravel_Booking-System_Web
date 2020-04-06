@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Cashier;
 use function App\Helpers\api_response;
 
-
-class ApiAuthCustomer
+class ApiAuthCashier
 {
     public function handle($request, Closure $next)
     {

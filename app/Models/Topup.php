@@ -8,7 +8,6 @@ use function App\Helpers\generateUuid;
 class Topup extends Model
 {
     //
-    protected $table = "topup";
     protected $primaryKey ="id";
     public $incrementing = false;
     protected $keyType = 'string';

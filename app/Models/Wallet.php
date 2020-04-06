@@ -8,7 +8,6 @@ use function App\Helpers\generateUuid;
 class Wallet extends Model
 {
     //
-    protected $table = "wallet";
     protected $primaryKey ="id";
     public $incrementing = false;
     protected $keyType = 'string';

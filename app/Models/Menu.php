@@ -8,7 +8,6 @@ use function App\Helpers\generateUuid;
 class Menu extends Model
 {
     //
-    protected $table = "menu";
     protected $primaryKey ="id";
     public $incrementing = false;
     protected $keyType = 'string';

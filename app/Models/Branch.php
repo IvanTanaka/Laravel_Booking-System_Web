@@ -8,7 +8,6 @@ use function App\Helpers\generateUuid;
 class Branch extends Model
 {
     //
-    protected $table = "branch";
     protected $primaryKey ="id";
     public $incrementing = false;
     protected $keyType = 'string';

@@ -8,7 +8,6 @@ use function App\Helpers\generateUuid;
 class Franchise extends Model
 {
     //
-    protected $table="franchise";
     protected $primaryKey ="id";
     public $incrementing = false;
     protected $keyType = 'string';

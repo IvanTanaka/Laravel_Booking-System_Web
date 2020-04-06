@@ -14,7 +14,7 @@ class CreateTopupTable extends Migration
      */
     public function up()
     {
-        Schema::create('topup', function (Blueprint $table) {
+        Schema::create('topups', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('user_id');
             $table->integer('amount');
