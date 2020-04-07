@@ -19,7 +19,7 @@ class FirstRegisterMiddleware
     {
 
         $user = Auth::user();
-        $franchise = Franchise::where('user_id',$user->id)->count();
+        $franchise = Franchise::where('owner_id',$user->id)->count();
         if($franchise>0){
             return $next($request);
         }return redirect('register\franchise');

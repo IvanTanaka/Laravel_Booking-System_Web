@@ -16,7 +16,7 @@ class CreateFranchiseTable extends Migration
     {
         Schema::create('franchises', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('user_id')->unique();
+            $table->string('owner_id')->unique();
             $table->string('name');
             $table->string('image_path')->nullable();
             $table->enum('type',ServiceType::getAllKeys());

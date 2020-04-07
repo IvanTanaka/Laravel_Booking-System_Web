@@ -22,7 +22,7 @@ class MenuController extends Controller
         if ($request->ajax()) {
             $user = Auth::user();
             $data = Menu::whereHas('franchise', function($query) use($user){
-                $query->where('user_id','=',$user->id);
+                $query->where('owner_id','=',$user->id);
             })
             ->latest()->get();
             
@@ -93,8 +93,8 @@ class MenuController extends Controller
         $file = $request->file('menu_image');
         // Check if image file  Exist then insert to database table
         if($file!=null){
-            $path = "public/images/".$user->franchise->id.'/'.'menu/';
-            $menu->image_path = generateUuid().$file->getClientOriginalExtension();
+            $path = "public/images/menu/";
+            $menu->image_path = generateUuid().".".$file->getClientOriginalExtension();
         }
 
         $menu->save();
@@ -150,7 +150,7 @@ class MenuController extends Controller
         $menu->description = $request->menu_description;
         $menu->price = $request->menu_price;
 
-        $path = "public/images/".$menu->franchise_id.'/'.'menu/';
+        $path = "public/images/menu/";
         $oldFileName = $menu->image_path;
         
         $file = $request->file('menu_image');
@@ -190,7 +190,7 @@ class MenuController extends Controller
     {
         //
         $menu = Menu::with('franchise')->find($id);
-        $path = "public/images/".$menu->franchise_id.'/'.'menu/';
+        $path = "public/images/menu/";
         Storage::delete($path.$menu->image_path);
 
         $menu->delete($id);

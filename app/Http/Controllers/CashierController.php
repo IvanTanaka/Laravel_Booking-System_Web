@@ -20,7 +20,7 @@ class CashierController extends Controller
         if ($request->ajax()) {
             $user = Auth::user();
             $data = Cashier::with('branch')->whereHas('franchise', function($query) use($user){
-                $query->where('user_id','=',$user->id);
+                $query->where('owner_id','=',$user->id);
             })
             ->latest()->get();
             

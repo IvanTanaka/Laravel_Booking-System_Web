@@ -16,4 +16,5 @@ class FranchiseController extends Controller
         
         return api_response(true, 200,"Success.",$franchise);
     }
+
 }

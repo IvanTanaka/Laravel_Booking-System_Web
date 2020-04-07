@@ -23,12 +23,12 @@ class Franchise extends Model
         return $this->hasMany('App\Models\Branch');
     }
 
-    public function menu(){
+    public function menus(){
         return $this->hasMany('App\Models\Menu');
     }
 
-    public function user()
+    public function owner()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\Owner');
     }
 }

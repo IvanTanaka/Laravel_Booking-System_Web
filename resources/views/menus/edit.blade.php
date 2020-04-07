@@ -99,7 +99,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <img id="menu_image_container" src="{{($menu->image_path != null)?'/storage/images/'.Auth::user()->franchise->id.'/'.'menu/'.$menu->image_path:'/assets/images/empty_image.png'}}" alt="menu image" style="height:300px; width:300px;" class="img-thumbnail"/>
+                    <img id="menu_image_container" src="{{($menu->image_path != null)?'/storage/images/menu/'.$menu->image_path:'/assets/images/empty_image.png'}}" alt="menu image" style="height:300px; width:300px;" class="img-thumbnail"/>
                   </div>
                 </div>
               </div>

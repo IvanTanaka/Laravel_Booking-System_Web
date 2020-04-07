@@ -21,7 +21,7 @@ class BranchController extends Controller
         if ($request->ajax()) {
             $user = Auth::user();
             $data = Branch::whereHas('franchise', function($query) use($user){
-                        $query->where('user_id','=',$user->id);
+                        $query->where('owner_id','=',$user->id);
                     })
                     ->latest()->get();
 
@@ -153,7 +153,7 @@ class BranchController extends Controller
         $message = "Franchise must at least have one store.";
         $user = Auth::user();
         $branchAmount = Branch::whereHas("franchise", function($query) use($user){
-            $query -> where("user_id", $user->id);
+            $query -> where("owner_id", $user->id);
         })->count();
         if($branchAmount>1){
             $branch = Branch::destroy($id);

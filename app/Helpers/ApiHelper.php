@@ -8,7 +8,7 @@ function api_response(bool $success, int $code, String $message, $response = [])
             'success' => $success,
             'code' => $code,
             'message' => $message, 
-            'data' => $response
+            'result' => $response
         ], $code
     );
 }
