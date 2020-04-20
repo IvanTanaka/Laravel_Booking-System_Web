@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCashierTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,9 @@ class CreateCashierTable extends Migration
      */
     public function up()
     {
-        Schema::create('cashiers', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('franchise_id');
-            $table->string('branch_id');
             $table->string('name');
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->string('api_token', 100)->nullable()->default(null);
-            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -33,6 +27,6 @@ class CreateCashierTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cashiers');
+        Schema::dropIfExists('categories');
     }
 }

@@ -13,7 +13,7 @@ class FranchiseSeeder extends Seeder
     public function run()
     {
         //
-        $seed1 = new Seed();
+        $seed1 = new FranchiseSeed();
         $seed1->user_name = "Ivan Tanaka";
         $seed1->user_email = "ivan@gmail.com";
         $seed1->user_phone_number = "082123450000";
@@ -24,7 +24,7 @@ class FranchiseSeeder extends Seeder
         $seed1->branch_close_time = "11.00 PM";
 
 
-        $seed2 = new Seed();
+        $seed2 = new FranchiseSeed();
         $seed2->user_name = "Leonardy Khanady";
         $seed2->user_email = "leo98@gmail.com";
         $seed2->user_phone_number = "082123450001";
@@ -35,7 +35,7 @@ class FranchiseSeeder extends Seeder
         $seed2->branch_close_time = "06.00 PM";
 
 
-        $seed3 = new Seed();
+        $seed3 = new FranchiseSeed();
         $seed3->user_name = "Meghan Robbie";
         $seed3->user_email = "meghan_robbie@gmail.com";
         $seed3->user_phone_number = "082123450002";
@@ -46,7 +46,7 @@ class FranchiseSeeder extends Seeder
         $seed3->branch_close_time = "08.00 PM";
 
 
-        $seed4 = new Seed();
+        $seed4 = new FranchiseSeed();
         $seed4->user_name = "Joko Lokasari";
         $seed4->user_email = "joko2323@gmail.com";
         $seed4->user_phone_number = "082123450003";
@@ -57,7 +57,7 @@ class FranchiseSeeder extends Seeder
         $seed4->branch_close_time = "10.00 PM";
 
 
-        $seed5 = new Seed();
+        $seed5 = new FranchiseSeed();
         $seed5->user_name = "M. Abdulah";
         $seed5->user_email = "abdul23@gmail.com";
         $seed5->user_phone_number = "082123450004";
@@ -68,7 +68,7 @@ class FranchiseSeeder extends Seeder
         $seed5->branch_close_time = "09.00 PM";
 
 
-        $seed6 = new Seed();
+        $seed6 = new FranchiseSeed();
         $seed6->user_name = "Tan Wei Teng";
         $seed6->user_email = "tanweitang63@gmail.com";
         $seed6->user_phone_number = "082123450005";
@@ -89,14 +89,11 @@ class FranchiseSeeder extends Seeder
             $user->save();
         
             $franchise =  new \App\Models\Franchise();
-            $franchise->id = uniqid();
             $franchise->owner_id = $user->id;
             $franchise->name = $seed->franchise_name;
-            $franchise->type = "food";
             $franchise->save();
         
             $branch = new \App\Models\Branch();
-            $branch->id = uniqid();
             $branch->franchise_id = $franchise->id;
             $branch->name = $franchise->name;
             $branch->address = $seed->branch_address;
@@ -109,7 +106,7 @@ class FranchiseSeeder extends Seeder
     }
 }
 
-class Seed{
+class FranchiseSeed{
     public $user_name;
     public $user_email;
     public $user_phone_number;

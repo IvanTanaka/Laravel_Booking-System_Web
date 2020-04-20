@@ -15,9 +15,8 @@ class CreateWalletTable extends Migration
     {
         Schema::create('wallets', function (Blueprint $table) {
             $table->uuid('id');
-            $table->string('user_id');
+            $table->string('customer_id');
             $table->integer('amount');
-            $table->integer('point');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateWalletTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wallet');
+        Schema::dropIfExists('wallets');
     }
 }

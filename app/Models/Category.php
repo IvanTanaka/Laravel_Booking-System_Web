@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use function App\Helpers\generateUuid;
 
-class Franchise extends Model
+class Category extends Model
 {
     //
     protected $primaryKey ="id";
@@ -19,20 +19,7 @@ class Franchise extends Model
          });
     }
 
-    public function branches(){
-        return $this->hasMany('App\Models\Branch');
-    }
-
-    public function menus(){
-        return $this->hasMany('App\Models\Menu');
-    }
-
-    public function category(){
-        return $this->belongsTo('App\Models\Category');
-    }
-
-    public function owner()
-    {
-        return $this->belongsTo('App\Models\Owner');
+    public function franchise(){
+        return $this->hasMany('App\Models\Franchise');
     }
 }

@@ -18,11 +18,25 @@ Route::prefix('/v1')->group(function () {
     Route::post('/register','APi\Customer\Auth\RegisterController@create');
     Route::post('/login','APi\Customer\Auth\LoginController@login');
     Route::post('/login-token','APi\Customer\Auth\LoginController@login_token');
-    Route::middleware('api_customer')->prefix('store')->group(function(){
-        Route::get('/','APi\Customer\FranchiseController@search');
-        Route::get('{branch_id}/product','APi\Customer\MenuController@index');
+    Route::middleware('api_customer')->group(function(){
+        Route::prefix('store')->group(function(){
+            Route::get('/','APi\Customer\FranchiseController@search');
+            Route::get('{branch_id}','APi\Customer\BranchController@view');
+            Route::get('{branch_id}/product','APi\Customer\MenuController@index');
+            Route::post('{branch_id}/order','APi\Customer\OrderController@submit');
+        });
+        Route::prefix('order')->group(function(){
 
+        });
+        Route::prefix('topup')->group(function(){
+
+        });
+        Route::prefix('news')->group(function(){
+
+        });
     });
+
+    
 });
 
 

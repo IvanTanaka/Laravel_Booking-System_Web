@@ -10,5 +10,9 @@ use function App\Helpers\api_response;
 class BranchController extends Controller
 {
     //
+    public function view($branch_id){
+        $branch = Branch::with('franchise')->find($branch_id);
+        return api_response(true, 200,"Success.",$branch);
+    }
 
 }

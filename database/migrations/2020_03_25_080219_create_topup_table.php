@@ -16,7 +16,7 @@ class CreateTopupTable extends Migration
     {
         Schema::create('topups', function (Blueprint $table) {
             $table->uuid('id');
-            $table->string('user_id');
+            $table->string('customer_id');
             $table->integer('amount');
             $table->integer('price');
             $table->enum('status',TopupStatus::getAllKeys());
@@ -31,6 +31,6 @@ class CreateTopupTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('topup');
+        Schema::dropIfExists('topups');
     }
 }

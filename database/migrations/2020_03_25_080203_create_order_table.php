@@ -17,13 +17,14 @@ class CreateOrderTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->uuid('id');
-            $table->string('user_id');
+            $table->string('customer_id');
             $table->string('branch_id');
             $table->string('cashier_id')->nullable();
             $table->string('franchise_id');
             $table->enum('status',OrderStatus::getAllKeys());
             $table->integer('total');
-            $table->integer('point');
+            $table->integer('people_count');
+            $table->dateTime('reserve_time');
             $table->timestamps();
         });
     }
@@ -35,6 +36,6 @@ class CreateOrderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order');
+        Schema::dropIfExists('orders');
     }
 }

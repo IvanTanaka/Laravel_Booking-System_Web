@@ -24,6 +24,16 @@ class Order extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function order_details()
+    {
+        return $this->hasMany('App\Models\OrderDetail');
+    }
+
+    public function rate()
+    {
+        return $this->hasOne('App\Models\Rate');
+    }
+
     public function branch()
     {
         return $this->belongsTo('App\Models\Branch');
