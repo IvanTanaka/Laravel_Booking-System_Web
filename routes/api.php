@@ -28,8 +28,13 @@ Route::prefix('/v1')->group(function () {
         Route::prefix('order')->group(function(){
 
         });
+        Route::prefix('wallet')->group(function(){
+            Route::middleware('cors')->get('/', 'APi\Customer\WalletController@index');
+        });
         Route::prefix('topup')->group(function(){
-
+            Route::get('/', 'APi\Customer\TopupController@index');
+            Route::middleware('cors')->post('/', 'APi\Customer\TopupController@store');
+            Route::middleware('cors')->get('{topup_id}', 'APi\Customer\TopupController@view');
         });
         Route::prefix('news')->group(function(){
 

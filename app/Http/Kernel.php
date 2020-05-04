@@ -53,6 +53,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
+        'cors' => \App\Http\Middleware\CORS::class,
         'first_register' => \App\Http\Middleware\FirstRegisterMiddleware::class,
         'api_customer' => \App\Http\Middleware\ApiAuthCustomer::class,
         'api_cashier' => \App\Http\Middleware\ApiAuthCashier::class,

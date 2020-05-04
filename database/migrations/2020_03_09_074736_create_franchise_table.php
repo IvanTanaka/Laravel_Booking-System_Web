@@ -15,7 +15,7 @@ class CreateFranchiseTable extends Migration
     public function up()
     {
         Schema::create('franchises', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->string('id')->primary();
             $table->string('owner_id')->unique();
             $table->string('category_id')->nullable();
             $table->string('name');

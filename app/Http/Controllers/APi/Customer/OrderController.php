@@ -28,6 +28,7 @@ class OrderController extends Controller
         $order->franchise_id = $branch->franchise->id;
         $order->people_count = $request->people_count;
         $order->total = $request->total;
+        $order->status = OrderStatus::WAITING;
         $order->reserve_time = \Carbon\Carbon::parse($request->reserve_time);
         $order->save();
 

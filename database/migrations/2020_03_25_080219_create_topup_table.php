@@ -15,10 +15,10 @@ class CreateTopupTable extends Migration
     public function up()
     {
         Schema::create('topups', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->string('id')->primary();
             $table->string('customer_id');
             $table->integer('amount');
-            $table->integer('price');
+            $table->string('va_number')->nullable();
             $table->enum('status',TopupStatus::getAllKeys());
             $table->timestamps();
         });

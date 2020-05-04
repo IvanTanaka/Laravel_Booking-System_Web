@@ -14,7 +14,7 @@ class CreateCashierTable extends Migration
     public function up()
     {
         Schema::create('cashiers', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->string('id')->primary();
             $table->string('franchise_id');
             $table->string('branch_id');
             $table->string('name');

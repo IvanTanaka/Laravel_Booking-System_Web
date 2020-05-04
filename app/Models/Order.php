@@ -19,9 +19,9 @@ class Order extends Model
          });
     }
 
-    public function user()
+    public function customer()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\Customer');
     }
 
     public function order_details()

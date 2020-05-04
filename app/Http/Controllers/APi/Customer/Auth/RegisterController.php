@@ -5,6 +5,7 @@ namespace App\Http\Controllers\APi\Customer\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\Customer;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -78,6 +79,9 @@ class RegisterController extends Controller
                 'password' => Hash::make($request['password']),
                 "api_token" => random_str(100)
             ]);
+            $wallet = new Wallet();
+            $wallet->customer_id = $user->id;
+            $wallet->save();
             return api_response(true, 200, "User registered",[ 
                 "name" => $user->name,
                 "email" => $user->email,

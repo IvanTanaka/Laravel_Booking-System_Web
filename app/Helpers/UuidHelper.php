@@ -5,5 +5,5 @@ use Webpatser\Uuid\Uuid;
 
 function generateUuid()
 {
-    return Uuid::generate();
+    return Uuid::generate()->string;
 }

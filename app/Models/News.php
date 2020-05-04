@@ -19,12 +19,6 @@ class News extends Model
          });
     }
 
-
-    public function user()
-    {
-        return $this->belongsTo('App\Models\User');
-    }
-
     public function franchise()
     {
         return $this->belongsTo('App\Models\Franchise');
