@@ -139,7 +139,7 @@ class TopupController extends Controller
             if($topup->status == TopupStatus::PENDING){
                 $topup->status = $result->transaction_status=='settlement'?TopupStatus::SUCCESS:($result->transaction_status=='pending'?TopupStatus::PENDING:TopupStatus::FAILED);
                 if($topup->status == TopupStatus::SUCCESS){
-                    $wallet = $wallet+$topup->amount;
+                    $wallet->amount = $wallet->amount+$topup->amount;
                     $wallet->update();
                 }
             }

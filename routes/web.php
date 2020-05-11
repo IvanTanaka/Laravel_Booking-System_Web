@@ -21,6 +21,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('stores','BranchController');
         Route::resource('menus','MenuController');
         Route::resource('cashiers','CashierController');
+        Route::resource('news','NewsController');
     });
     Route::get('/register/franchise', 'FranchiseController@create');
     Route::post('/register/franchise', 'FranchiseController@store');

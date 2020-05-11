@@ -85,6 +85,13 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{url('news')}}" class="{{ request()->is('news*') ? 'active' : '' }} nav-link">
+                  <i class="fas fa-image nav-icon"></i>
+                  <p>News Management</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
                 
                 <a class="nav-link" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
