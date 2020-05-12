@@ -11,7 +11,6 @@ class MenuController extends Controller
 {
     //
     public function index(Request $request, $branch_id){
-        $name = $request->name;
         $franchise = Menu::whereHas("franchise", function($query) use($branch_id){
             $query -> whereHas("branches", function($query) use($branch_id){
                 $query->where('id', $branch_id);

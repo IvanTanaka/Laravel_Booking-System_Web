@@ -37,7 +37,8 @@ Route::prefix('/v1')->group(function () {
             Route::middleware('cors')->get('{topup_id}', 'APi\Customer\TopupController@view');
         });
         Route::prefix('news')->group(function(){
-
+            Route::get('/', 'APi\Customer\NewsController@index');
+            Route::get('{news_id}', 'APi\Customer\NewsController@view');
         });
     });
 
