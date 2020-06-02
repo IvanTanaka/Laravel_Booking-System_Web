@@ -23,10 +23,11 @@ Route::prefix('/v1')->group(function () {
             Route::get('/','APi\Customer\FranchiseController@search');
             Route::get('{branch_id}','APi\Customer\BranchController@view');
             Route::get('{branch_id}/product','APi\Customer\MenuController@index');
-            Route::post('{branch_id}/order','APi\Customer\OrderController@submit');
         });
         Route::prefix('order')->group(function(){
-
+            Route::get('/','APi\Customer\OrderController@index');
+            Route::post('/','APi\Customer\OrderController@submit');
+            Route::get('{order_id}','APi\Customer\OrderController@view');
         });
         Route::prefix('wallet')->group(function(){
             Route::middleware('cors')->get('/', 'APi\Customer\WalletController@index');

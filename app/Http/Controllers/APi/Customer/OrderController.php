@@ -15,7 +15,12 @@ class OrderController extends Controller
 {
     //
     public function index(Request $request){
+        
+    }
 
+    public function view($order_id){
+        $order = Order::with('order_details.menu','branch.franchise','cashier')->find($order_id);
+        return api_response(true, 200,"Success.",$order);
     }
     
     public function submit(Request $request){

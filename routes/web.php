@@ -22,15 +22,9 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('menus','MenuController');
         Route::resource('cashiers','CashierController');
         Route::resource('news','NewsController');
+        Route::get('/sales','OrderController@index');
     });
     Route::get('/register/franchise', 'FranchiseController@create');
     Route::post('/register/franchise', 'FranchiseController@store');
 });
 
-// Route::prefix('api')->group(function () {
-//     Route::prefix('v1')->group(function(){
-//         Route::post('/login', 'API\UserController@login');
-//         Route::post('/register', 'API\UserAPIController@createOwner');
-//         Route::get('/users', 'API\UserAPIController@showUsers');
-//     });
-// });

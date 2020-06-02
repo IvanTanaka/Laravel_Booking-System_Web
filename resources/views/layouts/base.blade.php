@@ -67,6 +67,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{url('sales')}}" class="{{ request()->is('sales*') ? 'active' : '' }} nav-link">
+                  <i class="fas fa-chart-line nav-icon"></i>
+                  <p>Sales</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{url('stores')}}" class="{{ request()->is('stores*') ? 'active' : '' }} nav-link">
                   <i class="fas fa-store nav-icon"></i>
                   <p>Store Management</p>

@@ -41,7 +41,7 @@ return [
             'provider' => 'owner',
         ],
 
-        'api' => [
+        'api_customer' => [
             'driver' => 'token',
             'provider' => 'customer',
             'hash' => true,
@@ -50,6 +50,10 @@ return [
             'driver' => 'token',
             'provider' => 'cashier',
             'hash' => true,
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
         ],
     ],
 
@@ -84,6 +88,11 @@ return [
             'model' => App\Models\Cashier::class,
         ],
 
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ]
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -108,6 +117,12 @@ return [
     'passwords' => [
         'owner' => [
             'provider' => 'owner',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'admins' => [
+            'provider' => 'admins',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
