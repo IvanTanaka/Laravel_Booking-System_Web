@@ -15,7 +15,11 @@ class OrderController extends Controller
 {
     //
     public function index(Request $request){
-        
+        $token = $request->bearerToken();
+        $order = Order::with('branch.franchise')->whereHas('customer', function($query) use($token){
+            // $query->where('api_token',$token);
+        })->orderBy('created_at','desc')->paginate(10);
+        return api_response(true, 200,"Success.",$order);
     }
 
     public function view($order_id){
