@@ -33,6 +33,9 @@ class LoginController extends Controller
 
     public function showAdminLoginForm()
     {
+        Auth::guard('web')->logout();
+        Auth::guard('admin')->logout();
+        Auth::guard('cashier')->logout();
         return view('auth.login', ['url' => 'admin']);
     }
 
@@ -52,6 +55,9 @@ class LoginController extends Controller
 
     public function showCashierLoginForm()
     {
+        Auth::guard('web')->logout();
+        Auth::guard('admin')->logout();
+        Auth::guard('cashier')->logout();
         return view('auth.cashier_login', ['url' => 'cashier']);
     }
 
