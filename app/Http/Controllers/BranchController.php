@@ -53,7 +53,7 @@ class BranchController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('stores.index');
+        return view('owner.stores.index');
     }
 
     /**
@@ -64,7 +64,7 @@ class BranchController extends Controller
     public function create()
     {
         //
-        return view('stores.create');
+        return view('owner.stores.create');
     }
 
     /**
@@ -101,7 +101,7 @@ class BranchController extends Controller
     {
         //
         $branch = Branch::with('franchise')->find($id);
-        return view('stores.show', compact('branch'));
+        return view('owner.stores.show', compact('branch'));
     }
 
     /**
@@ -114,7 +114,7 @@ class BranchController extends Controller
     {
         //
         $branch = Branch::with('franchise')->find($id);
-        return view('stores.edit', compact('branch'));
+        return view('owner.stores.edit', compact('branch'));
     }
 
     /**

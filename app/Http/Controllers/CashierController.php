@@ -55,7 +55,7 @@ class CashierController extends Controller
             ->rawColumns(['action', 'branch_name'])
             ->make(true);
         }
-        return view('cashiers.index');
+        return view('owner.cashiers.index');
         
     }
 
@@ -70,7 +70,7 @@ class CashierController extends Controller
         $user = Auth::user();
         $franchise = $user->franchise->with('branches')->get()->first();
         $branches = $franchise->branches;
-        return view('cashiers.create',['branches'=>$branches]);
+        return view('owner.cashiers.create',['branches'=>$branches]);
     }
 
     /**
@@ -121,7 +121,7 @@ class CashierController extends Controller
         $franchise = $user->franchise->with('branches')->get()->first();
         $branches = $franchise->branches;
         $cashier = Cashier::with('franchise')->find($id);
-        return view('cashiers.edit',compact(['cashier','branches']));
+        return view('owner.cashiers.edit',compact(['cashier','branches']));
     }
 
     /**

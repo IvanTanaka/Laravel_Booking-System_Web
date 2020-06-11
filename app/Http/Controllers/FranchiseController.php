@@ -13,7 +13,7 @@ class FranchiseController extends Controller
 {
     //
     public function create(){
-        return view('register_franchise', ['service_type' => ServiceType::getAll]);
+        return view('owner.register_franchise', ['service_type' => ServiceType::getAll]);
     }
 
 

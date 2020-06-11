@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Cashier;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class CashierHomeController extends Controller
+class HomeController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -23,6 +24,6 @@ class CashierHomeController extends Controller
      */
     public function index()
     {
-        return view('cashier_dashboard');
+        return view('cashier.cashier_dashboard');
     }
 }

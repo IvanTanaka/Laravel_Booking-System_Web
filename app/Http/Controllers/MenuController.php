@@ -58,7 +58,7 @@ class MenuController extends Controller
             ->rawColumns(['action', 'price_format'])
             ->make(true);
         }
-        return view('menus.index');
+        return view('owner.menus.index');
         
     }
     
@@ -70,7 +70,7 @@ class MenuController extends Controller
     public function create()
     {
         //
-        return view('menus.create');
+        return view('owner.menus.create');
     }
     
     /**
@@ -119,7 +119,7 @@ class MenuController extends Controller
     {
         //
         $menu = Menu::with('franchise')->find($id);
-        return view('menus.show', compact('menu'));
+        return view('owner.menus.show', compact('menu'));
     }
     
     /**
@@ -132,7 +132,7 @@ class MenuController extends Controller
     {
         //
         $menu = Menu::with('franchise')->find($id);
-        return view('menus.edit', compact('menu'));
+        return view('owner.menus.edit', compact('menu'));
     }
     
     /**

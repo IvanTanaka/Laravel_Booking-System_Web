@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('layouts.cashier_base')
 @section('content')
     
     <!-- Content Header (Page header) -->

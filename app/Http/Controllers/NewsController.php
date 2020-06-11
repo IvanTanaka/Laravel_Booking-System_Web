@@ -60,7 +60,7 @@ class NewsController extends Controller
             ->rawColumns(['action', 'image','price_format'])
             ->make(true);
         }
-        return view('news.index');
+        return view('owner.news.index');
         
     }
 
@@ -72,7 +72,7 @@ class NewsController extends Controller
     public function create()
     {
         //
-        return view('news.create');
+        return view('owner.news.create');
     }
 
     /**
@@ -125,7 +125,7 @@ class NewsController extends Controller
     {
         //
         $news = News::with('franchise')->find($id);
-        return view('news.edit', compact('news'));
+        return view('owner.news.edit', compact('news'));
     }
 
     /**

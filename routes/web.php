@@ -22,8 +22,10 @@ Route::post('/login/admin', 'Auth\LoginController@adminLogin');
 Route::post('/login/cashier', 'Auth\LoginController@cashierLogin');
 
 
-
-Route::get('/cashier', 'CashierHomeController@index');
+Route::prefix('/cashier')->group(function(){
+    Route::get('/', 'Cashier\HomeController@index');
+    Route::get('/order', 'Cashier\OrderController@index');
+});
 Route::middleware(['auth'])->group(function () {
     Route::middleware(['first_register'])->group(function () {
         Route::get('/', 'HomeController@index')->name('home');

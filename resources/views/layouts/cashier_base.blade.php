@@ -61,39 +61,15 @@
               with font-awesome or any other icon font library -->
               
               <li class="nav-item">
-                <a href="{{url('/')}}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">
+                <a href="{{url('cashier/')}}" class="nav-link {{ request()->is('cashier') ? 'active' : '' }}">
                   <i class="fas fa-home nav-icon"></i>
                   <p>Dashboard</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{url('sales')}}" class="{{ request()->is('sales*') ? 'active' : '' }} nav-link">
-                  <i class="fas fa-chart-line nav-icon"></i>
-                  <p>Sales</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{url('stores')}}" class="{{ request()->is('stores*') ? 'active' : '' }} nav-link">
-                  <i class="fas fa-store nav-icon"></i>
-                  <p>Store Management</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{url('menus')}}" class="{{ request()->is('menus*') ? 'active' : '' }} nav-link">
-                  <i class="fas fa-utensils nav-icon"></i>
-                  <p>Menu Management</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{url('cashiers')}}" class="{{ request()->is('cashiers*') ? 'active' : '' }} nav-link">
-                  <i class="fas fa-cash-register nav-icon"></i>
-                  <p>Cashier Management</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{url('news')}}" class="{{ request()->is('news*') ? 'active' : '' }} nav-link">
-                  <i class="fas fa-image nav-icon"></i>
-                  <p>News Management</p>
+                <a href="{{url('cashier/order')}}" class="{{ request()->is('cashier/order*') ? 'active' : '' }} nav-link">
+                  <i class="fas fa-clipboard-list nav-icon"></i>
+                  <p>Order</p>
                 </a>
               </li>
 
