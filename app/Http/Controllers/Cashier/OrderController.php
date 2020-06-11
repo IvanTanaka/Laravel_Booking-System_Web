@@ -23,7 +23,7 @@ class OrderController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        return view('cashier.cashier_dashboard');
+    { 
+        return view('cashier.dashboard');
     }
 }

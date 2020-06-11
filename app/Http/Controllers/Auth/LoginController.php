@@ -58,7 +58,7 @@ class LoginController extends Controller
         Auth::guard('web')->logout();
         Auth::guard('admin')->logout();
         Auth::guard('cashier')->logout();
-        return view('auth.cashier_login', ['url' => 'cashier']);
+        return view('auth.login', ['url' => 'cashier']);
     }
 
     public function cashierLogin(Request $request)
