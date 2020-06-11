@@ -15,8 +15,17 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm');
+Route::get('/login/cashier', 'Auth\LoginController@showCashierLoginForm');
+
+Route::post('/login/admin', 'Auth\LoginController@adminLogin');
+Route::post('/login/cashier', 'Auth\LoginController@cashierLogin');
+
+
+
+Route::get('/cashier', 'CashierHomeController@index');
 Route::middleware(['auth'])->group(function () {
-    Route::middleware(['auth','first_register'])->group(function () {
+    Route::middleware(['first_register'])->group(function () {
         Route::get('/', 'HomeController@index')->name('home');
         Route::resource('stores','BranchController');
         Route::resource('menus','MenuController');

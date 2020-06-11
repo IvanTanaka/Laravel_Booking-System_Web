@@ -22,6 +22,12 @@ class RedirectIfAuthenticated
             if('owner'==$guard){
                 return redirect(RouteServiceProvider::HOME);
             }
+            if('cashier'==$guard){
+                return redirect('/cashier');
+            }
+            if('admin'==$guard){
+                return redirect('/admin');
+            }
         }
 
         return $next($request);

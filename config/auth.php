@@ -46,10 +46,9 @@ return [
             'provider' => 'customer',
             'hash' => true,
         ],
-        'api_cashier' => [
-            'driver' => 'token',
+        'cashier' => [
+            'driver' => 'session',
             'provider' => 'cashier',
-            'hash' => true,
         ],
         'admin' => [
             'driver' => 'session',
@@ -121,12 +120,18 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-        'admins' => [
-            'provider' => 'admins',
+        'cashier' => [
+            'provider' => 'cashier',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],
+        'admin' => [
+            'provider' => 'admin',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ]
     ],
 
     /*

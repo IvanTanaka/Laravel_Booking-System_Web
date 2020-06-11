@@ -20,7 +20,6 @@ class CreateCashierTable extends Migration
             $table->string('name');
             $table->string('username')->unique();
             $table->string('password');
-            $table->string('api_token', 100)->nullable()->default(null);
             $table->rememberToken();
             $table->timestamps();
         });

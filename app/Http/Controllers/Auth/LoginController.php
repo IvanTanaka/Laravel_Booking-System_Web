@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -28,6 +30,38 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+
+    public function showAdminLoginForm()
+    {
+        return view('auth.login', ['url' => 'admin']);
+    }
+
+    public function adminLogin(Request $request)
+    {
+        $this->validate($request, [
+            'email'   => 'required|email',
+            'password' => 'required|min:6'
+        ]);
+
+        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+
+            return redirect()->intended('/admin');
+        }
+        return back()->withInput($request->only('email', 'remember'));
+    }
+
+    public function showCashierLoginForm()
+    {
+        return view('auth.cashier_login', ['url' => 'cashier']);
+    }
+
+    public function cashierLogin(Request $request)
+    {
+        if (Auth::guard('cashier')->attempt(['username' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+            return redirect()->intended('/cashier');
+        }
+        return back()->withInput($request->only('email', 'remember'));
+    }
     /**
      * Create a new controller instance.
      *
@@ -35,7 +69,15 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware(['guest','guest:admin','guest:cashier'])->except('logout');
+    }
+
+    public function logout()
+    {
+        Auth::guard('web')->logout();
+        Auth::guard('admin')->logout();
+        Auth::guard('cashier')->logout();
+        return back();
     }
 
 }
