@@ -117,7 +117,10 @@
        */
   
       var monthlySalesData = {
-        labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September','October','November','December'],
+        labels  : [
+        @foreach($monthlyArr as $key => $salesData)
+          "{{$key}}",
+        @endforeach],
         datasets: [
           {
             label               : 'Sales Amount',
@@ -129,7 +132,10 @@
             pointHighlightFill  : '#fff',
             pointHighlightStroke: 'rgba(60,141,188,1)',
             lineTension         : 0,   
-            data                : [10, 48, 32, 50, 55, 20, 30]
+            data                : [
+        @foreach($monthlyArr as $salesData)
+          {{$salesData}},
+        @endforeach]
           }
         ]
       }
