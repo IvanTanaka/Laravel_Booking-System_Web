@@ -180,17 +180,18 @@
       //-------------
       var topTenSalesData        = {
         labels: [
-            'Chrome', 
-            'IE',
-            'FireFox', 
-            'Safari', 
-            'Opera', 
-            'Navigator', 
+              @foreach($bestSellingMenu as $menu)
+              "{{$menu->name}}",
+              @endforeach
         ],
         datasets: [
           {
-            data: [700,500,400,600,300,100],
-            backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+            data: [
+              @foreach($bestSellingMenu as $menu)
+              {{$menu->order_details_count}},
+              @endforeach
+            ],
+            backgroundColor : ['#d92323', '#00a65a', '#00c0ef', '#adf542', '#f39c12', '#6b2c43', '#3c8dbc', '#d2d6de', '#8c2be0'],
           }
         ]
       }

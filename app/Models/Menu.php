@@ -24,4 +24,9 @@ class Menu extends Model
     {
         return $this->belongsTo('App\Models\Franchise');
     }
+
+    public function orderDetails()
+    {
+        return $this->hasMany('App\Models\OrderDetail');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Menu;
 use Auth;
 use Carbon\Carbon;
 
@@ -13,6 +14,10 @@ class OrderController extends Controller
     public function index()
     {
         $user = Auth::user();
+
+        //
+        //Sales Amount for 12 months
+        //
         $monthlySalesData = Order::whereHas('franchise', function($query) use ($user){
             $query->where('owner_id', $user->id);
         })->whereDate('reserve_time','>=', Carbon::now()->subYear())->orderBy('reserve_time')->get()->groupBy(function($d) {
@@ -35,7 +40,20 @@ class OrderController extends Controller
             }
         }
         $monthlyArr = array_reverse($monthlyArr);
+        //
 
-        return view('owner.sales.index',compact(['monthlyArr']));
+        //
+        // Best Selling Menu
+        //
+
+        $bestSellingMenu = Menu::whereHas('franchise', function($query) use($user){
+            $query->where('owner_id', $user->id);
+        })
+        ->withCount('orderDetails')
+        ->orderBy('order_details_count', 'desc')
+        ->limit(10)
+        ->get();
+        
+        return view('owner.sales.index',compact(['monthlyArr', 'bestSellingMenu']));
     }
 }
