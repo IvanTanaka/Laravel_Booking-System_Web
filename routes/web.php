@@ -25,6 +25,9 @@ Route::post('/login/cashier', 'Auth\LoginController@cashierLogin');
 Route::prefix('/cashier')->group(function(){
     Route::get('/', 'Cashier\HomeController@index');
     Route::get('/order', 'Cashier\OrderController@index');
+    Route::get('/today/order', 'Cashier\OrderController@index');
+    Route::get('/order/{order_id}/accept', 'Cashier\OrderController@accept');
+    Route::get('/order/{order_id}/reject', 'Cashier\OrderController@reject');
 });
 Route::middleware(['auth'])->group(function () {
     Route::middleware(['first_register'])->group(function () {

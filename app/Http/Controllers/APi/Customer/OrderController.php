@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Customer;
 use App\Models\Branch;
+use App\Models\Wallet;
 use App\Enums\OrderStatus;
 use function App\Helpers\api_response;
 
@@ -51,6 +52,9 @@ class OrderController extends Controller
             $order_detail->save();
         }
         $order = Order::with('order_details')->find($order->id);
+        $wallet = Wallet::where('customer_id', $user->id)->first();
+        $wallet->amount -= $order->total;
+        $wallet->update();
         return api_response(true, 200,"Success.",$order);
     }
 }

@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <title>Membee | Store</title>
+  <title>Membee | Cashier</title>
   @yield('head')
   @include('layouts.head')
   <style>
@@ -67,9 +67,15 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{url('cashier/today/order')}}" class="{{ request()->is('cashier/today/order*') ? 'active' : '' }} nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Today Orders</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{url('cashier/order')}}" class="{{ request()->is('cashier/order*') ? 'active' : '' }} nav-link">
-                  <i class="fas fa-clipboard-list nav-icon"></i>
-                  <p>Order</p>
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>All Orders</p>
                 </a>
               </li>
 
