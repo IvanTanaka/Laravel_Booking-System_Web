@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Menu;
+use App\Models\Branch;
+use App\Enums\OrderStatus;
 use Auth;
 use Carbon\Carbon;
 
@@ -16,11 +18,31 @@ class OrderController extends Controller
         $user = Auth::user();
 
         //
+        //  Change order status to no response and finished
+        //
+        Order::whereHas('franchise', function($query) use($user){
+            $query->where('owner_id', $user->id);
+        })->where('cashier_id',null)->where('status', OrderStatus::WAITING)->whereDate('reserve_time','<',Carbon::now())->update([
+            'status' => OrderStatus::NO_RESPONSE
+        ]);
+        Order::whereHas('franchise', function($query) use($user){
+            $query->where('owner_id', $user->id);
+        })->where('status', OrderStatus::ACCEPTED)->whereDate('reserve_time','<=',Carbon::now())
+        ->whereTime('reserve_time','<=', Carbon::now()->addHours(7))->update([
+            'status' => OrderStatus::FINISHED
+        ]);
+        //
+
+
+        //
         //Sales Amount for 12 months
         //
         $monthlySalesData = Order::whereHas('franchise', function($query) use ($user){
             $query->where('owner_id', $user->id);
-        })->whereDate('reserve_time','>=', Carbon::now()->subYear())->orderBy('reserve_time')->get()->groupBy(function($d) {
+        })->whereDate('reserve_time','>=', Carbon::now()->subYear())
+        ->orderBy('reserve_time')
+        ->get()
+        ->groupBy(function($d) {
             return Carbon::parse($d->reserve_time)->format('F Y');
         });
 
@@ -53,7 +75,24 @@ class OrderController extends Controller
         ->orderBy('order_details_count', 'desc')
         ->limit(10)
         ->get();
+
+        //
+        // Best Sales Branch Store
+        //
+
+        $bestBranch = Order::whereHas('franchise', function($query) use($user){
+            $query->where('owner_id', $user->id);
+        })
+        ->where('status', OrderStatus::FINISHED)
+        ->orWhere('status', OrderStatus::ACCEPTED)
+        ->with('branch')
+        ->get()
+        ->groupBy('branch.name');
+        foreach($bestBranch as $key=>$value){
+            $bestBranch[$key] = count($value);
+        }
+        //
         
-        return view('owner.sales.index',compact(['monthlyArr', 'bestSellingMenu']));
+        return view('owner.sales.index',compact(['monthlyArr', 'bestSellingMenu', 'bestBranch']));
     }
 }

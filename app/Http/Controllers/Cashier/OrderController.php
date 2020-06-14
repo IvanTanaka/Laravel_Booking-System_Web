@@ -31,24 +31,32 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     { 
+        $user = Cashier::with(['franchise'])->find(Auth::id());
+        $no_responses = Order::whereHas('franchise', function($query) use($user){
+            $query->where('id','=',$user->franchise->id);
+        })->where('cashier_id',null)->where('status', OrderStatus::WAITING)
+        ->whereDate('reserve_time','<',Carbon::now())
+        ->get();
+        foreach($no_responses as $no_response){
+            $no_response->status = OrderStatus::NO_RESPONSE;
+            $no_response->update();
+            $wallet = Wallet::where('customer_id',$no_response->customer_id)->first();
+            $wallet->amount += $no_response->total;
+            $wallet->update();
+        }
+        Order::whereHas('franchise', function($query) use($user){
+            $query->where('id','=',$user->franchise->id);
+        })->where('status', OrderStatus::ACCEPTED)->whereDate('reserve_time','<=',Carbon::now())
+        ->whereTime('reserve_time','<=', Carbon::now()->addHours(7))->update([
+            'status' => OrderStatus::FINISHED
+        ]);
         if ($request->ajax()) {
-            $user = Cashier::with(['franchise'])->find(Auth::id());
-            Order::whereHas('franchise', function($query) use($user){
-                $query->where('id','=',$user->franchise->id);
-            })->where('cashier_id',null)->where('status', OrderStatus::WAITING)->whereDate('reserve_time','<',Carbon::now())->update([
-                'status' => OrderStatus::NO_RESPONSE
-            ]);
-            Order::whereHas('franchise', function($query) use($user){
-                $query->where('id','=',$user->franchise->id);
-            })->where('status', OrderStatus::ACCEPTED)->whereDate('reserve_time','<=',Carbon::now())
-            ->whereTime('reserve_time','<=', Carbon::now()->addHours(7))->update([
-                'status' => OrderStatus::FINISHED
-            ]);
+            
             if($request->is('cashier/today/order*')){
                 $data = Order::with(['customer','order_details.menu'])->whereHas('branch', function($query) use($user){
                     $query->where('id','=',$user->branch->id);
                 })
-                ->where('reserve_time', '>',Carbon::parse('-24 hours'))
+                ->whereDate('reserve_time',Carbon::now())
                 ->orderBy('reserve_time', 'desc')
                 ->orderBy('created_at','desc')
                 ->get();

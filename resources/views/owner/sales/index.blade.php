@@ -56,12 +56,6 @@
               <div class="card card-danger">
                 <div class="card-header">
                   <h3 class="card-title">Best Seller</h3>
-  
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-                  </div>
                 </div>
                 <div class="card-body">
                   <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
@@ -77,7 +71,7 @@
               <!-- BAR CHART -->
               <div class="card card-success">
                 <div class="card-header">
-                  <h3 class="card-title">Bar Chart</h3>
+                  <h3 class="card-title">Accepted and Finished Orders</h3>
   
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -191,7 +185,7 @@
               {{$menu->order_details_count}},
               @endforeach
             ],
-            backgroundColor : ['#d92323', '#00a65a', '#00c0ef', '#adf542', '#f39c12', '#6b2c43', '#3c8dbc', '#d2d6de', '#8c2be0'],
+            backgroundColor : ['#d92323', '#00a65a', '#f5ef42', '#00c0ef', '#adf542', '#f39c12', '#6b2c43', '#3c8dbc', '#d49e61', '#8c2be0'],
           }
         ]
       }
@@ -213,10 +207,35 @@
       //-------------
       //- BAR CHART -
       //-------------
+
+      var branchSalesData = {
+        labels  : [
+        @foreach($bestBranch as $key=>$salesData)
+          "{{$key}}",
+        @endforeach],
+        datasets: [
+          {
+            label               : 'Sales Amount',
+            backgroundColor     : '#1f84d7',
+            borderColor         : '#1f84d7',
+            pointRadius         : 10,
+            pointColor          : '#3b8bba',
+            pointStrokeColor    : 'rgba(60,141,188,1)',
+            pointHighlightFill  : '#fff',
+            pointHighlightStroke: 'rgba(60,141,188,1)',
+            lineTension         : 0,   
+            data                : [
+        @foreach($bestBranch as $salesData)
+          {{$salesData}},
+        @endforeach]
+          }
+        ]
+      }
+
+
       var barChartCanvas = $('#barChart').get(0).getContext('2d')
-      var barChartData = jQuery.extend(true, {}, monthlySalesData)
-      var temp0 = monthlySalesData.datasets[0]
-    //   var temp1 = monthlySalesData.datasets[1]
+      var barChartData = jQuery.extend(true, {}, branchSalesData)
+      var temp0 = branchSalesData.datasets[0]
       barChartData.datasets[0] = temp0
     //   barChartData.datasets[1] = temp0
   
