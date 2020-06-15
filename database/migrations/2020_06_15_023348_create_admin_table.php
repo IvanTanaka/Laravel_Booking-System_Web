@@ -3,9 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-// use App\Enums\ServiceType;
 
-class CreateFranchiseTable extends Migration
+class CreateAdminTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,14 +13,13 @@ class CreateFranchiseTable extends Migration
      */
     public function up()
     {
-        Schema::create('franchises', function (Blueprint $table) {
+        Schema::create('admins', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('owner_id')->unique();
-            $table->string('category_id')->nullable();
             $table->string('name');
-            $table->string('image_path')->nullable();
-            $table->integer('amount')->default(0);
-            // $table->enum('type',ServiceType::getAllKeys());
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ class CreateFranchiseTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('franchises');
+        Schema::dropIfExists('admins');
     }
 }

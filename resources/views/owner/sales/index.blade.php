@@ -14,13 +14,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Sales</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Starter Page</li>
-            </ol>
+            <h1 class="m-0 text-dark">Sales History</h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -39,7 +33,7 @@
               <!-- LINE CHART -->
               <div class="card card-info">
                 <div class="card-header">
-                  <h3 class="card-title">Sales Amount</h3>
+                  <h3 class="card-title">Sales Amount in Years</h3>
                 </div>
                 <div class="card-body">
                   <div class="chart">
@@ -53,9 +47,9 @@
             <div class="col-md-6">
   
               <!-- PIE CHART -->
-              <div class="card card-danger">
+              <div class="card card-info">
                 <div class="card-header">
-                  <h3 class="card-title">Best Seller</h3>
+                  <h3 class="card-title">Top 5 Best Seller</h3>
                 </div>
                 <div class="card-body">
                   <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
@@ -69,15 +63,9 @@
             <div class="col-md-6">
   
               <!-- BAR CHART -->
-              <div class="card card-success">
+              <div class="card card-info">
                 <div class="card-header">
-                  <h3 class="card-title">Accepted and Finished Orders</h3>
-  
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-                  </div>
+                  <h3 class="card-title">Top 5 Branch By Finished Order</h3>
                 </div>
                 <div class="card-body">
                   <div class="chart">
@@ -185,7 +173,7 @@
               {{$menu->order_details_count}},
               @endforeach
             ],
-            backgroundColor : ['#d92323', '#00a65a', '#f5ef42', '#00c0ef', '#adf542', '#f39c12', '#6b2c43', '#3c8dbc', '#d49e61', '#8c2be0'],
+            backgroundColor : ['#d92323', '#f39c12', '#00a65a',  '#8c2be0', '#00c0ef'],
           }
         ]
       }

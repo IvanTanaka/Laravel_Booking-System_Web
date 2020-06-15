@@ -40,6 +40,7 @@ class OrderController extends Controller
         $monthlySalesData = Order::whereHas('franchise', function($query) use ($user){
             $query->where('owner_id', $user->id);
         })->whereDate('reserve_time','>=', Carbon::now()->subYear())
+        ->where('status', OrderStatus::FINISHED)
         ->orderBy('reserve_time')
         ->get()
         ->groupBy(function($d) {
@@ -73,7 +74,7 @@ class OrderController extends Controller
         })
         ->withCount('orderDetails')
         ->orderBy('order_details_count', 'desc')
-        ->limit(10)
+        ->limit(5)
         ->get();
 
         //
@@ -84,7 +85,6 @@ class OrderController extends Controller
             $query->where('owner_id', $user->id);
         })
         ->where('status', OrderStatus::FINISHED)
-        ->orWhere('status', OrderStatus::ACCEPTED)
         ->with('branch')
         ->get()
         ->groupBy('branch.name');

@@ -31,6 +31,11 @@ class Franchise extends Model
         return $this->belongsTo('App\Models\Category');
     }
 
+    public function redeems()
+    {
+        return $this->hasMany('App\Models\Redeem');
+    }
+
     public function owner()
     {
         return $this->belongsTo('App\Models\Owner');

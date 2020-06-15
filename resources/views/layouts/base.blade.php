@@ -69,7 +69,13 @@
               <li class="nav-item">
                 <a href="{{url('sales')}}" class="{{ request()->is('sales*') ? 'active' : '' }} nav-link">
                   <i class="fas fa-chart-line nav-icon"></i>
-                  <p>Sales</p>
+                  <p>Sales History</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{url('redeem')}}" class="{{ request()->is('redeem*') ? 'active' : '' }} nav-link">
+                  <i class="fas fa-chart-line nav-icon"></i>
+                  <p>Redeem Money</p>
                 </a>
               </li>
               <li class="nav-item">
