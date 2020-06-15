@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <title>Membee | Store</title>
+  <title>Membee | Admin</title>
   @yield('head')
   @include('layouts.head')
   <style>
@@ -61,45 +61,21 @@
               with font-awesome or any other icon font library -->
               
               <li class="nav-item">
-                <a href="{{url('/')}}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">
+                <a href="{{url('admin/')}}" class="nav-link {{ request()->is('admin') ? 'active' : '' }}">
                   <i class="fas fa-home nav-icon"></i>
                   <p>Dashboard</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{url('sales')}}" class="{{ request()->is('sales*') ? 'active' : '' }} nav-link">
-                  <i class="fas fa-chart-line nav-icon"></i>
-                  <p>Sales History</p>
+                <a href="{{url('admin/category')}}" class="{{ request()->is('admin/category*') ? 'active' : '' }} nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Category Management</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{url('redeem')}}" class="{{ request()->is('redeem*') ? 'active' : '' }} nav-link">
-                  <i class="fas fa-dollar-sign nav-icon"></i>
-                  <p>Redeem Money</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{url('stores')}}" class="{{ request()->is('stores*') ? 'active' : '' }} nav-link">
-                  <i class="fas fa-store nav-icon"></i>
-                  <p>Store Management</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{url('menus')}}" class="{{ request()->is('menus*') ? 'active' : '' }} nav-link">
-                  <i class="fas fa-utensils nav-icon"></i>
-                  <p>Menu Management</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{url('cashiers')}}" class="{{ request()->is('cashiers*') ? 'active' : '' }} nav-link">
-                  <i class="fas fa-cash-register nav-icon"></i>
-                  <p>Cashier Management</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{url('news')}}" class="{{ request()->is('news*') ? 'active' : '' }} nav-link">
-                  <i class="fas fa-image nav-icon"></i>
-                  <p>News Management</p>
+                <a href="{{url('admin/redeem')}}" class="{{ request()->is('admin/redeem*') ? 'active' : '' }} nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Owner's Redeem</p>
                 </a>
               </li>
 

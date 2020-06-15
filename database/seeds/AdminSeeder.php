@@ -15,7 +15,7 @@ class AdminSeeder extends Seeder
         $admin = new \App\Models\Admin();
         $admin->name = "Admin";
         $admin->email = "admin@membee.com";
-        $admin->password = Hash::make("admin");
+        $admin->password = Hash::make("adminadmin");
         $admin->save();
     }
 }

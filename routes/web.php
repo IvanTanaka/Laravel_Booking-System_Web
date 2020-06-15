@@ -21,6 +21,15 @@ Route::get('/login/cashier', 'Auth\LoginController@showCashierLoginForm');
 Route::post('/login/admin', 'Auth\LoginController@adminLogin');
 Route::post('/login/cashier', 'Auth\LoginController@cashierLogin');
 
+Route::prefix('/admin')->group(function(){
+    Route::get('/', 'Admin\HomeController@index');
+    Route::prefix('redeem')->group(function(){
+        Route::get('/', 'Admin\RedeemController@index');
+        Route::get('/{redeem_id}/accept', 'Admin\RedeemController@accept');
+        Route::get('/{redeem_id}/reject', 'Admin\RedeemController@reject');
+    });
+    Route::get('/category', 'Admin\CategoryController@index');
+});
 
 Route::prefix('/cashier')->group(function(){
     Route::get('/', 'Cashier\HomeController@index');
@@ -36,7 +45,8 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('menus','MenuController');
         Route::resource('cashiers','CashierController');
         Route::resource('news','NewsController');
-        Route::get('/sales','OrderController@index');
+        Route::get('sales','OrderController@index');
+        Route::get('redeem','RedeemController@index');
     });
     Route::get('/register/franchise', 'FranchiseController@create');
     Route::post('/register/franchise', 'FranchiseController@store');
