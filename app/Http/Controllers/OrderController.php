@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Menu;
 use App\Models\Branch;
+use App\Models\Franchise;
 use App\Enums\OrderStatus;
 use Auth;
 use Carbon\Carbon;
@@ -22,9 +23,9 @@ class OrderController extends Controller
         //
         $no_responses = Order::whereHas('franchise', function($query) use($user){
             $query->where('owner_id', $user->id);
-        })->where('cashier_id',null)->where('status', OrderStatus::WAITING)->whereDate('reserve_time','<',Carbon::now())->update([
-            'status' => OrderStatus::NO_RESPONSE
-        ]);
+        })->where('cashier_id',null)->where('status', OrderStatus::WAITING)
+        ->whereDate('reserve_time','<',Carbon::now())
+        ->get();
         foreach($no_responses as $no_response){
             $no_response->status = OrderStatus::NO_RESPONSE;
             $no_response->update();
@@ -33,12 +34,17 @@ class OrderController extends Controller
             $wallet->update();
         }
 
-        Order::whereHas('franchise', function($query) use($user){
+        $finisheds = Order::whereHas('franchise', function($query) use($user){
             $query->where('owner_id', $user->id);
         })->where('status', OrderStatus::ACCEPTED)->whereDate('reserve_time','<=',Carbon::now())
-        ->whereTime('reserve_time','<=', Carbon::now()->addHours(7))->update([
-            'status' => OrderStatus::FINISHED
-        ]);
+        ->whereTime('reserve_time','<=', Carbon::now()->addHours(7))->get();
+        foreach ($finisheds as $finished) {
+            $finished->status = OrderStatus::FINISHED;
+            $finished->update();
+            $franchise = Franchise::find($finished->franchise_id);
+            $franchise->amount += $finished->total;
+            $franchise->update();
+        }
         //
 
 
