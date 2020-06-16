@@ -44,12 +44,21 @@ class OrderController extends Controller
             $wallet->amount += $no_response->total;
             $wallet->update();
         }
-        Order::whereHas('franchise', function($query) use($user){
+        $finisheds = Order::whereHas('franchise', function($query) use($user){
             $query->where('id','=',$user->franchise->id);
-        })->where('status', OrderStatus::ACCEPTED)->whereDate('reserve_time','<=',Carbon::now())
-        ->whereTime('reserve_time','<=', Carbon::now()->addHours(7))->update([
-            'status' => OrderStatus::FINISHED
-        ]);
+        })
+        ->where('status', OrderStatus::ACCEPTED)
+        ->whereDate('reserve_time','<=',Carbon::now())
+        ->whereTime('reserve_time','<=', Carbon::now()->addHours(7))
+        ->get();
+
+        foreach ($finisheds as $finished) {
+            $finished->status = OrderStatus::FINISHED;
+            $finished->update();
+            $franchise = Franchise::find($finished->franchise_id);
+            $franchise->amount += $finished->total;
+            $franchise->update();
+        }
         if ($request->ajax()) {
             
             if($request->is('cashier/today/order*')){

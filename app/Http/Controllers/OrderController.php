@@ -20,11 +20,19 @@ class OrderController extends Controller
         //
         //  Change order status to no response and finished
         //
-        Order::whereHas('franchise', function($query) use($user){
+        $no_responses = Order::whereHas('franchise', function($query) use($user){
             $query->where('owner_id', $user->id);
         })->where('cashier_id',null)->where('status', OrderStatus::WAITING)->whereDate('reserve_time','<',Carbon::now())->update([
             'status' => OrderStatus::NO_RESPONSE
         ]);
+        foreach($no_responses as $no_response){
+            $no_response->status = OrderStatus::NO_RESPONSE;
+            $no_response->update();
+            $wallet = Wallet::where('customer_id',$no_response->customer_id)->first();
+            $wallet->amount += $no_response->total;
+            $wallet->update();
+        }
+
         Order::whereHas('franchise', function($query) use($user){
             $query->where('owner_id', $user->id);
         })->where('status', OrderStatus::ACCEPTED)->whereDate('reserve_time','<=',Carbon::now())

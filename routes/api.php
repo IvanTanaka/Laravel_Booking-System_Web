@@ -28,6 +28,8 @@ Route::prefix('/v1')->group(function () {
             Route::get('/','APi\Customer\OrderController@index');
             Route::post('/','APi\Customer\OrderController@submit');
             Route::get('{order_id}','APi\Customer\OrderController@view');
+            Route::post('{order_id}/cancel','APi\Customer\OrderController@cancel');
+            Route::post('{order_id}/finish','APi\Customer\OrderController@finish');
         });
         Route::prefix('wallet')->group(function(){
             Route::middleware('cors')->get('/', 'APi\Customer\WalletController@index');
