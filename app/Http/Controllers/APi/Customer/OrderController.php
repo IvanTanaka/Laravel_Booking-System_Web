@@ -56,7 +56,7 @@ class OrderController extends Controller
 
     public function view(Request $request, $order_id){
         $token = $request->bearerToken();
-        $order = Order::with('order_details.menu','branch.franchise','cashier')->find($order_id);
+        $order = Order::with('order_details.menu','branch.franchise','cashier', 'rate')->find($order_id);
         if($order->cashier_id == null && 
         $order->status == OrderStatus::WAITING && 
         Carbon::parse($order->reserve_time)->lte(Carbon::now()->addHours(7))){
@@ -101,7 +101,7 @@ class OrderController extends Controller
             $order_detail->subtotal = ($cart["price"]*$cart["qty"]);
             $order_detail->save();
         }
-        $order = Order::with('order_details')->find($order->id);
+        $order = Order::with('order_details.menu','branch.franchise','cashier', 'rate')->find($order_id);
         $wallet = Wallet::where('customer_id', $user->id)->first();
         $wallet->amount -= $order->total;
         $wallet->update();
@@ -111,7 +111,7 @@ class OrderController extends Controller
     public function cancel($order_id, Request $request){
         $token = $request->bearerToken();
         $user = Customer::where('api_token', $token)->first();
-        $order = Order::find($order_id);
+        $order = Order::with('order_details.menu','branch.franchise','cashier', 'rate')->find($order_id);
         if($order->status == OrderStatus::WAITING){
             $order->status = OrderStatus::CANCELED;
             $order->update();
@@ -124,7 +124,7 @@ class OrderController extends Controller
 
     public function finish($order_id, Request $request){
         $token = $request->bearerToken();
-        $order = Order::find($order_id);
+        $order = Order::with('order_details.menu','branch.franchise','cashier', 'rate')->find($order_id);
         if($order->status == OrderStatus::ACCEPTED){
             $order->status = OrderStatus::FINISHED;
             $order->update();

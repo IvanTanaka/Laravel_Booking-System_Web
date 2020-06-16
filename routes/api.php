@@ -31,6 +31,9 @@ Route::prefix('/v1')->group(function () {
             Route::post('{order_id}/cancel','APi\Customer\OrderController@cancel');
             Route::post('{order_id}/finish','APi\Customer\OrderController@finish');
         });
+        Route::prefix('rating')->group(function(){
+            Route::post('{order_id}','APi\Customer\RateController@create');
+        });
         Route::prefix('wallet')->group(function(){
             Route::middleware('cors')->get('/', 'APi\Customer\WalletController@index');
         });
