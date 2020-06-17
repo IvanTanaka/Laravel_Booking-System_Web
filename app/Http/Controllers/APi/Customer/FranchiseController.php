@@ -14,8 +14,7 @@ class FranchiseController extends Controller
         $name = $request->name;
         $category = $request->category;
         
-        $franchise = Franchise::
-        where(function($q) use($name){
+        $franchise = Franchise::where(function($q) use($name){
             $q->whereHas('branches',function($query) use($name){
                 // Search by branch name
                 $query->where('name',"like","%".$name."%");

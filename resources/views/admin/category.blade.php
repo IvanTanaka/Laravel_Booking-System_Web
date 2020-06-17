@@ -66,7 +66,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-12">
-                <h1 class="m-0 text-dark">Redeem List
+                <h1 class="m-0 text-dark">Franchise's Categories
             </h1>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -83,23 +83,20 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body table-responsive p-2">
-                        <table class="table table-bordered data-table" id="redeem_table">
+                        <table class="table table-bordered data-table" id="category_table">
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Franchise</th>
                                     <th>Owner Name</th>
                                     <th>Phone Number</th>
-                                    <th>Franchise</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th>Category</th>
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
                     </div>
-                    <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
             </div>
@@ -113,21 +110,28 @@
 @section('script')
 <script type="text/javascript">
     $(function () {
-        var table = $('#redeem_table').DataTable({
+        var table = $('#category_table').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{{Request::url()}}",
             columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'name', name:'name'},
             {data: 'owner_name', name: 'owner_name'},
             {data: 'owner_phone_number', name: 'owner_phone_number'},
-            {data: 'franchise_name', name:'franchise_name'},
-            {data: 'amount', name: 'amount'},
-            {data: 'status', name: 'status'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
+            {data: 'category_select', name: 'category_select', orderable: false, searchable: false},
             ]
         });
         
     });
+
+    function setCategory($this,$franchise_id){
+        $.post("/admin/category/update",
+        {
+            _token : "{{ csrf_token() }}",
+            category_id: $this.value,
+            franchise_id: $franchise_id
+        });
+    }
 </script>
 @endsection

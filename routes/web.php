@@ -29,6 +29,7 @@ Route::prefix('/admin')->group(function(){
         Route::get('/{redeem_id}/reject', 'Admin\RedeemController@reject');
     });
     Route::get('/category', 'Admin\CategoryController@index');
+    Route::post('/category/update', 'Admin\CategoryController@update');
 });
 
 Route::prefix('/cashier')->group(function(){

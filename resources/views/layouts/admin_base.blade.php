@@ -69,7 +69,7 @@
               <li class="nav-item">
                 <a href="{{url('admin/category')}}" class="{{ request()->is('admin/category*') ? 'active' : '' }} nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Category Management</p>
+                  <p>Franchise's Category</p>
                 </a>
               </li>
               <li class="nav-item">

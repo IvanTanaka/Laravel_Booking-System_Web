@@ -44,7 +44,7 @@ class RedeemController extends Controller
                     ->addColumn('owner_name', function($row){
                         return $row->owner->name;
                     })
-                    ->addColumn('owner_phone', function($row){
+                    ->addColumn('owner_phone_number', function($row){
                         return $row->owner->phone_number;
                     })
                     ->addColumn('amount', function($row){
