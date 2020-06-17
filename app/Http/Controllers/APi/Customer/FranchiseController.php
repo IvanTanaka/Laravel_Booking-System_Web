@@ -12,19 +12,30 @@ class FranchiseController extends Controller
     //
     public function search(Request $request){
         $name = $request->name;
+        $category = $request->category;
         
-        $franchise = Franchise::whereHas('branches',function($query) use($name){
-                        // Search by branch name
-                        $query->where('name',"like","%".$name."%");
-                    })
-                    ->orWhereHas('menus',function($query) use($name){
-                        // Search by menu name
-                        $query->where('name',"like","%".$name."%");
-                    })
-                    // Search by franchise name
-                    ->orWhere('name',"like","%".$name."%")
-                    ->with('branches')
-                    ->paginate(10);
+        $franchise = Franchise::
+        where(function($q) use($name){
+            $q->whereHas('branches',function($query) use($name){
+                // Search by branch name
+                $query->where('name',"like","%".$name."%");
+            })
+            ->orWhereHas('menus',function($query) use($name){
+                // Search by menu name
+                $query->where('name',"like","%".$name."%");
+            })
+            // Search by franchise name
+            ->orWhere('name',"like","%".$name."%");
+        })
+        ->with('branches');
+        if($category != null){
+            $franchise = $franchise->whereNotNull('category_id')
+            ->whereHas('category', function($query) use($category){
+                $query->where('name',$category);
+            });
+        }
+        $franchise = $franchise->paginate(10);
+
         
         return api_response(true, 200,"Success.",$franchise);
     }
