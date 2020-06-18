@@ -101,7 +101,7 @@ class OrderController extends Controller
             $order_detail->subtotal = ($cart["price"]*$cart["qty"]);
             $order_detail->save();
         }
-        $order = Order::with('order_details.menu','branch.franchise','cashier', 'rate')->find($order_id);
+        $order = Order::with('order_details.menu','branch.franchise','cashier', 'rate')->find($order->id);
         $wallet = Wallet::where('customer_id', $user->id)->first();
         $wallet->amount -= $order->total;
         $wallet->update();

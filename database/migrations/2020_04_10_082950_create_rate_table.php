@@ -19,7 +19,7 @@ class CreateRateTable extends Migration
             $table->string('customer_id');
             $table->string('branch_id');
             $table->float('stars');
-            $table->text('comment');
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }
