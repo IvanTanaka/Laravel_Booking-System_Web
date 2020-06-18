@@ -25,9 +25,16 @@ class CategoryController extends Controller
         $categories = Category::all();
         
         if ($request->ajax()) {
-            
-            $data = Franchise::with(['category','branches', 'owner'])
-            ->latest()
+            $category = $request->category;
+            if($category == "all" || $category==null){
+                $data = Franchise::with(['category','branches', 'owner']);
+            }else{
+                $data = Franchise::with(['category','branches', 'owner'])
+                ->whereHas('category', function($query) use($category){
+                    $query->where('slug', $category);
+                });
+            }
+            $data = $data->latest()
             ->get();
 
             return Datatables::of($data)
@@ -50,7 +57,7 @@ class CategoryController extends Controller
                     ->rawColumns(['category_select'])
                     ->make(true);
         }
-        return view('admin.category');
+        return view('admin.category', compact('categories'));
     }
 
     public function update(Request $request){

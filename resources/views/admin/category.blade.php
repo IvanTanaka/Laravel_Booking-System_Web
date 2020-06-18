@@ -82,6 +82,18 @@
             
             <div class="col-lg-12">
                 <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <select class="custom-select" id="category_filter">
+                                    <option value="all">Show All</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{$category->slug}}">{{$category->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-body table-responsive p-2">
                         <table class="table table-bordered data-table" id="category_table">
                             <thead>
@@ -109,7 +121,7 @@
 
 @section('script')
 <script type="text/javascript">
-    $(function () {
+    $(document).ready(function () {
         var table = $('#category_table').DataTable({
             processing: true,
             serverSide: true,
@@ -122,11 +134,18 @@
             {data: 'category_select', name: 'category_select', orderable: false, searchable: false},
             ]
         });
+
+        $('#category_filter').on('change',function
+        (e){
+            var optionSelected = $("option:selected", this);
+            var valueSelected = this.value;
+            $('#category_table').DataTable().ajax.url("/admin/category?category="+this.value).load();
+        })
         
     });
 
     function setCategory($this,$franchise_id){
-        $.post("/admin/category/update",
+        $.post("{{url('/admin/category/update')}}",
         {
             _token : "{{ csrf_token() }}",
             category_id: $this.value,

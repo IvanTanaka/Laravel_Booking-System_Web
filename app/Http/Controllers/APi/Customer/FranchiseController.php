@@ -30,7 +30,7 @@ class FranchiseController extends Controller
         if($category != null){
             $franchise = $franchise->whereNotNull('category_id')
             ->whereHas('category', function($query) use($category){
-                $query->where('name',$category);
+                $query->where('slug',$category);
             });
         }
         $franchise = $franchise->paginate(10);
