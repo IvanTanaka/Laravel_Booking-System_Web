@@ -67,6 +67,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{url('bank-account')}}" class="nav-link {{ request()->is('bank-account*') ? 'active' : '' }}">
+                  <i class="fas fa-money-check-alt nav-icon"></i>
+                  <p>Bank Account</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{url('sales')}}" class="{{ request()->is('sales*') ? 'active' : '' }} nav-link">
                   <i class="fas fa-chart-line nav-icon"></i>
                   <p>Sales History</p>

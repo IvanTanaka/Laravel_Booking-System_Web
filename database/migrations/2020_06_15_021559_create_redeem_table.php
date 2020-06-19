@@ -19,7 +19,7 @@ class CreateRedeemTable extends Migration
             $table->string('owner_id');
             $table->string('franchise_id');
             $table->string('bank_account_id');
-            $table->string('admin_id');
+            $table->string('admin_id')->nullable();
             $table->integer('amount');
             $table->enum('status',RedeemStatus::getAllKeys());
             $table->timestamps();

@@ -17,8 +17,9 @@ class CreateBankAccountTable extends Migration
             $table->string('id')->primary();
             $table->string('owner_id');
             $table->string('name');
+            $table->string('bank');
             $table->string('account_number');
-            $table->boolean('default');
+            $table->boolean('is_default');
             $table->timestamps();
         });
     }
