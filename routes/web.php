@@ -48,7 +48,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('menus','MenuController');
         Route::resource('cashiers','CashierController');
         Route::resource('news','NewsController');
-        Route::get('sales','OrderController@index');
+        Route::get('orders','OrderController@index');
         Route::get('redeem','RedeemController@index');
         Route::post('redeem', 'RedeemController@create');
         Route::post('redeem/cancel', 'RedeemController@cancel');

@@ -84,9 +84,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{url('sales')}}" class="{{ request()->is('sales*') ? 'active' : '' }} nav-link">
+                <a href="{{url('orders')}}" class="{{ request()->is('orders*') ? 'active' : '' }} nav-link">
                   <i class="fas fa-chart-line nav-icon"></i>
-                  <p>Sales History</p>
+                  <p>Order History</p>
                 </a>
               </li>
               <li class="nav-item">
