@@ -42,6 +42,8 @@ Route::prefix('/cashier')->group(function(){
 Route::middleware(['auth'])->group(function () {
     Route::middleware(['first_register'])->group(function () {
         Route::get('/', 'HomeController@index')->name('home');
+        Route::get('/profile', 'FranchiseController@index');
+        Route::post('/profile', 'FranchiseController@update');
         Route::resource('stores','BranchController');
         Route::resource('menus','MenuController');
         Route::resource('cashiers','CashierController');
@@ -53,7 +55,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('bank-account', 'BankAccountController');
         Route::post('bank-account/default','BankAccountController@setDefault');
     });
-    Route::get('/register/franchise', 'FranchiseController@create');
-    Route::post('/register/franchise', 'FranchiseController@store');
+    Route::get('/register/franchise', 'RegisterFranchiseController@create');
+    Route::post('/register/franchise', 'RegisterFranchiseController@store');
 });
 

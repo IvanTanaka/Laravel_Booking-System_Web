@@ -3,43 +3,76 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Enums\ServiceType;
 use App\Models\Franchise;
-use App\Models\Branch;
 use function App\Helpers\convertToTime;
+use function App\Helpers\generateUuid;
+use Illuminate\Support\Facades\Storage;
 use Auth;
 
 class FranchiseController extends Controller
 {
     //
-    public function create(){
-        return view('owner.register_franchise', ['service_type' => ServiceType::getAll]);
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
 
-
-    public function store(Request $request){
-        $this->validate($request, [
-            'store_phone_number' => ['required','regex:/^([0-9\s\-\+\(\)]*)$/'],
-        ]);
-
+    public function index(){
         $user = Auth::user();
-        $franchise =  new Franchise();
-        $franchise->id = uniqid();
-        $franchise->owner_id = $user->id;
-        $franchise->name = $request->franchise_name;
-        $franchise->type = $request->franchise_type;
-        $franchise->save();
-        
-        $branch = new Branch();
-        $branch->id = uniqid();
-        $branch->franchise_id = $franchise->id;
-        $branch->name = $request->franchise_name;
-        $branch->address = $request->store_address;
-        $branch->phone_number = $request->store_phone_number;
-        $branch->open_time = convertToTime($request->store_open_time);
-        $branch->close_time = convertToTime($request->store_close_time);
-        $branch->save();
-
-        return redirect('login')->with('alert-success','Register success.');
+        $franchise = Franchise::whereHas('owner', function($query) use($user){
+            $query->where('owner_id',$user->id);
+        })->first();
+        return view('owner.franchise', ['user' => $user, 'franchise' => $franchise ]);
     }
+
+    public function update(Request $request){
+        $user = Auth::user();
+        $user->name = $request->owner_name;
+        $user->email = $request->owner_email;
+        $user->phone_number = $request->owner_phone_number;
+        $user->update();
+
+        $franchise = Franchise::whereHas('owner', function($query) use($user){
+            $query->where('owner_id',$user->id);
+        })->first();
+
+        $franchise->name = $request->franchise_name;
+
+        $path = "public/images/".$franchise->id."/";
+        $oldFileName = $franchise->image_path;
+        
+        $file = $request->file('franchise_logo');
+        // Check if image file Exist then insert to database table
+        if($file!=null){
+            //Check if image is not remove then insert new image to database;
+            if($request->franchise_logo_remove == "false"){
+                $franchise->image_path = generateUuid().$file->getClientOriginalExtension();
+            }else{
+                $franchise->image_path = null;
+            }
+        }elseif($request->franchise_logo_remove == "true"){
+            $franchise->image_path = null;
+        }
+        $franchise->update();
+        
+        // Check if image file Exist save to storage
+        if($file!=null){
+            Storage::delete($path.$oldFileName);
+            $file->storeAs($path,$franchise->image_path);
+        }elseif($request->franchise_logo_remove == "true"){
+            Storage::delete($path.$oldFileName);
+        }
+
+
+        $franchise->update();
+        return view('owner.franchise', ['user' => $user, 'franchise' => $franchise ]);
+
+    }
+
 }

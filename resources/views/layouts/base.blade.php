@@ -45,15 +45,26 @@
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div id="profile-image" class="img-circle">
-            {{-- <img src="/dist/img/user2-160x160.jpg" class=" img-circle elevation-2" alt="User Image"> --}}
+        <a href="{{url('profile')}}">
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="pull-left image" style="align-self: center;">
+                @if(isset(\App\Models\Franchise::where('owner_id',Auth::id())->first()->image_path))
+                  <img src="/storage/images/{{\App\Models\Franchise::where('owner_id',Auth::id())->first()->id}}/{{\App\Models\Franchise::where('owner_id',Auth::id())->first()->image_path}}" class=" img-circle" alt="Franchise Logo">
+                @else
+                  <div id="profile-image" class="img-circle">
+                  </div>
+                @endif
+            </div>
+            <div class="pull-left info">
+              <div>
+                @if(isset(\App\Models\Franchise::where('owner_id',Auth::id())->first()->name))
+                  <div style="font-size: 18px; ">{{ \App\Models\Franchise::where('owner_id',Auth::id())->first()->name }}</div>
+                @endif
+                <div>{{ Auth::user()->name }}</div>
+              </div>
+            </div>
           </div>
-          <div class="info">
-            <a href="#" class="d-block">{{ Auth::user()->name }}</a>
-          </div>
-        </div>
-        
+        </a>
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">

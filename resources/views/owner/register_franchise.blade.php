@@ -33,17 +33,6 @@
                     <input type="text" id="franchise_name" name="franchise_name" class="form-control">
                   </div>
                 </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label for="franchise_type">Type</label>
-                    <select class="form-control custom-select" name="franchise_type">
-                      <option selected disabled>Select one</option>
-                      @foreach ($service_type as $service)
-                      <option value="{{$service["type"]}}">{{$service["text"]}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-                </div>
               </div>
             </div>
             <!-- /.card-body -->
