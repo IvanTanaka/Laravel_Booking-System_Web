@@ -49,7 +49,7 @@
         padding: 10px;
         border-radius: 5px;
     }
-    .rejected_redeem_status{
+    .rejected_redeem_status, .canceled_redeem_status{
         font-weight: 700;
         width: 100%;
         display: inline-block;

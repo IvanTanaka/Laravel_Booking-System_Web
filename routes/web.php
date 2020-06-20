@@ -49,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('sales','OrderController@index');
         Route::get('redeem','RedeemController@index');
         Route::post('redeem', 'RedeemController@create');
+        Route::post('redeem/cancel', 'RedeemController@cancel');
         Route::resource('bank-account', 'BankAccountController');
         Route::post('bank-account/default','BankAccountController@setDefault');
     });

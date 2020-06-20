@@ -67,15 +67,23 @@ class RedeemController extends Controller
                         return "<span class='rejected_redeem_status'>Rejected</span>";
                     case RedeemStatus::WAITING:
                         return "<span class='waiting_redeem_status'>Waiting</span>";
+                    case RedeemStatus::CANCELED:
+                        return "<span class='canceled_redeem_status'>Canceled</span>";
                 }
             })
             ->addColumn('action', function($row){
                 if($row->status == RedeemStatus::WAITING){
-                    $cancelBtn = '<a href="'.url('redeem/'.$row->id.'/canceled').'" class="p-1">'
+
+                    $cancelBtn = '<div class="col-6">'
+                    .'<form action="'.url('redeem/cancel').'" method="post">'
+                    .'<input type="hidden" name="redeem_id" value="'.$row->id.'" />'
+                    .csrf_field()
                     .'<button class="btn btn-danger btn-small">'
                     .'Canceled'
                     .'</button>'
-                    .'</a>';
+                    .'</form>'
+                    .'</div>';
+
                     $action = $cancelBtn;
                     return $action;
                 }
@@ -100,5 +108,17 @@ class RedeemController extends Controller
         $franchise->amount -= $redeem->amount;
         $franchise->update();
         return redirect('redeem');
+    }
+
+    public function cancel(Request $request){
+        $redeem = Redeem::find($request->redeem_id);
+        if($redeem->owner_id == Auth::id()&&$redeem->status == RedeemStatus::WAITING){
+            $redeem->status = RedeemStatus::CANCELED;
+            $franchise = Franchise::find($redeem->franchise_id);
+            $franchise->amount += $redeem->amount;
+            $redeem->update();  
+            $franchise->update();
+        }
+        return back();
     }
 }

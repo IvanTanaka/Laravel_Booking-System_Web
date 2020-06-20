@@ -110,6 +110,7 @@ class RedeemController extends Controller
     public function accept(Request $request){
         $redeem = Redeem::find($request->redeem_id);
         $redeem->status = RedeemStatus::ACCEPTED;
+        $redeem->admin_id = Auth::id();
         $redeem->update();  
         return back();
     }
@@ -117,6 +118,7 @@ class RedeemController extends Controller
     public function reject(Request $request){
         $redeem = Redeem::find($request->redeem_id);
         $redeem->status = RedeemStatus::REJECTED;
+        $redeem->admin_id = Auth::id();
         $franchise = Franchise::find($redeem->franchise_id);
         $franchise->amount += $redeem->amount;
         $redeem->update();  

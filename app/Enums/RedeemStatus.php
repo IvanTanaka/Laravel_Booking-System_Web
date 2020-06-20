@@ -13,7 +13,7 @@ class RedeemStatus{
             self::WAITING,
             self::ACCEPTED,
             self::REJECTED,
-            self::CANCELED,
+            self::CANCELED
         ];
     }
 }
