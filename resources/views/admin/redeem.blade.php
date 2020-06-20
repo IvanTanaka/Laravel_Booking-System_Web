@@ -8,7 +8,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" defer></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js" defer></script>
 <style>
-    .finished_order_status{
+    .accepted_redeem_status{
         font-weight: 700;
         width: 100%;
         display: inline-block;
@@ -20,7 +20,7 @@
         padding: 10px;
         border-radius: 5px;
     }
-    .waiting_order_status{
+    .waiting_redeem_status{
         font-weight: 700;
         width: 100%;
         display: inline-block;
@@ -32,19 +32,7 @@
         padding: 10px;
         border-radius: 5px;
     }
-    .accepted_order_status{
-        font-weight: 700;
-        width: 100%;
-        display: inline-block;
-        text-align: center;
-        vertical-align: middle;
-        user-select: none;
-        color: #fff;
-        background-color: #0509ff;
-        padding: 10px;
-        border-radius: 5px;
-    }
-    .no_response_order_status,.denied_order_status,.canceled_order_status{
+    .rejected_redeem_status{
         font-weight: 700;
         width: 100%;
         display: inline-block;
@@ -87,9 +75,12 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Redeem At</th>
                                     <th>Owner Name</th>
                                     <th>Phone Number</th>
                                     <th>Franchise</th>
+                                    <th>Bank</th>
+                                    <th>Bank Account Number</th>
                                     <th>Amount</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -119,9 +110,12 @@
             ajax: "{{Request::url()}}",
             columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'created', name: 'created'},
             {data: 'owner_name', name: 'owner_name'},
             {data: 'owner_phone_number', name: 'owner_phone_number'},
             {data: 'franchise_name', name:'franchise_name'},
+            {data: 'bank', name: 'bank'},
+            {data: 'bank_account_number', name: 'bank_account_number'},
             {data: 'amount', name: 'amount'},
             {data: 'status', name: 'status'},
             {data: 'action', name: 'action', orderable: false, searchable: false},

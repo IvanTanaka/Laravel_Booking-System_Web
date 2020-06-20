@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use function App\Helpers\generateUuid;
 
 class Redeem extends Model
 {
@@ -24,5 +25,9 @@ class Redeem extends Model
 
     public function owner(){
         return $this->belongsTo('App\Models\Owner');
+    }
+
+    public function bank_account(){
+        return $this->belongsTo('App\Models\BankAccount');
     }
 }

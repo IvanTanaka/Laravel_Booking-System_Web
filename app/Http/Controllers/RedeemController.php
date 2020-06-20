@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use DataTables;
 use App\Models\Franchise;
 use App\Models\Redeem;
 use App\Models\BankAccount;
@@ -27,15 +28,63 @@ class RedeemController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         $franchise = Franchise::where('owner_id', $user->id)->first();
-        $redeem = Redeem::whereHas('franchise', function($query) use($user){
-            $query->where('owner_id', $user->id);
-        })->get();
         $bank_account = BankAccount::where('owner_id', $user->id)->where('is_default', true)->first();
-        return view('owner.redeem.index', compact(['franchise', 'redeem','bank_account']));
+        
+        if ($request->ajax()) {
+            $data = Redeem::with(['bank_account'])->whereHas('franchise', function($query) use($user){
+                $query->where('owner_id','=',$user->id);
+            })
+            ->latest()->get();
+            
+            
+            return Datatables::of($data)
+            ->addIndexColumn()
+            ->addColumn('created', function($row){
+                return date("d M Y H:i:s", strtotime($row->created_at));
+            })
+            ->addColumn('amount', function($row){
+                $formattedPrice = 'Rp '.number_format($row->amount, 2, ',', '.');
+                return $formattedPrice;
+            })
+            ->addColumn('account_number',function($row){
+                return $row->bank_account->account_number;
+            })
+            ->addColumn('bank',function($row){
+                return $row->bank_account->bank;
+            })
+            ->addColumn('bank_name',function($row){
+                return $row->bank_account->name;
+            })
+            ->addColumn('status', function($row){
+                switch($row->status){
+                    case RedeemStatus::ACCEPTED:
+                        return "<span class='accepted_redeem_status'>Accepted</span>";
+                    case RedeemStatus::REJECTED:
+                        return "<span class='rejected_redeem_status'>Rejected</span>";
+                    case RedeemStatus::WAITING:
+                        return "<span class='waiting_redeem_status'>Waiting</span>";
+                }
+            })
+            ->addColumn('action', function($row){
+                if($row->status == RedeemStatus::WAITING){
+                    $cancelBtn = '<a href="'.url('redeem/'.$row->id.'/canceled').'" class="p-1">'
+                    .'<button class="btn btn-danger btn-small">'
+                    .'Canceled'
+                    .'</button>'
+                    .'</a>';
+                    $action = $cancelBtn;
+                    return $action;
+                }
+                return "";
+            })
+            ->rawColumns(['action', 'status'])
+            ->make(true);
+        }
+        return view('owner.redeem.index', compact(['franchise','bank_account']));
     }
 
     public function create(Request $request){
@@ -48,6 +97,8 @@ class RedeemController extends Controller
         $redeem->amount = $request->redeem_amount;
         $redeem->status = RedeemStatus::WAITING;
         $redeem->save();
+        $franchise->amount -= $redeem->amount;
+        $franchise->update();
         return redirect('redeem');
     }
 }

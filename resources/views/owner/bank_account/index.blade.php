@@ -61,7 +61,7 @@
         <div class="card">
           <div class="card-body">
             <h3>
-            Please Input your Bank Account
+            Please Add your Bank Account
             </h3>
           </div>
         </div>

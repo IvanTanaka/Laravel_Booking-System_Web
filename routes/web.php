@@ -25,8 +25,8 @@ Route::prefix('/admin')->group(function(){
     Route::get('/', 'Admin\HomeController@index');
     Route::prefix('redeem')->group(function(){
         Route::get('/', 'Admin\RedeemController@index');
-        Route::get('/{redeem_id}/accept', 'Admin\RedeemController@accept');
-        Route::get('/{redeem_id}/reject', 'Admin\RedeemController@reject');
+        Route::post('/accept', 'Admin\RedeemController@accept');
+        Route::post('/reject', 'Admin\RedeemController@reject');
     });
     Route::get('/category', 'Admin\CategoryController@index');
     Route::post('/category/update', 'Admin\CategoryController@update');

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Redeem;
+use App\Models\Franchise;
 use DataTables;
 use App\Enums\RedeemStatus;
 
@@ -31,13 +32,25 @@ class RedeemController extends Controller
     { 
         $user = Auth::user();
         if ($request->ajax()) {
-            
-            $data = Redeem::with(['franchise','owner'])
+
+            $data = Redeem::with(['franchise','owner','bank_account'])
             ->latest()
             ->get();
 
             return Datatables::of($data)
                     ->addIndexColumn()
+                    ->addColumn('created', function($row){
+                        return date("d M Y H:i:s", strtotime($row->created_at));
+                    })
+                    ->addColumn('bank_account_number',function($row){
+                        return $row->bank_account->account_number;
+                    })
+                    ->addColumn('bank',function($row){
+                        return $row->bank_account->bank;
+                    })
+                    ->addColumn('bank_name',function($row){
+                        return $row->bank_account->name;
+                    })
                     ->addColumn('franchise_name', function($row){
                         return $row->franchise->name;
                     })
@@ -53,28 +66,37 @@ class RedeemController extends Controller
                     ->addColumn('status', function($row){
                         switch($row->status){
                             case RedeemStatus::ACCEPTED:
-                                return "<span class='accepted_order_status'>Accepted</span>";
+                                return "<span class='accepted_redeem_status'>Accepted</span>";
                             case RedeemStatus::REJECTED:
-                                return "<span class='denied_order_status'>Rejected</span>";
+                                return "<span class='rejected_redeem_status'>Rejected</span>";
                             case RedeemStatus::WAITING:
-                                return "<span class='waiting_order_status'>Waiting</span>";
+                                return "<span class='waiting_redeem_status'>Waiting</span>";
                         }
                     })
                     ->addColumn('action', function($row){
                             if($row->status == RedeemStatus::WAITING){
-                                $acceptBtn = '<a href="'.url('admin/redeem/'.$row->id.'/accept').'" class="p-1">'
-                                .'<button class="btn btn-success btn-small">'
+                                $acceptBtn = '<div class="col-6">'
+                                .'<form action="'.url('admin/redeem/accept').'" method="post">'
+                                .'<input type="hidden" name="redeem_id" value="'.$row->id.'" />'
+                                .csrf_field()
+                                .'<button class="btn btn-success btn-small" type="submit">'
                                 .'<i class="fas fa-check" style="width:20px"></i>'
                                 .' Accept'
                                 .'</button>'
-                                .'</a>';
-                                $rejectBtn = '<a href="'.url('admin/redeem/'.$row->id.'/reject').'" class="p-1">'
+                                .'</form>'
+                                .'</div>';
+
+                                $rejectBtn = '<div class="col-6">'
+                                .'<form action="'.url('admin/redeem/reject').'" method="post">'
+                                .'<input type="hidden" name="redeem_id" value="'.$row->id.'" />'
+                                .csrf_field()
                                 .'<button class="btn btn-danger btn-small">'
                                 .'<i class="fas fa-times" style="width:20px"></i>'
                                 .' Reject'
                                 .'</button>'
-                                .'</a>';
-                                $action = $acceptBtn.$rejectBtn;
+                                .'</form>'
+                                .'</div>';
+                                $action = '<div class="row">'.$acceptBtn.$rejectBtn.'</div>';
                                 return $action;
                             }
                             return "";
@@ -85,16 +107,16 @@ class RedeemController extends Controller
         return view('admin.redeem');
     }
 
-    public function accept($redeem_id){
-        $redeem = Redeem::find($order_id);
-        $redeem->status = Redeem::ACCEPTED;
+    public function accept(Request $request){
+        $redeem = Redeem::find($request->redeem_id);
+        $redeem->status = RedeemStatus::ACCEPTED;
         $redeem->update();  
         return back();
     }
 
-    public function reject($redeem_id){
-        $redeem = Redeem::find($order_id);
-        $redeem->status = Redeem::REJECTED;
+    public function reject(Request $request){
+        $redeem = Redeem::find($request->redeem_id);
+        $redeem->status = RedeemStatus::REJECTED;
         $franchise = Franchise::find($redeem->franchise_id);
         $franchise->amount += $redeem->amount;
         $redeem->update();  
