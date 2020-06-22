@@ -78,6 +78,8 @@ class BankAccountController extends Controller
     public function edit($id)
     {
         //
+        $bank_account = BankAccount::find($id);
+        return view('owner.bank_account.edit', compact(['bank_account']));
     }
 
     /**
@@ -90,6 +92,18 @@ class BankAccountController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = Auth::user();
+        $bank_account = BankAccount::where('owner_id',$user->id)->update(['is_default'=> false]);
+        $bank_account = BankAccount::find($id);
+        $bank_account->name = $request->bank_account_name;
+        $bank_account->bank = $request->bank_account_bank;
+        $bank_account->account_number = $request->bank_account_number;
+        $bank_account->is_default = true;
+        $bank_account->save();
+
+        return redirect()->route('bank-account.index')
+        ->with('success','Bank Account edited successfully.');
+
     }
 
     /**

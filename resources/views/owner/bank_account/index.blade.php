@@ -30,7 +30,7 @@
   <div class="container-fluid">
     <div class="row">
     @forelse ($bank_accounts as $bank_account)
-      <div class="col-md-4">
+      <div class="col-12 col-sm-6 col-md-6 col-lg-4">
         <div class="card redeem-header-container {{($bank_account->is_default)?'default-card':''}}">
           <div class="card-body">
             <div class = "row">
@@ -45,11 +45,11 @@
               <div class="col-6 middle">
 
                 <form id="deleteId" action="bank-account/{{$bank_account->id}}" method="post">
-                  <input type="hidden" name="_method" value="DELETE" />
-                  {{csrf_field()}}
+                  @method('DELETE')
+                  @csrf
                   <button class="btn btn-danger" style="float: right; margin-left:5px; margin-right:5px;" type="submit"><i class="fas fa-trash"></i></button>
                 </form>
-                <a class="btn btn-info" style="float: right; margin-left:5px; margin-right:5px;" href="{{url('bank-account.edit')}}"><i class="fas fa-edit"></i></a>
+                <a class="btn btn-info" style="float: right; margin-left:5px; margin-right:5px;" href="{{route('bank-account.edit',['bank_account'=>$bank_account->id])}}"><i class="fas fa-edit"></i></a>
               </div>
             </div>
           </div>
@@ -57,7 +57,7 @@
       </div>
       <!-- /.col-md-6 -->
       @empty
-      <div class="col-4">
+      <div class="col-12 col-sm-6 col-md-6 col-lg-4">
         <div class="card">
           <div class="card-body">
             <h3>

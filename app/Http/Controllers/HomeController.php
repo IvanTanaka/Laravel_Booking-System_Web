@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Menu;
 use App\Models\Branch;
 use App\Models\Franchise;
+use App\Models\Rate;
 use App\Enums\OrderStatus;
 use Auth;
 use Carbon\Carbon;
@@ -120,7 +121,21 @@ class HomeController extends Controller
             $bestBranch[$key] = count($value);
         }
         //
+
+        $rateTotal =Rate::whereHas('branch.franchise', function($query) use($user){
+            $query->where('owner_id',$user->id);
+        })->avg('stars');
         
-        return view('owner.dashboard',compact(['monthlyArr', 'bestSellingMenu', 'bestBranch']));
+        $totalAmount = 'Rp. '.number_format(Franchise::where('owner_id', $user->id)->first()->amount, 2, ',', '.');
+
+        $totalMenu = Menu::whereHas('franchise', function($query) use($user){
+            $query->where('owner_id','=',$user->id);
+        })->get()->count();
+
+        $todaySale = Order::whereHas('franchise', function($query) use ($user){
+            $query->where('owner_id', $user->id);
+        })->whereDate('reserve_time', Carbon::now())->where('status', OrderStatus::FINISHED)->count();
+
+        return view('owner.dashboard',compact(['monthlyArr', 'bestSellingMenu', 'bestBranch', 'rateTotal', 'totalAmount', 'totalMenu','todaySale']));
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.base')
 @section('head')
     <style>
-        .card-info .card-header{
+        .card-membee .card-header, .bg-membee{
             background-color: #FF7266 !important;
             color: #fff;
         }
@@ -14,7 +14,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1 class="m-0 text-dark">Sales History</h1>
+            <h1 class="m-0 text-dark">Dashboard</h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -28,10 +28,73 @@
     <section class="content">
         <div class="container-fluid">
           <div class="row">
+
+            <div class="col-12 col-sm-6 col-md-3">
+              <div class="info-box">
+                <span class="info-box-icon bg-membee elevation-1"><i class="fas fa-star"></i></span>
+  
+                <div class="info-box-content">
+                  <span class="info-box-text">Rating</span>
+                  <span class="info-box-number">
+                    {{ number_format($rateTotal, 1)}}
+                  </span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              <!-- /.info-box -->
+            </div>
+
+
+            <div class="col-12 col-sm-6 col-md-3">
+              <div class="info-box">
+                <span class="info-box-icon bg-membee elevation-1"><i class="fas fa-dollar-sign"></i></span>
+  
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Amount</span>
+                  <span class="info-box-number">
+                    {{$totalAmount}}
+                  </span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              <!-- /.info-box -->
+            </div>
+
+
+            <div class="col-12 col-sm-6 col-md-3">
+              <div class="info-box">
+                <span class="info-box-icon bg-membee elevation-1"><i class="fas fa-user-friends"></i></span>
+  
+                <div class="info-box-content">
+                  <span class="info-box-text">Today's Sales</span>
+                  <span class="info-box-number">
+                    {{$todaySale}}
+                  </span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              <!-- /.info-box -->
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-3">
+              <div class="info-box">
+                <span class="info-box-icon bg-membee elevation-1"><i class="fas fa-utensils"></i></span>
+  
+                <div class="info-box-content">
+                  <span class="info-box-text">Menu</span>
+                  <span class="info-box-number">
+                    {{$totalMenu}}
+                  </span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              <!-- /.info-box -->
+            </div>
+
             <div class="col-12">
             
               <!-- LINE CHART -->
-              <div class="card card-info">
+              <div class="card card-membee">
                 <div class="card-header">
                   <h3 class="card-title">Sales Amount in Years</h3>
                 </div>
@@ -47,7 +110,7 @@
             <div class="col-md-6">
   
               <!-- PIE CHART -->
-              <div class="card card-info">
+              <div class="card card-membee">
                 <div class="card-header">
                   <h3 class="card-title">Top 5 Best Seller</h3>
                 </div>
@@ -63,7 +126,7 @@
             <div class="col-md-6">
   
               <!-- BAR CHART -->
-              <div class="card card-info">
+              <div class="card card-membee">
                 <div class="card-header">
                   <h3 class="card-title">Top 5 Branch By Finished Order</h3>
                 </div>
