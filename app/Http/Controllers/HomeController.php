@@ -142,6 +142,13 @@ class HomeController extends Controller
             $query->where('owner_id', $user->id);
         })->whereDate('reserve_time', Carbon::now()->addHours(7))->where('status', OrderStatus::FINISHED)->count();
 
-        return view('owner.dashboard',compact(['monthlyArr', 'bestSellingMenu', 'bestBranch', 'rateTotal', 'totalAmount', 'totalMenu','todaySale']));
+        $branchNoCashier = Branch::whereHas('franchise', function($query) use($user){
+            $query->where('owner_id', $user->id);
+        })
+        ->where('is_deleted', false)
+        ->doesntHave('cashiers')
+        ->get();
+
+        return view('owner.dashboard',compact(['monthlyArr', 'bestSellingMenu', 'bestBranch', 'rateTotal', 'totalAmount', 'totalMenu','todaySale','branchNoCashier']));
     }
 }

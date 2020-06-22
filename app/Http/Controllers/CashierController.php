@@ -70,7 +70,13 @@ class CashierController extends Controller
     {
         //
         $user = Auth::user();
-        $franchise = $user->franchise->with('branches')->get()->first();
+        $franchise = $user->franchise->with([
+            'branches' => function ($query){
+                $query->where('is_deleted',false);
+            }
+        ])
+        ->get()
+        ->first();
         $branches = $franchise->branches;
         return view('owner.cashiers.create',['branches'=>$branches]);
     }
@@ -120,7 +126,13 @@ class CashierController extends Controller
         //
 
         $user = Auth::user();
-        $franchise = $user->franchise->with('branches')->get()->first();
+        $franchise = $user->franchise->with([
+            'branches' => function ($query){
+                $query->where('is_deleted',false);
+            }
+        ])
+        ->get()
+        ->first();
         $branches = $franchise->branches;
         $cashier = Cashier::with('franchise')->find($id);
         return view('owner.cashiers.edit',compact(['cashier','branches']));
@@ -160,6 +172,7 @@ class CashierController extends Controller
     {
         //
         $cashier = Cashier::with('branch')->find($id);
+        $cashier->username = null;
         $cashier->branch_id = null;
         $cashier->is_deleted = true;
         $cashier->update();

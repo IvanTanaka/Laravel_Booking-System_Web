@@ -62,20 +62,20 @@
               
               <li class="nav-item">
                 <a href="{{url('cashier/')}}" class="nav-link {{ request()->is('cashier') ? 'active' : '' }}">
-                  <i class="fas fa-home nav-icon"></i>
+                  <i class="fas fa-tachometer-alt nav-icon"></i>
                   <p>Dashboard</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{url('cashier/today/order')}}" class="{{ request()->is('cashier/today/order*') ? 'active' : '' }} nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Today Orders</p>
+                  <i class="far fa-calendar-check nav-icon"></i>
+                  <p>Today's Orders</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{url('cashier/order')}}" class="{{ request()->is('cashier/order*') ? 'active' : '' }} nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>All Orders</p>
+                  <i class="fas fa-history nav-icon"></i>
+                  <p>Order History</p>
                 </a>
               </li>
 

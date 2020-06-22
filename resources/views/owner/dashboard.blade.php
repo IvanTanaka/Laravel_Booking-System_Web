@@ -28,7 +28,32 @@
     <section class="content">
         <div class="container-fluid">
           <div class="row">
-
+            @if(count($branchNoCashier) != 0)
+            <div class="col-12">
+              <div class="card bg-gradient-warning">
+                <div class="card-header">
+                  <h3 class="card-title">Warning There's A Branch without Cashier Apointed Yet</h3>
+  
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                  <!-- /.card-tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  Here are the list of branch without cashier apointed yet
+                  <ul>
+                  @foreach($branchNoCashier as $branch)
+                    <li>{{$branch->name}}</li>
+                  @endforeach
+                  </ul>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            @endif
             <div class="col-12 col-sm-6 col-md-3">
               <div class="info-box">
                 <span class="info-box-icon bg-membee elevation-1"><i class="fas fa-star"></i></span>

@@ -19,7 +19,7 @@ class CreateCashierTable extends Migration
             $table->string('franchise_id');
             $table->string('branch_id')->nullable();
             $table->string('name');
-            $table->string('username')->unique();
+            $table->string('username')->unique()->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

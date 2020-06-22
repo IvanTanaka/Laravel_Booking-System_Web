@@ -73,7 +73,7 @@
               
               <li class="nav-item">
                 <a href="{{url('/')}}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">
-                  <i class="fas fa-home nav-icon"></i>
+                  <i class="fas fa-tachometer-alt nav-icon"></i>
                   <p>Dashboard</p>
                 </a>
               </li>
