@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Menu;
 use App\Models\Branch;
 use App\Models\Franchise;
+use App\Models\Wallet;
 use App\Enums\OrderStatus;
 use Auth;
 use DataTables;
@@ -34,7 +35,8 @@ class OrderController extends Controller
         $no_responses = Order::whereHas('franchise', function($query) use($franchise){
             $query->where('id','=',$franchise->id);
         })->where('cashier_id',null)->where('status', OrderStatus::WAITING)
-        ->whereDate('reserve_time','<',Carbon::now())
+        ->whereDate('reserve_time','<=',Carbon::now()->addHours(7))
+        ->whereTime('reserve_time','<=', Carbon::now()->addHours(7))
         ->get();
         foreach($no_responses as $no_response){
             $no_response->status = OrderStatus::NO_RESPONSE;
@@ -47,7 +49,7 @@ class OrderController extends Controller
             $query->where('id','=',$franchise->id);
         })
         ->where('status', OrderStatus::ACCEPTED)
-        ->whereDate('reserve_time','<=',Carbon::now())
+        ->whereDate('reserve_time','<=',Carbon::now()->addHours(7))
         ->whereTime('reserve_time','<=', Carbon::now()->addHours(7))
         ->get();
 
@@ -73,7 +75,10 @@ class OrderController extends Controller
                         return $row->customer->name;
                     })
                     ->addColumn('cashier', function($row){
-                        return $row->cashier->name;
+                        if($row->cashier!=null){
+                            return $row->cashier->name;
+                        }
+                        return "";
                     })
                     ->addColumn('branch', function($row){
                         return $row->branch->name;

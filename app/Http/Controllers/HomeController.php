@@ -39,7 +39,8 @@ class HomeController extends Controller
         $no_responses = Order::whereHas('franchise', function($query) use($user){
             $query->where('owner_id', $user->id);
         })->where('cashier_id',null)->where('status', OrderStatus::WAITING)
-        ->whereDate('reserve_time','<',Carbon::now())
+        ->whereDate('reserve_time','<=',Carbon::now()->addHours(7))
+        ->whereTime('reserve_time','<=', Carbon::now()->addHours(7))
         ->get();
         foreach($no_responses as $no_response){
             $no_response->status = OrderStatus::NO_RESPONSE;
@@ -51,7 +52,8 @@ class HomeController extends Controller
 
         $finisheds = Order::whereHas('franchise', function($query) use($user){
             $query->where('owner_id', $user->id);
-        })->where('status', OrderStatus::ACCEPTED)->whereDate('reserve_time','<=',Carbon::now())
+        })->where('status', OrderStatus::ACCEPTED)
+        ->whereDate('reserve_time','<=',Carbon::now()->addHours(7))
         ->whereTime('reserve_time','<=', Carbon::now()->addHours(7))->get();
         foreach ($finisheds as $finished) {
             $finished->status = OrderStatus::FINISHED;
@@ -68,7 +70,7 @@ class HomeController extends Controller
         //
         $monthlySalesData = Order::whereHas('franchise', function($query) use ($user){
             $query->where('owner_id', $user->id);
-        })->whereDate('reserve_time','>=', Carbon::now()->subYear())
+        })->whereDate('reserve_time','>=', Carbon::now()->addHours(7)->subYear())
         ->where('status', OrderStatus::FINISHED)
         ->orderBy('reserve_time')
         ->get()
@@ -84,7 +86,7 @@ class HomeController extends Controller
         }
 
         for($i = 0; $i <= 11; $i++){
-            $key = Carbon::now()->subMonth($i)->format('F Y');
+            $key = Carbon::now()->addHours(7)->subMonth($i)->format('F Y');
             if(!empty($monthlySalesCount[$key])){
                 $monthlyArr[$key] = $monthlySalesCount[$key];    
             }else{
@@ -134,7 +136,7 @@ class HomeController extends Controller
 
         $todaySale = Order::whereHas('franchise', function($query) use ($user){
             $query->where('owner_id', $user->id);
-        })->whereDate('reserve_time', Carbon::now())->where('status', OrderStatus::FINISHED)->count();
+        })->whereDate('reserve_time', Carbon::now()->addHours(7))->where('status', OrderStatus::FINISHED)->count();
 
         return view('owner.dashboard',compact(['monthlyArr', 'bestSellingMenu', 'bestBranch', 'rateTotal', 'totalAmount', 'totalMenu','todaySale']));
     }

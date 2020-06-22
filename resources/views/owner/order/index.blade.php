@@ -82,7 +82,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body table-responsive p-2">
-                        <table class="table table-bordered data-table" id="store_table">
+                        <table class="table table-bordered data-table" id="order_table">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -116,7 +116,7 @@
 @section('script')
 <script type="text/javascript">
     $(function () {
-        var table = $('#store_table').DataTable({
+        var table = $('#order_table').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{{Request::url()}}",

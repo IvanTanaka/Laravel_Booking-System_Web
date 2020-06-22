@@ -24,7 +24,8 @@ class OrderController extends Controller
         })
         ->where('cashier_id',null)
         ->where('status', OrderStatus::WAITING)
-        ->whereDate('reserve_time','<',Carbon::now())
+        ->whereDate('reserve_time','<=',Carbon::now()->addHours(7))
+        ->whereTime('reserve_time','<=', Carbon::now()->addHours(7))
         ->get();
         foreach($no_responses as $no_response){
             $no_response->status = OrderStatus::NO_RESPONSE;
@@ -37,7 +38,7 @@ class OrderController extends Controller
         $finisheds = Order::whereHas('customer', function($query) use($token){
             $query->where('api_token',$token);
         })->where('status', OrderStatus::ACCEPTED)
-        ->whereDate('reserve_time','<=',Carbon::now())
+        ->whereDate('reserve_time','<=',Carbon::now()->addHours(7))
         ->whereTime('reserve_time','<=', Carbon::now()->addHours(7))
         ->get();
         foreach ($finisheds as $finished) {
