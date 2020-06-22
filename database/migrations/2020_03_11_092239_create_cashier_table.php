@@ -15,8 +15,9 @@ class CreateCashierTable extends Migration
     {
         Schema::create('cashiers', function (Blueprint $table) {
             $table->string('id')->primary();
+            $table->boolean('is_deleted')->default(false);
             $table->string('franchise_id');
-            $table->string('branch_id');
+            $table->string('branch_id')->nullable();
             $table->string('name');
             $table->string('username')->unique();
             $table->string('password');

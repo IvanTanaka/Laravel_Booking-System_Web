@@ -32,7 +32,10 @@ class RedeemController extends Controller
     {
         $user = Auth::user();
         $franchise = Franchise::where('owner_id', $user->id)->first();
-        $bank_account = BankAccount::where('owner_id', $user->id)->where('is_default', true)->first();
+        $bank_account = BankAccount::where('owner_id', $user->id)
+        ->where('is_default', true)
+        ->where('is_deleted', false)
+        ->first();
         
         if ($request->ajax()) {
             $data = Redeem::with(['bank_account'])->whereHas('franchise', function($query) use($user){

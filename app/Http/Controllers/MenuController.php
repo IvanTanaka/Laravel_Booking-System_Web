@@ -24,6 +24,7 @@ class MenuController extends Controller
             $data = Menu::whereHas('franchise', function($query) use($user){
                 $query->where('owner_id','=',$user->id);
             })
+            ->where('is_deleted',false)
             ->latest()->get();
             
             
@@ -193,7 +194,8 @@ class MenuController extends Controller
         $path = "public/images/menu/";
         Storage::delete($path.$menu->image_path);
 
-        $menu->delete($id);
+        $menu->is_deleted = true;
+        $menu->update();
 
         return redirect()->route('menus.index')
                         ->with('success', 'Menu deleted successfully.');

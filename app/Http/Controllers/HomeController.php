@@ -103,6 +103,7 @@ class HomeController extends Controller
         $bestSellingMenu = Menu::whereHas('franchise', function($query) use($user){
             $query->where('owner_id', $user->id);
         })
+        ->where('is_deleted',false)
         ->withCount('orderDetails')
         ->orderBy('order_details_count', 'desc')
         ->limit(5)
@@ -132,7 +133,10 @@ class HomeController extends Controller
 
         $totalMenu = Menu::whereHas('franchise', function($query) use($user){
             $query->where('owner_id','=',$user->id);
-        })->get()->count();
+        })
+        ->where('is_deleted',false)
+        ->get()
+        ->count();
 
         $todaySale = Order::whereHas('franchise', function($query) use ($user){
             $query->where('owner_id', $user->id);

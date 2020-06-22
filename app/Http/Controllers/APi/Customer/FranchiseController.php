@@ -17,16 +17,20 @@ class FranchiseController extends Controller
         $franchise = Franchise::where(function($q) use($name){
             $q->whereHas('branches',function($query) use($name){
                 // Search by branch name
-                $query->where('name',"like","%".$name."%");
+                $query->where('is_deleted',false)->where('name',"like","%".$name."%");
             })
             ->orWhereHas('menus',function($query) use($name){
                 // Search by menu name
-                $query->where('name',"like","%".$name."%");
+                $query->where('is_deleted',false)->where('name',"like","%".$name."%");
             })
             // Search by franchise name
             ->orWhere('name',"like","%".$name."%");
         })
-        ->with('branches');
+        ->with([
+            'branches' => function ($query){
+                $query->where('is_deleted',false);
+            }
+        ]);
         if($category != null){
             $franchise = $franchise->whereNotNull('category_id')
             ->whereHas('category', function($query) use($category){

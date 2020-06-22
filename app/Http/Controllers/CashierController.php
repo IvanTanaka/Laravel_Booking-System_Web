@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cashier;
+use App\Models\Branch;
 use Auth;
 use DataTables;
 
@@ -22,6 +23,7 @@ class CashierController extends Controller
             $data = Cashier::with('branch')->whereHas('franchise', function($query) use($user){
                 $query->where('owner_id','=',$user->id);
             })
+            ->where('is_deleted', false)
             ->latest()->get();
             
             
@@ -157,8 +159,10 @@ class CashierController extends Controller
     public function destroy($id)
     {
         //
-        $cashier = Cashier::destroy($id);
-
+        $cashier = Cashier::with('branch')->find($id);
+        $cashier->branch_id = null;
+        $cashier->is_deleted = true;
+        $cashier->update();
         return redirect()->route('cashiers.index')
                         ->with('success', 'Cashier deleted successfully.');
     }

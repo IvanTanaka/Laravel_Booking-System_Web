@@ -19,7 +19,9 @@ class BankAccountController extends Controller
         $user = Auth::user();
         $bank_accounts = BankAccount::whereHas('owner', function($query) use($user){
             return $query->where('id',$user->id);
-        })->get();
+        })
+        ->where('is_deleted', false)
+        ->get();
         return view('owner.bank_account.index', compact(['bank_accounts']));
     }
 
@@ -115,9 +117,16 @@ class BankAccountController extends Controller
     public function destroy($id)
     {
         //
-        $bank_account = BankAccount::destroy($id);
+        $bank_account = BankAccount::find($id);
+        $bank_account->is_deleted = true;
+        $bank_account->is_default = false;
+        $bank_account->update();
         $user = Auth::user();
-        $bank_account = BankAccount::where('owner_id',$user->id)->latest()->first()->update(['is_default'=>true]);
+        $bank_account = BankAccount::where('owner_id',$user->id)
+        ->where('is_deleted', false)
+        ->latest()
+        ->first()
+        ->update(['is_default'=>true]);
         return redirect()->route('bank-account.index');
     }
 

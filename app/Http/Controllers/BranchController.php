@@ -23,6 +23,7 @@ class BranchController extends Controller
             $data = Branch::whereHas('franchise', function($query) use($user){
                         $query->where('owner_id','=',$user->id);
                     })
+                    ->where('is_deleted', false)
                     ->latest()->get();
 
 
@@ -156,12 +157,15 @@ class BranchController extends Controller
             $query -> where("owner_id", $user->id);
         })->count();
         if($branchAmount>1){
-            $branch = Branch::destroy($id);
+            $branch = Branch::doesntHave('cashiers')->find($id);
             if($branch){
+                $branch = Branch::find($id);
+                $branch->is_deleted = true;
+                $branch->update();
                 $messageType = 'success';
                 $message = 'Store deleted successfully.';
             }else{
-                $message = 'Some cashier is still connected to this store';
+                $message = 'Some cashier might still connected to this store';
             }
         }
         return redirect()->route('stores.index')

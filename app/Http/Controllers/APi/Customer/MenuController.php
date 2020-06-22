@@ -11,12 +11,14 @@ class MenuController extends Controller
 {
     //
     public function index(Request $request, $branch_id){
-        $franchise = Menu::whereHas("franchise", function($query) use($branch_id){
+        $menu = Menu::whereHas("franchise", function($query) use($branch_id){
             $query -> whereHas("branches", function($query) use($branch_id){
                 $query->where('id', $branch_id);
             });
-        })->paginate(10);
+        })
+        ->where('is_deleted',false)
+        ->paginate(10);
         
-        return api_response(true, 200,"Success.",$franchise);
+        return api_response(true, 200,"Success.",$menu);
     }
 }

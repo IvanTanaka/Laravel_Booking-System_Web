@@ -15,6 +15,7 @@ class CreateBankAccountTable extends Migration
     {
         Schema::create('bank_accounts', function (Blueprint $table) {
             $table->string('id')->primary();
+            $table->boolean('is_deleted')->default(false);
             $table->string('owner_id');
             $table->string('name');
             $table->string('bank');
