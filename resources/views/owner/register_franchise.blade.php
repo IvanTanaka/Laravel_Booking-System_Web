@@ -1,4 +1,14 @@
 @extends('layouts.base')
+
+@section('head')
+  <style>
+    .card-form{
+      background-color: #FF7266 !important;
+      color: #fff;
+    }
+  </style>
+@endsection
+
 @section('content')
 
 
@@ -22,7 +32,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="card">
-            <div class="card-header">
+            <div class="card-form card-header">
               <h3 class="card-title">Franchise</h3>
             </div>
             <div class="card-body">
@@ -41,7 +51,7 @@
         </div>
         <div class="col-lg-12">
           <div class="card">
-            <div class="card-header">
+            <div class="card-form card-header">
               <h3 class="card-title">Store</h3>
             </div>
             <div class="card-body">

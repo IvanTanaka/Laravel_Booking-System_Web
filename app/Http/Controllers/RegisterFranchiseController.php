@@ -24,13 +24,11 @@ class RegisterFranchiseController extends Controller
 
         $user = Auth::user();
         $franchise =  new Franchise();
-        $franchise->id = uniqid();
         $franchise->owner_id = $user->id;
         $franchise->name = $request->franchise_name;
         $franchise->save();
         
         $branch = new Branch();
-        $branch->id = uniqid();
         $branch->franchise_id = $franchise->id;
         $branch->name = $request->franchise_name;
         $branch->address = $request->store_address;
@@ -39,6 +37,6 @@ class RegisterFranchiseController extends Controller
         $branch->close_time = convertToTime($request->store_close_time);
         $branch->save();
 
-        return redirect('home')->with('alert-success','Register success.');
+        return redirect()->route('/')->with('alert-success','Register success.');
     }
 }

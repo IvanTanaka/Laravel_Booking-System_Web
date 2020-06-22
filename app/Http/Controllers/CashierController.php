@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cashier;
 use App\Models\Branch;
+use App\Models\Franchise;
 use Auth;
 use DataTables;
 
@@ -70,7 +71,7 @@ class CashierController extends Controller
     {
         //
         $user = Auth::user();
-        $franchise = $user->franchise->with([
+        $franchise = Franchise::where('owner_id',$user->id)->with([
             'branches' => function ($query){
                 $query->where('is_deleted',false);
             }
@@ -126,7 +127,7 @@ class CashierController extends Controller
         //
 
         $user = Auth::user();
-        $franchise = $user->franchise->with([
+        $franchise = Franchise::where('owner_id',$user->id)->with([
             'branches' => function ($query){
                 $query->where('is_deleted',false);
             }
