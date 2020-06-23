@@ -27,6 +27,14 @@ class FranchiseController extends Controller
             // Search by franchise name
             ->orWhere('franchises.name',"like","%".$name."%");
         })
+        ->whereHas('branches',function ($query){
+            $query->where('is_deleted',false);
+            $query->whereHas('cashiers');
+            $query->with('rates');
+        })
+        ->whereHas('menus',function ($query){
+            $query->where('is_deleted',false);
+        })
         ->with([
             'branches' => function ($query){
                 $query->where('is_deleted',false);
