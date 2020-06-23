@@ -20,7 +20,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-12">
-        <h1 class="m-0 text-dark">Create Menu</h1>
+        <h1 class="m-0 text-dark"></h1>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
@@ -31,97 +31,113 @@
 <!-- Main content -->
 <div class="content">
   <div class="container-fluid">
-    
-    <form action="{{ route('menus.store') }}" method="POST" enctype='multipart/form-data'>
-      @csrf
-      <div class="row">
-        @if ($message = Session::get('error'))
-        <div class="col-lg-12">
-          <div class="alert alert-danger alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h5><i class="icon fas fa-ban"></i> Error!</h5>
-            {{$message}}
-          </div>
+    <div class="row">
+      @if ($message = Session::get('error'))
+      <div class="col-lg-12">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <h5><i class="icon fas fa-ban"></i> Error!</h5>
+          {{$message}}
         </div>
-        @elseif($errors->any())
-        <div class="col-lg-12">
-          <div class="alert alert-danger alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h5><i class="icon fas fa-ban"></i> Error!</h5>
-            <ul>
-              @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-              @endforeach
-            </ul>
-          </div>
+      </div>
+      @elseif($errors->any())
+      <div class="col-lg-12">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <h5><i class="icon fas fa-ban"></i> Error!</h5>
+          <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+          </ul>
         </div>
-        @endif
-        <div class="col-lg-12">
-          <div class="card">
-            <div class="card-body table-responsive p-2">
+      </div>
+      @endif
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h1 class="m-0 text-dark">Create Menu</h1>
+          </div>
+          <div class="card-body">
+            <form action="{{ route('menus.store') }}" method="POST" enctype='multipart/form-data'>
+              @csrf
               <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label for="menu_name">Name</label>
-                    <div class="input-group">
-                      <input type="text" class="form-control" im-insert="true" id="menu_name" name="menu_name" required>
+                <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-header card-form">
+                      Menu
                     </div>
-                    <!-- /.input group -->
-                  </div>
-                  <div class="form-group">
-                    <label for="menu_price">Price</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">Rp </span>
+                    <div class="card-body table-responsive p-2">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label for="menu_name">Name</label>
+                            <div class="input-group">
+                              <input type="text" class="form-control" im-insert="true" id="menu_name" name="menu_name" required>
+                            </div>
+                            <!-- /.input group -->
+                          </div>
+                          <div class="form-group">
+                            <label for="menu_price">Price</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">Rp </span>
+                              </div>
+                              <input type="number" class="form-control" im-insert="true" id="menu_price" name="menu_price" required autocomplete="phone_number">
+                            </div>
+                            <!-- /.input group -->
+                          </div>
+                          <div class="form-group">
+                            <label for="menu_description">Description</label>
+                            <textarea id="menu_description" class="form-control" rows="4" name="menu_description"></textarea>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label for="menu_image">Menu Image</label>
+                            <div class="input-group">
+                              <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="menu_image" name="menu_image" accept="image/jpg, image/png, image/jpeg">
+                                <label class="custom-file-label" for="menu_image">Choose image</label>  
+                              </div>  
+                              <div class="input-group-append">
+                                <input type="hidden" id="menu_image_remove" name="menu_image_remove" value="false">
+                                <button type="button" class="btn btn-danger" id="remove_image">Remove</button>
+                              </div>
+                              
+                              
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <img id="menu_image_container" src="\assets\images\empty_image.png" alt="menu image" style="height:300px; width:300px;" class="img-thumbnail"/>
+                          </div>
+                        </div>
                       </div>
-                      <input type="number" class="form-control" im-insert="true" id="menu_price" name="menu_price" required autocomplete="phone_number">
                     </div>
-                    <!-- /.input group -->
+                    <!-- /.card-body -->
                   </div>
-                  <div class="form-group">
-                    <label for="menu_description">Description</label>
-                    <textarea id="menu_description" class="form-control" rows="4" name="menu_description"></textarea>
-                  </div>
+                  <!-- /.card -->
                 </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label for="menu_image">Menu Image</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="menu_image" name="menu_image" accept="image/jpg, image/png, image/jpeg">
-                        <label class="custom-file-label" for="menu_image">Choose image</label>  
-                      </div>  
-                      <div class="input-group-append">
-                        <input type="hidden" id="menu_image_remove" name="menu_image_remove" value="false">
-                        <button type="button" class="btn btn-danger" id="remove_image">Remove</button>
-                      </div>
-                      
-                      
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <img id="menu_image_container" src="\assets\images\empty_image.png" alt="menu image" style="height:300px; width:300px;" class="img-thumbnail"/>
+                
+              </div>
+              
+              <div class="row">
+                <div class="col-12">
+                  <div class="float-right">
+                    <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Discard</button>
+                    <button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save</button>
                   </div>
                 </div>
               </div>
-            </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-        </div>
-        
-      </div>
-      
-      <div class="row">
-        <div class="col-12">
-          <div class="float-right">
-            <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Discard</button>
-            <button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save</button>
+              <!-- /.row -->
+            </form>
           </div>
         </div>
       </div>
-      <!-- /.row -->
-    </form>
+    </div>
   </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
