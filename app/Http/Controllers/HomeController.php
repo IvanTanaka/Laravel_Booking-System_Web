@@ -125,6 +125,9 @@ class HomeController extends Controller
         })
         ->where('status', OrderStatus::FINISHED)
         ->with('branch')
+        ->whereHas('branch', function($query){
+            $query->where('is_deleted',false);
+        })
         ->get()
         ->groupBy('branch.name');
         foreach($bestBranch as $key=>$value){
