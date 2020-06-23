@@ -1,14 +1,5 @@
 @extends('layouts.base')
 
-@section('head')
-  <style>
-    .card-form{
-      background-color: #FF7266 !important;
-      color: #fff;
-    }
-  </style>
-@endsection
-
 @section('content')
 
 

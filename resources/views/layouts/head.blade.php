@@ -29,4 +29,9 @@
       color: #ffffff !important;
       background-color: #FF7266 !important;
     }
+
+    .card-form{
+      background-color: #FF7266 !important;
+      color: #fff;
+    }
   </style>

@@ -14,7 +14,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1 class="m-0 text-dark">Dashboard</h1>
+            <h1 class="m-0 text-dark"></h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -28,144 +28,179 @@
     <section class="content">
         <div class="container-fluid">
           <div class="row">
-            @if(count($branchNoCashier) != 0)
             <div class="col-12">
-              <div class="card bg-gradient-warning">
+              <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Warning There's A Branch without Cashier Appointed yet</h3>
-  
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                    </button>
+                  <h1 class="m-0 text-dark">Dashboard</h1>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    @if(count($branchNoCashier) != 0)
+                    <div class="col-12">
+                      <div class="card bg-gradient-warning">
+                        <div class="card-header">
+                          <h3 class="card-title">Warning There's A Branch without Cashier Appointed yet</h3>
+          
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+                          <!-- /.card-tools -->
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          Here are the list of branch without cashier apointed yet
+                          <ul>
+                          @foreach($branchNoCashier as $branch)
+                            <li>{{$branch->name}}</li>
+                          @endforeach
+                          </ul>
+                        </div>
+                        <!-- /.card-body -->
+                      </div>
+                      <!-- /.card -->
+                    </div>
+                    @endif
+                    @if($totalMenu == 0)
+                    <div class="col-12">
+                      <div class="card bg-gradient-warning">
+                        <div class="card-header">
+                          <h3 class="card-title">Warning No Menu Registered.</h3>
+          
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+                          <!-- /.card-tools -->
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          <div>
+                          Without any menu, customer won't be able to find this franchise.
+                          </div>
+                          <a href="{{url('/menus/create')}}" class="btn btn-outline-secondary">Add Menu</a>
+                        </div>
+                        <!-- /.card-body -->
+                      </div>
+                      <!-- /.card -->
+                    </div>
+                    @endif
+                    <div class="col-12 col-sm-6 col-md-3">
+                      <div class="info-box">
+                        <span class="info-box-icon bg-membee elevation-1"><i class="fas fa-star"></i></span>
+          
+                        <div class="info-box-content">
+                          <span class="info-box-text">Rating</span>
+                          <span class="info-box-number">
+                            {{ number_format($rateTotal, 1)}}
+                          </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                      </div>
+                      <!-- /.info-box -->
+                    </div>
+
+
+                    <div class="col-12 col-sm-6 col-md-3">
+                      <div class="info-box">
+                        <span class="info-box-icon bg-membee elevation-1"><i class="fas fa-dollar-sign"></i></span>
+          
+                        <div class="info-box-content">
+                          <span class="info-box-text">Total Amount</span>
+                          <span class="info-box-number">
+                            {{$totalAmount}}
+                          </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                      </div>
+                      <!-- /.info-box -->
+                    </div>
+
+
+                    <div class="col-12 col-sm-6 col-md-3">
+                      <div class="info-box">
+                        <span class="info-box-icon bg-membee elevation-1"><i class="fas fa-user-friends"></i></span>
+          
+                        <div class="info-box-content">
+                          <span class="info-box-text">Today's Sales</span>
+                          <span class="info-box-number">
+                            {{$todaySale}}
+                          </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                      </div>
+                      <!-- /.info-box -->
+                    </div>
+
+                    <div class="col-12 col-sm-6 col-md-3">
+                      <div class="info-box">
+                        <span class="info-box-icon bg-membee elevation-1"><i class="fas fa-utensils"></i></span>
+          
+                        <div class="info-box-content">
+                          <span class="info-box-text">Menu</span>
+                          <span class="info-box-number">
+                            {{$totalMenu}}
+                          </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                      </div>
+                      <!-- /.info-box -->
+                    </div>
+
+                    <div class="col-12">
+                    
+                      <!-- LINE CHART -->
+                      <div class="card card-membee">
+                        <div class="card-header">
+                          <h3 class="card-title">Sales Amount in Years</h3>
+                        </div>
+                        <div class="card-body">
+                          <div class="chart">
+                            <canvas id="lineChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                          </div>
+                        </div>
+                        <!-- /.card-body -->
+                      </div>
+                      <!-- /.card -->  
+                    </div>
+                    <div class="col-md-6">
+          
+                      <!-- PIE CHART -->
+                      <div class="card card-membee">
+                        <div class="card-header">
+                          <h3 class="card-title">Top 5 Best Seller</h3>
+                        </div>
+                        <div class="card-body">
+                          <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                        <!-- /.card-body -->
+                      </div>
+                      <!-- /.card -->
+          
+                    </div>
+                    <!-- /.col (LEFT) -->
+                    <div class="col-md-6">
+          
+                      <!-- BAR CHART -->
+                      <div class="card card-membee">
+                        <div class="card-header">
+                          <h3 class="card-title">Top 5 Branch By Finished Order</h3>
+                        </div>
+                        <div class="card-body">
+                          <div class="chart">
+                            <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                          </div>
+                        </div>
+                        <!-- /.card-body -->
+                      </div>
+                      <!-- /.card -->
+          
+                    </div>
+                    <!-- /.col (RIGHT) -->
                   </div>
-                  <!-- /.card-tools -->
                 </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                  Here are the list of branch without cashier apointed yet
-                  <ul>
-                  @foreach($branchNoCashier as $branch)
-                    <li>{{$branch->name}}</li>
-                  @endforeach
-                  </ul>
-                </div>
-                <!-- /.card-body -->
               </div>
-              <!-- /.card -->
             </div>
-            @endif
-            <div class="col-12 col-sm-6 col-md-3">
-              <div class="info-box">
-                <span class="info-box-icon bg-membee elevation-1"><i class="fas fa-star"></i></span>
-  
-                <div class="info-box-content">
-                  <span class="info-box-text">Rating</span>
-                  <span class="info-box-number">
-                    {{ number_format($rateTotal, 1)}}
-                  </span>
-                </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
-
-
-            <div class="col-12 col-sm-6 col-md-3">
-              <div class="info-box">
-                <span class="info-box-icon bg-membee elevation-1"><i class="fas fa-dollar-sign"></i></span>
-  
-                <div class="info-box-content">
-                  <span class="info-box-text">Total Amount</span>
-                  <span class="info-box-number">
-                    {{$totalAmount}}
-                  </span>
-                </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
-
-
-            <div class="col-12 col-sm-6 col-md-3">
-              <div class="info-box">
-                <span class="info-box-icon bg-membee elevation-1"><i class="fas fa-user-friends"></i></span>
-  
-                <div class="info-box-content">
-                  <span class="info-box-text">Today's Sales</span>
-                  <span class="info-box-number">
-                    {{$todaySale}}
-                  </span>
-                </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-3">
-              <div class="info-box">
-                <span class="info-box-icon bg-membee elevation-1"><i class="fas fa-utensils"></i></span>
-  
-                <div class="info-box-content">
-                  <span class="info-box-text">Menu</span>
-                  <span class="info-box-number">
-                    {{$totalMenu}}
-                  </span>
-                </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
-
-            <div class="col-12">
-            
-              <!-- LINE CHART -->
-              <div class="card card-membee">
-                <div class="card-header">
-                  <h3 class="card-title">Sales Amount in Years</h3>
-                </div>
-                <div class="card-body">
-                  <div class="chart">
-                    <canvas id="lineChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->  
-            </div>
-            <div class="col-md-6">
-  
-              <!-- PIE CHART -->
-              <div class="card card-membee">
-                <div class="card-header">
-                  <h3 class="card-title">Top 5 Best Seller</h3>
-                </div>
-                <div class="card-body">
-                  <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-  
-            </div>
-            <!-- /.col (LEFT) -->
-            <div class="col-md-6">
-  
-              <!-- BAR CHART -->
-              <div class="card card-membee">
-                <div class="card-header">
-                  <h3 class="card-title">Top 5 Branch By Finished Order</h3>
-                </div>
-                <div class="card-body">
-                  <div class="chart">
-                    <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-  
-            </div>
-            <!-- /.col (RIGHT) -->
           </div>
           <!-- /.row -->
         </div><!-- /.container-fluid -->
