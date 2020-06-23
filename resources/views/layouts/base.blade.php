@@ -38,7 +38,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-primary elevation-4 sidebar-light-orange">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
+      <a href="{{url('/')}}" class="brand-link">
         <span class="brand-text logo" style="text-align:center; display:block;">membee</span>
       </a>
       
