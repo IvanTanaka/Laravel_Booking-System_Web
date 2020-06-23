@@ -258,7 +258,7 @@
           {
             data: [
               @foreach($bestSellingMenu as $menu)
-              {{$menu->order_details_count}},
+              {{$menu->sales_qty}},
               @endforeach
             ],
             backgroundColor : ['#d92323', '#f39c12', '#00a65a',  '#8c2be0', '#00c0ef'],

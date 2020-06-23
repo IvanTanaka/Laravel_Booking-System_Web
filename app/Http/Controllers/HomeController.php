@@ -10,6 +10,7 @@ use App\Models\Franchise;
 use App\Models\Rate;
 use App\Enums\OrderStatus;
 use Auth;
+use DB;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -104,11 +105,17 @@ class HomeController extends Controller
             $query->where('owner_id', $user->id);
         })
         ->where('is_deleted',false)
-        ->withCount('orderDetails')
-        ->orderBy('order_details_count', 'desc')
+        // ->whereHas('orderDetails.order''=>'function($query){
+        //     $query->where('status', OrderStatus::FINISHED);
+        // })
+        ->join('order_details','menus.id','menu_id')
+        ->join('orders','orders.id','order_id')
+        ->where('status',OrderStatus::FINISHED)
+        ->groupBy('menus.name','menus.id')
+        ->select('menus.name',DB::raw('SUM(qty) AS sales_qty'))
+        ->orderBy('qty','desc')
         ->limit(5)
         ->get();
-
         //
         // Best Sales Branch Store
         //
