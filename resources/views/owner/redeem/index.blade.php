@@ -71,7 +71,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1 class="m-0 text-dark">Redeem</h1>
+            <h1 class="m-0 text-dark"></h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -81,110 +81,123 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-        <form action="{{url('redeem')}}" method="POST">
-          @csrf
         <div class="row">
-          <div class="col-md-4">
-            <div class="card redeem-header-container">
-              <div class="card-header">
-                <h5 class="m-0">Balance Amount</h5>
-              </div>
-              <div class="card-body">
-
-                <div class="middle" >
-                  <span>Your current balance : </span>
-                </div>
-                <div class="text-center">
-                  <span class="balance-amount" id="redeem_total_balance">Rp. {{$franchise->amount}}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card redeem-header-container">
-              <div class="card-header">
-                <h5 class="m-0">Redeem Amount</h5>
-              </div>
-              <div class="card-body">
-                <div>
-                  <input type="number" id="redeem_input" name="redeem_amount" class="form-control" onkeyup="checkZero()" value="0">
-                  
-                  <small id="minimum amount" class="form-text text-muted">* Minimum Rp. 10.000</small>
-                </div>
-                <div class="text-center">
-                  <span class="balance-amount" id="redeem_amount">Rp. 0</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          @if($bank_account != null)
-          <div class="col-md-4">
-            <div class="card redeem-header-container">
-              <div class="card-header">
-                <h5 class="m-0">Bank Account  <a class="btn btn-info btn-sm" style="float:right;" href="{{url('bank-account')}}"><i class="fas fa-edit"></i></a></h5>
-              </div>
-              <div class="card-body">
-                <div class = "row">
-                  <div class="col-12">
-                  <input type="hidden" name="bank_account_id" value="{{$bank_account->id}}">
-                    Name : {{$bank_account->name}}<br>
-                    Bank : {{$bank_account->bank}}<br>
-                    Bank Account Number : {{$bank_account->account_number}}<br> 
-                  </div>
-                </div>
-                <div class="text-center bottom-center">
-                <button type="submit" id="redeem_button" class="btn btn-primary-membee btn-success btn-lg disabled" style="width: 100%; color:white;">Redeem</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.col-md-6 -->
-          @else
-          <div class="col-4">
-            <div class="card redeem-header-container">
-              <div class="card-body">
-                <h3>
-                Please Add your Bank Account
-                  <div class="bottom-center">
-                    <a class="btn btn-info btn-lg" style="width: 100%; "href="{{url('bank-account')}}"><i class="fas fa-plus"></i> Add Bank Account</a>
-                  </div>
-                </h3>
-              </div>
-            </div>
-          </div>
-          @endif
-
-        </div>
-        <div class="row">
-
-          <div class="col-lg-12">
+          <div class="col-12">
             <div class="card">
-                <div class="card-body table-responsive p-2">
-                    <table class="table table-bordered data-table" id="redeem_table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Redeem At</th>
-                                <th>Amount</th>
-                                <th>Bank Name</th>
-                                <th>Bank</th>
-                                <th>Account Number</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- /.card-body -->
+              <div class="card-header">
+                  <h1 class="m-0 text-dark">Redeem</h1>
+              </div>
+              <div class="card-body">
+                <form action="{{url('redeem')}}" method="POST">
+                  @csrf
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="card redeem-header-container">
+                        <div class="card-header card-form">
+                          <h5 class="m-0">Balance Amount</h5>
+                        </div>
+                        <div class="card-body">
+
+                          <div class="middle" >
+                            <span>Your current balance : </span>
+                          </div>
+                          <div class="text-center">
+                            <span class="balance-amount" id="redeem_total_balance">Rp. {{$franchise->amount}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="card redeem-header-container">
+                        <div class="card-header card-form">
+                          <h5 class="m-0">Redeem Amount</h5>
+                        </div>
+                        <div class="card-body">
+                          <div>
+                            <input type="number" id="redeem_input" name="redeem_amount" class="form-control" onkeyup="checkZero()" value="0">
+                            
+                            <small id="minimum amount" class="form-text text-muted">* Minimum Rp. 10.000</small>
+                          </div>
+                          <div class="text-center">
+                            <span class="balance-amount" id="redeem_amount">Rp. 0</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    @if($bank_account != null)
+                    <div class="col-md-4">
+                      <div class="card redeem-header-container">
+                        <div class="card-header card-form">
+                          <h5 class="m-0">Bank Account  <a class="btn btn-info btn-sm" style="position: absolute; top:8px;right:10px;" href="{{url('bank-account')}}"><i class="fas fa-edit"></i></a></h5>
+                        </div>
+                        <div class="card-body">
+                          <div class = "row">
+                            <div class="col-12">
+                            <input type="hidden" name="bank_account_id" value="{{$bank_account->id}}">
+                              Name : {{$bank_account->name}}<br>
+                              Bank : {{$bank_account->bank}}<br>
+                              Bank Account Number : {{$bank_account->account_number}}<br> 
+                            </div>
+                          </div>
+                          <div class="text-center bottom-center">
+                          <button type="submit" id="redeem_button" class="btn btn-primary-membee btn-success btn-lg disabled" style="width: 100%; color:white;">Redeem</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.col-md-6 -->
+                    @else
+                    <div class="col-4">
+                      <div class="card redeem-header-container">
+                        <div class="card-header  card-form">
+                        </div>
+                        <div class="card-body">
+                          <h3>
+                          Please Add your Bank Account
+                            <div class="bottom-center">
+                              <a class="btn btn-info btn-lg" style="width: 100%; "href="{{url('bank-account')}}"><i class="fas fa-plus"></i> Add Bank Account</a>
+                            </div>
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                    @endif
+
+                  </div>
+                  <div class="row">
+
+                    <div class="col-lg-12">
+                      <div class="card">
+                          <div class="card-body table-responsive p-2">
+                              <table class="table table-bordered data-table" id="redeem_table">
+                                  <thead>
+                                      <tr>
+                                          <th>No</th>
+                                          <th>Redeem At</th>
+                                          <th>Amount</th>
+                                          <th>Bank Name</th>
+                                          <th>Bank</th>
+                                          <th>Account Number</th>
+                                          <th>Status</th>
+                                          <th>Action</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                  </tbody>
+                              </table>
+                          </div>
+                          <!-- /.card-body -->
+                      </div>
+                      <!-- /.card -->
+                    </div>
+                  </div>
+                  <!-- /.row -->
+                </form>
+              </div>
             </div>
-            <!-- /.card -->
           </div>
         </div>
-        <!-- /.row -->
-        </form>
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
