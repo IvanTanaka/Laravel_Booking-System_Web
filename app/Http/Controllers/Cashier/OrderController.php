@@ -66,6 +66,7 @@ class OrderController extends Controller
                 $data = Order::with(['customer','order_details.menu'])->whereHas('branch', function($query) use($user){
                     $query->where('id','=',$user->branch->id);
                 })
+                ->where('status','!=',OrderStatus::CANCELED)
                 ->whereDate('reserve_time',Carbon::now()->addHours(7))
                 ->orderBy('reserve_time', 'desc')
                 ->orderBy('created_at','desc')
@@ -74,6 +75,7 @@ class OrderController extends Controller
                 $data = Order::with(['customer','order_details.menu'])->whereHas('branch', function($query) use($user){
                     $query->where('id','=',$user->branch->id);
                 })
+                ->where('status','!=',OrderStatus::CANCELED)
                 ->orderBy('reserve_time', 'desc')
                 ->orderBy('created_at','desc')
                 ->get();
@@ -148,20 +150,24 @@ class OrderController extends Controller
 
     public function accept($order_id){
         $order = Order::find($order_id);
-        $order->cashier_id = Auth::id();
-        $order->status = OrderStatus::ACCEPTED;
-        $order->update();  
+        if($order->status == OrderStatus::WAITING){
+            $order->cashier_id = Auth::id();
+            $order->status = OrderStatus::ACCEPTED;
+            $order->update();  
+        }
         return back();
     }
 
     public function reject($order_id){
         $order = Order::find($order_id);
-        $order->cashier_id = Auth::id();
-        $order->status = OrderStatus::DENIED;
-        $order->update();  
-        $wallet = Wallet::where('customer_id',$order->customer_id)->first();
-        $wallet->amount += $order->total;
-        $wallet->update();
+        if($order->status == OrderStatus::WAITING){
+            $order->cashier_id = Auth::id();
+            $order->status = OrderStatus::DENIED;
+            $order->update();  
+            $wallet = Wallet::where('customer_id',$order->customer_id)->first();
+            $wallet->amount += $order->total;
+            $wallet->update();
+        }
         return back();
     }
 }

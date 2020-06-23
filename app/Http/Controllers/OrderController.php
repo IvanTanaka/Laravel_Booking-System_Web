@@ -65,6 +65,7 @@ class OrderController extends Controller
             $data = Order::with(['customer','order_details.menu','cashier','branch','rate'])->whereHas('franchise', function($query) use($franchise){
                 $query->where('id','=',$franchise->id);
             })
+            ->where('status','!=',OrderStatus::CANCELED)
             ->orderBy('reserve_time', 'desc')
             ->orderBy('created_at','desc')
             ->get();
