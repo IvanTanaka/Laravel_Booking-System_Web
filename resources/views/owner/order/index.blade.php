@@ -66,7 +66,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-12">
-                <h1 class="m-0 text-dark">Order History</h1>
+                <h1 class="m-0 text-dark"></h1>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -78,37 +78,48 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            
-            <div class="col-lg-12">
+            <div class="col-12">
                 <div class="card">
-                    <div class="card-body table-responsive p-2">
-                        <table class="table table-bordered data-table" id="order_table">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Customer</th>
-                                    <th>Cashier</th>
-                                    <th>Branch</th>
-                                    <th>Rate</th>
-                                    <th>Comment</th>
-                                    <th>Reserve Time</th>
-                                    <th>Orders</th>
-                                    <th>Dine In / Take Out</th>
-                                    <th>Total</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                    <div class="card-header">
+                        <h1 class="m-0 text-dark">Order History</h1>
                     </div>
-                    <!-- /.card-body -->
+                    <div class="card-body">
+                        <div class="row">
+                            
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body table-responsive p-2">
+                                        <table class="table table-bordered data-table" id="order_table">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Customer</th>
+                                                    <th>Cashier</th>
+                                                    <th>Branch</th>
+                                                    <th>Rate</th>
+                                                    <th>Comment</th>
+                                                    <th>Reserve Time</th>
+                                                    <th>Orders</th>
+                                                    <th>Dine In / Take Out</th>
+                                                    <th>Total</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            
+                        </div>
+                        <!-- /.row -->
+                    </div>
                 </div>
-                <!-- /.card -->
             </div>
-            
         </div>
-        <!-- /.row -->
     </div><!-- /.container-fluid -->
 </div>
 @endsection
