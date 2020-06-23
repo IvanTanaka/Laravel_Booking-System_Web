@@ -91,20 +91,7 @@ class BranchController extends Controller
         return redirect()->route('stores.index')
                         ->with('success','Store added successfully.');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-        $branch = Branch::with('franchise')->find($id);
-        return view('owner.stores.show', compact('branch'));
-    }
-
+    
     /**
      * Show the form for editing the specified resource.
      *

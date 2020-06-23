@@ -150,7 +150,8 @@
                     @else
                     <div class="col-4">
                       <div class="card redeem-header-container">
-                        <div class="card-header  card-form">
+                        <div class="card-header card-form">
+                          &nbsp;
                         </div>
                         <div class="card-body">
                           <h3>
