@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Franchise;
 use function App\Helpers\api_response;
+use DB;
 
 class FranchiseController extends Controller
 {
@@ -24,12 +25,13 @@ class FranchiseController extends Controller
                 $query->where('is_deleted',false)->where('name',"like","%".$name."%");
             })
             // Search by franchise name
-            ->orWhere('name',"like","%".$name."%");
+            ->orWhere('franchises.name',"like","%".$name."%");
         })
         ->with([
             'branches' => function ($query){
                 $query->where('is_deleted',false);
-            }
+                $query->with('rates');
+            },
         ]);
         if($category != null){
             $franchise = $franchise->whereNotNull('category_id')
@@ -37,7 +39,12 @@ class FranchiseController extends Controller
                 $query->where('slug',$category);
             });
         }
-        $franchise = $franchise->paginate(10);
+        $franchise = $franchise->leftJoin('branches','franchise_id','franchises.id')
+        ->leftJoin('rates','branch_id','branches.id')
+        ->select('franchises.name','franchises.id',DB::raw('CAST(AVG(rates.stars) AS DECIMAL(10,2)) as rating_stars'))
+        ->groupBy('franchises.name','franchises.id')
+        ->orderBy('rating_stars','desc')
+        ->paginate(10);
 
         
         return api_response(true, 200,"Success.",$franchise);

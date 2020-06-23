@@ -44,4 +44,8 @@ class Branch extends Model
     {
         return $this->hasMany('App\Models\Order');
     }
+    public function rates()
+    {
+        return $this->hasMany('App\Models\Rate');
+    }
 }
