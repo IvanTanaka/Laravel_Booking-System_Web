@@ -25,6 +25,7 @@ class CreateOrderTable extends Migration
             $table->integer('total');
             $table->integer('people_count');
             $table->dateTime('reserve_time');
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

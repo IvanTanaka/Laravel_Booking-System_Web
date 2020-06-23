@@ -100,6 +100,7 @@
                                                     <th>Comment</th>
                                                     <th>Reserve Time</th>
                                                     <th>Orders</th>
+                                                    <th>Order Note</th>
                                                     <th>Dine In / Take Out</th>
                                                     <th>Total</th>
                                                     <th>Status</th>
@@ -140,6 +141,7 @@
             {data: 'comment', name: 'comment'},
             {data: 'reserve_time', name: 'reserve_time'},
             {data: 'orders', name:'orders'},
+            {data: 'note', name:'note'},
             {data: 'dine_in_or_take_out', name: 'dine_in_or_take_out', orderable: false},
             {data: 'total', name: 'total'},
             {data: 'status', name: 'status', orderable: false},
