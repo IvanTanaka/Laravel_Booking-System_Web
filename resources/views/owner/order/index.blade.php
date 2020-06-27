@@ -93,8 +93,11 @@
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
+                                                    <th>Order Code</th>
                                                     <th>Customer</th>
+                                                    <th>Customer Phone</th>
                                                     <th>Cashier</th>
+                                                    <th>Cashier Username</th>
                                                     <th>Branch</th>
                                                     <th>Rate</th>
                                                     <th>Comment</th>
@@ -134,8 +137,11 @@
             ajax: "{{Request::url()}}",
             columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'order_code', name: 'order_code'},
             {data: 'customer', name: 'customer'},
+            {data: 'customer_phone', name: 'customer_phone'},
             {data: 'cashier', name: 'cashier'},
+            {data: 'cashier_username', name: 'cashier_username'},
             {data: 'branch', name: 'branch'},
             {data: 'rate', name: 'rate'},
             {data: 'comment', name: 'comment'},

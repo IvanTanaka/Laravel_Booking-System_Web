@@ -83,7 +83,27 @@ class OrderController extends Controller
         $token = $request->bearerToken();
         $user = Customer::where('api_token', $token)->first();
         $branch = Branch::with('franchise')->find($request->branch_id);
+        
+        $orderCount = Order::where('branch_id', $request->branch_id)
+                    ->whereDate('reserve_time',  Carbon::parse($request->reserve_time))
+                    ->count();
+    
+        $alphabet = array( 'A', 'B', 'C', 'D', 'E',
+                    'F', 'G', 'H', 'I', 'J',
+                    'K', 'L', 'M', 'N', 'O',
+                    'P', 'Q', 'R', 'S', 'T',
+                    'U', 'V', 'W', 'X', 'Y',
+                    'Z');
+        
+        $alphabetCode = $alphabet[floor($orderCount/9999)];
+        $orderCount = ($orderCount%9999)+1;
+
+        $inOutCode = ($request->people_count>0)?"I":"O";
+        $order_code = $inOutCode."".$alphabetCode."".sprintf('%04d', $orderCount);
+
+        
         $order = new Order();
+        $order->order_code = $order_code;
         $order->customer_id = $user->id;
         $order->branch_id = $branch->id;
         $order->franchise_id = $branch->franchise->id;

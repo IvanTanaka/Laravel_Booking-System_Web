@@ -63,7 +63,7 @@ class LoginController extends Controller
 
     public function cashierLogin(Request $request)
     {
-        if (Auth::guard('cashier')->attempt(['username' => $request->email, 'password' => $request->password, 'is_deleted' => false], $request->get('remember'))) {
+        if (Auth::guard('cashier')->attempt(['username' => strtolower($request->email), 'password' => $request->password, 'is_deleted' => false], $request->get('remember'))) {
             return redirect()->intended('/cashier');
         }
         return back()->withInput($request->only('email', 'remember'));

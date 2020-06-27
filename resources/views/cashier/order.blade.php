@@ -87,7 +87,9 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Order Code</th>
                                     <th>Customer Name</th>
+                                    <th>Customer Phone</th>
                                     <th>Reserve Time</th>
                                     <th>Orders</th>
                                     <th>Order Note</th>
@@ -121,7 +123,9 @@
             ajax: "{{Request::url()}}",
             columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'order_code', name: 'order_code'},
             {data: 'customer_name', name: 'customer_name'},
+            {data: 'customer_phone', name: 'customer_phone'},
             {data: 'reserve_time', name: 'reserve_time'},
             {data: 'orders', name:'orders'},
             {data: 'note', name:'note'},

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Franchise;
+use App\Models\Category;
 use function App\Helpers\convertToTime;
 use function App\Helpers\generateUuid;
 use Illuminate\Support\Facades\Storage;
@@ -28,7 +29,8 @@ class FranchiseController extends Controller
         $franchise = Franchise::whereHas('owner', function($query) use($user){
             $query->where('owner_id',$user->id);
         })->first();
-        return view('owner.franchise', ['user' => $user, 'franchise' => $franchise ]);
+        $categories = Category::all();
+        return view('owner.franchise', ['user' => $user, 'franchise' => $franchise ,'categories' => $categories]);
     }
 
     public function update(Request $request){
@@ -43,6 +45,7 @@ class FranchiseController extends Controller
         })->first();
 
         $franchise->name = $request->franchise_name;
+        $franchise->category_id = $request->franchise_category;
 
         $path = "public/images/".$franchise->id."/";
         $oldFileName = $franchise->image_path;
@@ -71,7 +74,7 @@ class FranchiseController extends Controller
 
 
         $franchise->update();
-        return view('owner.franchise', ['user' => $user, 'franchise' => $franchise ]);
+        return redirect('profile');
 
     }
 

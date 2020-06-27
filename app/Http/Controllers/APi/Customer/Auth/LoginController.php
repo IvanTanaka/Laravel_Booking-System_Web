@@ -45,7 +45,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $customer = Customer::where('email',$request->email)->get();
+        $customer = Customer::where('email',strtolower($request->email))->get();
         if(count($customer)==1){
             if(Hash::check($request->password, $customer[0]->password)){
                 $customer = Customer::find($customer[0]->id);

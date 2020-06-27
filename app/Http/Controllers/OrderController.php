@@ -75,9 +75,18 @@ class OrderController extends Controller
                     ->addColumn('customer', function($row){
                         return $row->customer->name;
                     })
+                    ->addColumn('customer_phone', function($row){
+                        return $row->customer->phone_number;
+                    })
                     ->addColumn('cashier', function($row){
                         if($row->cashier!=null){
                             return $row->cashier->name;
+                        }
+                        return "";
+                    })
+                    ->addColumn('cashier_username', function($row){
+                        if($row->cashier!=null){
+                            return $row->cashier->username;
                         }
                         return "";
                     })

@@ -19,7 +19,7 @@
 <div class="content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-12 col-sm-8 offset-md-2">
+      <div class="col-12 col-md-8 offset-md-2">
         <form action="{{ url('/profile') }}" method="POST" enctype="multipart/form-data">
           <div class="card">
             <div class="card-header">
@@ -67,10 +67,21 @@
                       </div>
                       <div class="card-body">
                         <div class="row">
-                          <div class="col-lg-12">
+                          <div class="col-lg-6">
                             <div class="form-group">
                               <label for="franchise_name">Name</label>
                               <input type="text" id="franchise_name" value="{{$franchise->name}}" name="franchise_name" class="form-control">
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label for="franchise_name">Category</label>
+                              <select class="custom-select" name="franchise_category">
+                                <option {{($franchise->category_id != null)?'selected':''}}>No Category</option>
+                                @foreach ($categories as $category)
+                                <option {{($franchise->category_id == $category->id)?'selected':''}} value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
+                              </select>
                             </div>
                           </div>
                           <div class="col-lg-12">

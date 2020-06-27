@@ -86,6 +86,9 @@ class OrderController extends Controller
                     ->addColumn('customer_name', function($row){
                         return $row->customer->name;
                     })
+                    ->addColumn('customer_phone', function($row){
+                        return $row->customer->phone_number;
+                    })
                     ->addColumn('status', function($row){
                         switch($row->status){
                             case OrderStatus::ACCEPTED:
