@@ -260,6 +260,9 @@
           yAxes: [{
             gridLines : {
               display : false,
+            },
+            ticks :{
+              precision: 0
             }
           }]
         }
@@ -357,7 +360,8 @@
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    precision: 0
                 }
             }]
         }
