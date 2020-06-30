@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
+use PDF;
 use App\Models\Redeem;
 use App\Models\Franchise;
 use DataTables;
@@ -34,7 +35,8 @@ class RedeemController extends Controller
         if ($request->ajax()) {
 
             $data = Redeem::with(['franchise','owner','bank_account'])
-            ->latest()
+            ->orderByRaw('FIELD(status, "'.RedeemStatus::WAITING.'", "'.RedeemStatus::ACCEPTED.'", "'.RedeemStatus::FINISHED.'", "'.RedeemStatus::REJECTED.'", "'.RedeemStatus::CANCELED.'")', "desc")
+            ->orderBy("created_at")
             ->get();
 
             return Datatables::of($data)
@@ -67,10 +69,14 @@ class RedeemController extends Controller
                         switch($row->status){
                             case RedeemStatus::ACCEPTED:
                                 return "<span class='accepted_redeem_status'>Accepted</span>";
+                            case RedeemStatus::FINISHED:
+                                return "<span class='finished_redeem_status'>Finished</span>";
                             case RedeemStatus::REJECTED:
                                 return "<span class='rejected_redeem_status'>Rejected</span>";
                             case RedeemStatus::WAITING:
                                 return "<span class='waiting_redeem_status'>Waiting</span>";
+                                case RedeemStatus::CANCELED:
+                                    return "<span class='rejected_redeem_status'>Canceled</span>";
                         }
                     })
                     ->addColumn('action', function($row){
@@ -98,6 +104,20 @@ class RedeemController extends Controller
                                 .'</div>';
                                 $action = '<div class="row">'.$acceptBtn.$rejectBtn.'</div>';
                                 return $action;
+                            }elseif($row->status == RedeemStatus::ACCEPTED){
+
+                                $finishedBtn = '<div class="col-6">'
+                                .'<form action="'.url('admin/redeem/finish').'" method="post">'
+                                .'<input type="hidden" name="redeem_id" value="'.$row->id.'" />'
+                                .csrf_field()
+                                .'<button class="btn btn-success btn-small">'
+                                .'<i class="fas fa-check" style="width:20px"></i>'
+                                .' Finished'
+                                .'</button>'
+                                .'</form>'
+                                .'</div>';
+                                $action = '<div class="row">'.$finishedBtn.'</div>';
+                                return $action;
                             }
                             return "";
                     })
@@ -109,20 +129,53 @@ class RedeemController extends Controller
 
     public function accept(Request $request){
         $redeem = Redeem::find($request->redeem_id);
-        $redeem->status = RedeemStatus::ACCEPTED;
-        $redeem->admin_id = Auth::id();
-        $redeem->update();  
+        if($redeem->status == RedeemStatus::WAITING){
+            $redeem->status = RedeemStatus::ACCEPTED;
+            $redeem->admin_id = Auth::id();
+            $redeem->update();
+        }
         return back();
     }
 
     public function reject(Request $request){
         $redeem = Redeem::find($request->redeem_id);
-        $redeem->status = RedeemStatus::REJECTED;
-        $redeem->admin_id = Auth::id();
-        $franchise = Franchise::find($redeem->franchise_id);
-        $franchise->amount += $redeem->amount;
-        $redeem->update();  
-        $franchise->update();
+        if($redeem->status == RedeemStatus::WAITING){
+            $redeem->status = RedeemStatus::REJECTED;
+            $redeem->admin_id = Auth::id();
+            $franchise = Franchise::find($redeem->franchise_id);
+            $franchise->amount += $redeem->amount;
+            $redeem->update();  
+            $franchise->update();
+        }
         return back();
     }
+
+    public function finish(Request $request){
+        $redeem = Redeem::find($request->redeem_id);
+        $redeem->status = RedeemStatus::FINISHED;
+        $redeem->admin_id = Auth::id();
+        $redeem->update();  
+        return back();
+    }
+
+    public function finishedMultiple(Request $request){
+        $redeem = Redeem::where('status', RedeemStatus::ACCEPTED)
+                ->update(
+                    [
+                        'status' => RedeemStatus::FINISHED,
+                        'admin_id' => Auth::id()
+                    ]
+                );
+        return back();
+    }
+
+    public function print_pdf(){
+        $redeems = Redeem::with(['bank_account'])
+                ->where('status', RedeemStatus::ACCEPTED)
+                ->get();
+
+        $pdf = PDF::loadview('admin.redeem_activate_pdf',['redeems'=>$redeems]);
+        return $pdf->download('redeem_transfer-pdf');
+    }
+
 }

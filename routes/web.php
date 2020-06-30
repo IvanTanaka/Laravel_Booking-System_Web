@@ -25,8 +25,10 @@ Route::prefix('/admin')->group(function(){
     Route::get('/', 'Admin\HomeController@index');
     Route::prefix('redeem')->group(function(){
         Route::get('/', 'Admin\RedeemController@index');
+        Route::get('/finished-multiple', 'Admin\RedeemController@finishedMultiple');
         Route::post('/accept', 'Admin\RedeemController@accept');
         Route::post('/reject', 'Admin\RedeemController@reject');
+        Route::get('/print-pdf', 'Admin\RedeemController@print_pdf');
     });
     Route::get('/category', 'Admin\CategoryController@index');
     Route::post('/category/update', 'Admin\CategoryController@update');

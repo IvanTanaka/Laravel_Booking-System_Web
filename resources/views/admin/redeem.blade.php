@@ -8,7 +8,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" defer></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js" defer></script>
 <style>
-    .accepted_redeem_status{
+    .finished_redeem_status{
         font-weight: 700;
         width: 100%;
         display: inline-block;
@@ -17,6 +17,18 @@
         user-select: none;
         color: #fff;
         background-color: #1fb800;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    .accepted_redeem_status{
+        font-weight: 700;
+        width: 100%;
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle;
+        user-select: none;
+        color: #fff;
+        background-color: #0509ff;
         padding: 10px;
         border-radius: 5px;
     }
@@ -54,8 +66,8 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-12">
-                <h1 class="m-0 text-dark">Redeem List
-            </h1>
+                <h1 class="m-0 text-dark">
+                </h1>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -70,6 +82,26 @@
             
             <div class="col-lg-12">
                 <div class="card">
+                    <div class="card-header">
+                    
+                        <h1 class="m-0 text-dark">
+                            Redeem List
+                            <div class="float-right">
+                                <a href="{{url('admin/redeem/finished-multiple')}}">
+                                    <button class="btn btn-success">
+                                        <i class="fas fa-check"></i>
+                                        Finished all Accepted
+                                    </button>
+                                </a>
+                                <a href="{{url('admin/redeem/print-pdf')}}">
+                                    <button class="btn btn-info">
+                                        <i class="fas fa-download"></i>
+                                        download
+                                    </button>
+                                </a>
+                            </div>
+                        </h1>
+                    </div>
                     <div class="card-body table-responsive p-2">
                         <table class="table table-bordered data-table" id="redeem_table">
                             <thead>

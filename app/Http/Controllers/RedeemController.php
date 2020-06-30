@@ -64,6 +64,7 @@ class RedeemController extends Controller
             })
             ->addColumn('status', function($row){
                 switch($row->status){
+                    case RedeemStatus::FINISHED:
                     case RedeemStatus::ACCEPTED:
                         return "<span class='accepted_redeem_status'>Accepted</span>";
                     case RedeemStatus::REJECTED:
