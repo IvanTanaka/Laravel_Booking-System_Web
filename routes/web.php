@@ -28,6 +28,7 @@ Route::prefix('/admin')->group(function(){
         Route::get('/finished-multiple', 'Admin\RedeemController@finishedMultiple');
         Route::post('/accept', 'Admin\RedeemController@accept');
         Route::post('/reject', 'Admin\RedeemController@reject');
+        Route::post('/finish', 'Admin\RedeemController@finish');
         Route::get('/print-pdf', 'Admin\RedeemController@print_pdf');
     });
     Route::get('/category', 'Admin\CategoryController@index');

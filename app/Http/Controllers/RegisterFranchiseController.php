@@ -37,6 +37,6 @@ class RegisterFranchiseController extends Controller
         $branch->close_time = convertToTime($request->store_close_time);
         $branch->save();
 
-        return redirect()->route('/')->with('alert-success','Register success.');
+        return redirect('/')->with('alert-success','Register success.');
     }
 }
