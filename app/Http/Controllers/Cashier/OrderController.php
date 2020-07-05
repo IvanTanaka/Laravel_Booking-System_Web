@@ -68,6 +68,7 @@ class OrderController extends Controller
                 })
                 ->where('status','!=',OrderStatus::CANCELED)
                 ->whereDate('reserve_time',Carbon::now()->addHours(7))
+                ->orderByRaw('FIELD(status, "'.OrderStatus::WAITING.'", "'.OrderStatus::ACCEPTED.'", "'.OrderStatus::DENIED.'", "'.OrderStatus::FINISHED.'", "'.OrderStatus::NO_RESPONSE.'", "'.OrderStatus::CANCELED.'")', "desc")
                 ->orderBy('reserve_time', 'desc')
                 ->orderBy('created_at','desc')
                 ->get();
@@ -76,6 +77,7 @@ class OrderController extends Controller
                     $query->where('id','=',$user->branch->id);
                 })
                 ->where('status','!=',OrderStatus::CANCELED)
+                ->orderByRaw('FIELD(status, "'.OrderStatus::WAITING.'", "'.OrderStatus::ACCEPTED.'", "'.OrderStatus::DENIED.'", "'.OrderStatus::FINISHED.'", "'.OrderStatus::NO_RESPONSE.'", "'.OrderStatus::CANCELED.'")', "desc")
                 ->orderBy('reserve_time', 'desc')
                 ->orderBy('created_at','desc')
                 ->get();

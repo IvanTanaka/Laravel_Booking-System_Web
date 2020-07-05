@@ -67,6 +67,30 @@ class HomeController extends Controller
 
 
         //
+        //
+        //
+
+        $monthlySalesTotalData = Order::whereHas('franchise', function($query) use ($user){
+            $query->where('owner_id', $user->id);
+        })->whereDate('reserve_time','>=', Carbon::now()->addHours(7)->subYear())
+        ->where('status', OrderStatus::FINISHED)
+        ->select(DB::raw('SUM(total) as total'),
+            DB::raw("DATE_FORMAT(reserve_time,'%M %Y') as months")
+        )
+        ->orderBy('reserve_time')
+        ->groupBy('months')
+        ->get();
+        
+        $monthlySalesTotal = [];
+        foreach ($monthlySalesTotalData as $key => $value) {
+            $monthlySalesTotal[$value->months] = $value->total;
+        }
+
+
+        //
+
+
+        //
         //Sales Amount for 12 months
         //
         $monthlySalesData = Order::whereHas('franchise', function($query) use ($user){
@@ -81,6 +105,7 @@ class HomeController extends Controller
 
         $monthlySalesCount = [];
         $monthlyArr = [];
+        $monthlyTotalArr = [];
 
         foreach ($monthlySalesData as $key => $value) {
             $monthlySalesCount[$key] = count($value);
@@ -93,8 +118,15 @@ class HomeController extends Controller
             }else{
                 $monthlyArr[$key] = 0;    
             }
+
+            if(!empty($monthlySalesTotal[$key])){
+                $monthlyTotalArr[$key] = $monthlySalesTotal[$key];    
+            }else{
+                $monthlyTotalArr[$key] = 0;    
+            }
         }
         $monthlyArr = array_reverse($monthlyArr);
+        $monthlyTotalArr = array_reverse($monthlyTotalArr);
         //
 
         //
@@ -159,6 +191,6 @@ class HomeController extends Controller
         ->doesntHave('cashiers')
         ->get();
 
-        return view('owner.dashboard',compact(['monthlyArr', 'bestSellingMenu', 'bestBranch', 'rateTotal', 'totalAmount', 'totalMenu','todaySale','branchNoCashier']));
+        return view('owner.dashboard',compact(['monthlyArr', 'monthlyTotalArr', 'bestSellingMenu', 'bestBranch', 'rateTotal', 'totalAmount', 'totalMenu','todaySale','branchNoCashier']));
     }
 }

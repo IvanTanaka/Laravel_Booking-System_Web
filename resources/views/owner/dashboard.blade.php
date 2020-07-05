@@ -163,6 +163,7 @@
                       </div>
                       <!-- /.card -->  
                     </div>
+
                     <div class="col-md-6">
           
                       <!-- PIE CHART -->
@@ -197,6 +198,25 @@
           
                     </div>
                     <!-- /.col (RIGHT) -->
+
+
+                    <div class="col-12">
+                    
+                      <!-- LINE CHART -->
+                      <div class="card card-membee">
+                        <div class="card-header">
+                          <h3 class="card-title">Sales Total in Years</h3>
+                        </div>
+                        <div class="card-body">
+                          <div class="chart">
+                            <canvas id="yearsTotalChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                          </div>
+                        </div>
+                        <!-- /.card-body -->
+                      </div>
+                      <!-- /.card -->  
+                    </div>
+                    
                   </div>
                 </div>
               </div>
@@ -216,6 +236,20 @@
 
 <script>
     $(function () {
+      function formatNumber(number, decimalsLength, decimalSeparator, thousandSeparator) {
+       var n = number,
+           decimalsLength = isNaN(decimalsLength = Math.abs(decimalsLength)) ? 2 : decimalsLength,
+           decimalSeparator = decimalSeparator == undefined ? "," : decimalSeparator,
+           thousandSeparator = thousandSeparator == undefined ? "." : thousandSeparator,
+           sign = n < 0 ? "-" : "",
+           i = parseInt(n = Math.abs(+n || 0).toFixed(decimalsLength)) + "",
+           j = (j = i.length) > 3 ? j % 3 : 0;
+
+       return sign +
+           (j ? i.substr(0, j) + thousandSeparator : "") +
+           i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousandSeparator) +
+           (decimalsLength ? decimalSeparator + Math.abs(n - i).toFixed(decimalsLength).slice(2) : "");
+      }
       /* ChartJS
        * -------
        * Here we will create a few charts using ChartJS
@@ -244,6 +278,31 @@
           }
         ]
       }
+
+
+      var monthlySalesTotalData = {
+        labels  : [
+        @foreach($monthlyTotalArr as $key => $salesTotalData)
+          "{{$key}}",
+        @endforeach],
+        datasets: [
+          {
+            label               : 'Sales Total',
+            backgroundColor     : '#1f84d7',
+            borderColor         : '#1f84d7',
+            pointRadius         : 10,
+            pointColor          : '#3b8bba',
+            pointStrokeColor    : 'rgba(60,141,188,1)',
+            pointHighlightFill  : '#fff',
+            pointHighlightStroke: 'rgba(60,141,188,1)',
+            lineTension         : 0,   
+            data                : [
+        @foreach($monthlyTotalArr as $salesTotalData)
+          {{$salesTotalData}},
+        @endforeach]
+          }
+        ]
+      }
   
       var monthlySalesOption = {
         maintainAspectRatio : false,
@@ -267,6 +326,41 @@
           }]
         }
       }
+
+
+      var monthlySalesTotalOption = {
+        maintainAspectRatio : false,
+        responsive : true,
+        legend: {
+          display: true
+        },
+        scales: {
+          xAxes: [{
+            gridLines : {
+              display : true,
+            }
+          }],
+          yAxes: [{
+            gridLines : {
+              display : false,
+            },
+            ticks :{
+              precision: 0,
+              callback: function (value) {
+                  return "Rp "+formatNumber(value,'0');
+              }
+            }
+          }],
+        },
+        tooltips: {
+            callbacks: {
+                label: function(tooltipItem, chart){
+                    var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                    return datasetLabel + ': RP ' + formatNumber(tooltipItem.yLabel,'0');
+                }
+            }
+        }
+      }
   
       //-------------
       //- LINE CHART -
@@ -274,6 +368,18 @@
       var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
       var lineChartOptions = jQuery.extend(true, {}, monthlySalesOption)
       var lineChartData = jQuery.extend(true, {}, monthlySalesData)
+      lineChartData.datasets[0].fill = false;
+      lineChartOptions.datasetFill = false
+  
+      var lineChart = new Chart(lineChartCanvas, { 
+        type: 'line',
+        data: lineChartData, 
+        options: lineChartOptions
+      })
+
+      var lineChartCanvas = $('#yearsTotalChart').get(0).getContext('2d')
+      var lineChartOptions = jQuery.extend(true, {}, monthlySalesTotalOption)
+      var lineChartData = jQuery.extend(true, {}, monthlySalesTotalData)
       lineChartData.datasets[0].fill = false;
       lineChartOptions.datasetFill = false
   
