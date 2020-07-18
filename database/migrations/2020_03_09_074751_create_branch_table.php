@@ -14,7 +14,7 @@ class CreateBranchTable extends Migration
     public function up()
     {
         Schema::create('branches', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->char('id',36)->primary();
             $table->boolean('is_deleted')->default(false);
             $table->string('franchise_id');
             $table->string('name');

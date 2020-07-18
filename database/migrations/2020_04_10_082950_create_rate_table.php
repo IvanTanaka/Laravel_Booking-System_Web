@@ -14,7 +14,7 @@ class CreateRateTable extends Migration
     public function up()
     {
         Schema::create('rates', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->char('id',36)->primary();
             $table->string('order_id');
             $table->string('customer_id');
             $table->string('branch_id');

@@ -39,7 +39,7 @@
                     <div class="col-12">
                       <div class="card bg-gradient-warning">
                         <div class="card-header">
-                          <h3 class="card-title">Warning There's A Branch without Cashier Appointed yet</h3>
+                          <h3 class="card-title">Warning there's a branch without cashier appointed yet</h3>
           
                           <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -152,7 +152,7 @@
                       <!-- LINE CHART -->
                       <div class="card card-membee">
                         <div class="card-header">
-                          <h3 class="card-title">Sales Amount in Years</h3>
+                          <h3 class="card-title">Sales Amount within year</h3>
                         </div>
                         <div class="card-body">
                           <div class="chart">
@@ -169,7 +169,7 @@
                       <!-- PIE CHART -->
                       <div class="card card-membee">
                         <div class="card-header">
-                          <h3 class="card-title">Top 5 Best Seller</h3>
+                          <h3 class="card-title">Top 5 best seller menu</h3>
                         </div>
                         <div class="card-body">
                           <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
@@ -185,7 +185,7 @@
                       <!-- BAR CHART -->
                       <div class="card card-membee">
                         <div class="card-header">
-                          <h3 class="card-title">Top 5 Branch By Finished Order</h3>
+                          <h3 class="card-title">Top 5 branch by Sales Amount</h3>
                         </div>
                         <div class="card-body">
                           <div class="chart">
@@ -205,7 +205,7 @@
                       <!-- LINE CHART -->
                       <div class="card card-membee">
                         <div class="card-header">
-                          <h3 class="card-title">Sales Total in Years</h3>
+                          <h3 class="card-title">Sales Revenue within a year</h3>
                         </div>
                         <div class="card-body">
                           <div class="chart">
@@ -287,7 +287,7 @@
         @endforeach],
         datasets: [
           {
-            label               : 'Sales Total',
+            label               : 'Sales Revenue',
             backgroundColor     : '#1f84d7',
             borderColor         : '#1f84d7',
             pointRadius         : 10,

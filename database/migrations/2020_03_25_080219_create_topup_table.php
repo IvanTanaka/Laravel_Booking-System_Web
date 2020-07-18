@@ -15,7 +15,7 @@ class CreateTopupTable extends Migration
     public function up()
     {
         Schema::create('topups', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->char('id',36)->primary();
             $table->string('customer_id');
             $table->integer('amount');
             $table->string('va_number')->nullable();

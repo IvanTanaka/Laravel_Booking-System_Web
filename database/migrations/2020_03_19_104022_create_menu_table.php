@@ -14,7 +14,7 @@ class CreateMenuTable extends Migration
     public function up()
     {
         Schema::create('menus', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->char('id',36)->primary();
             $table->boolean('is_deleted')->default(false);
             $table->string('franchise_id');
             $table->string('name');

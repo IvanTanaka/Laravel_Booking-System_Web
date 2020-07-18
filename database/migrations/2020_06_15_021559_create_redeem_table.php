@@ -15,7 +15,7 @@ class CreateRedeemTable extends Migration
     public function up()
     {
         Schema::create('redeems', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->char('id',36)->primary();
             $table->string('owner_id');
             $table->string('franchise_id');
             $table->string('bank_account_id');
