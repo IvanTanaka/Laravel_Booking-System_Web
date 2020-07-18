@@ -171,7 +171,7 @@ class HomeController extends Controller
             $query->where('owner_id',$user->id);
         })->avg('stars');
         
-        $totalAmount = 'Rp. '.number_format(Franchise::where('owner_id', $user->id)->first()->amount, 2, ',', '.');
+        $totalAmount = 'Rp '.number_format(Franchise::where('owner_id', $user->id)->first()->amount, 2, ',', '.');
 
         $totalMenu = Menu::whereHas('franchise', function($query) use($user){
             $query->where('owner_id','=',$user->id);

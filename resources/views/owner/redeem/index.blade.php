@@ -102,7 +102,7 @@
                             <span>Your current balance : </span>
                           </div>
                           <div class="text-center">
-                            <span class="balance-amount" id="redeem_total_balance">Rp. {{$franchise->amount}}</span>
+                            <span class="balance-amount" id="redeem_total_balance">Rp {{number_format($franchise->amount,2,',','.')}}</span>
                           </div>
                         </div>
                       </div>
@@ -116,10 +116,10 @@
                           <div>
                             <input type="number" id="redeem_input" name="redeem_amount" class="form-control" onkeyup="checkZero()" value="0">
                             
-                            <small id="minimum amount" class="form-text text-muted">* Minimum Rp. 10.000</small>
+                            <small id="minimum amount" class="form-text text-muted">* Minimum Rp 10.000</small>
                           </div>
                           <div class="text-center">
-                            <span class="balance-amount" id="redeem_amount">Rp. 0</span>
+                            <span class="balance-amount" id="redeem_amount">Rp 0</span>
                           </div>
                         </div>
                       </div>
@@ -233,8 +233,8 @@
 
       const inputHandler = function(e) {
         if(e.target.value<={{$franchise->amount}}&&e.target.value>=0){
-          redeem_amount.innerHTML = "Rp. "+e.target.value;
-          redeem_total_balance.innerHTML = "Rp. "+({{$franchise->amount}}-e.target.value);
+          redeem_amount.innerHTML = "Rp "+number_format(e.target.value,2,',','.');
+          redeem_total_balance.innerHTML = "Rp "+number_format({{$franchise->amount}}-e.target.value,2,',','.');
           if(e.target.value>=10000){
           redeem_button.classList.remove("disabled");
           }else{
@@ -242,12 +242,12 @@
           }
         }else if(e.target.value<0){
           redeem_button.classList.add("disabled");
-          redeem_amount.innerHTML = "Rp. 0";
-          redeem_total_balance.innerHTML = "Rp. {{$franchise->amount}}";
+          redeem_amount.innerHTML = "Rp 0";
+          redeem_total_balance.innerHTML = "Rp {{number_format($franchise->amount,2,',','.')}}";
           redeem_input.value = 0;
         }else if(e.target.value>{{$franchise->amount}}){
-          redeem_amount.innerHTML = "Rp. {{$franchise->amount}}";
-          redeem_total_balance.innerHTML = "Rp. 0";
+          redeem_amount.innerHTML = "Rp {{number_format($franchise->amount,2,',','.')}}";
+          redeem_total_balance.innerHTML = "Rp 0";
           redeem_input.value = {{$franchise->amount}};
           if(e.target.value>=10000){
           redeem_button.classList.remove("disabled");
@@ -259,13 +259,48 @@
 
       function checkZero(){
         if(redeem_input.value.length == 0){
-          redeem_amount.innerHTML = "Rp. 0";
-          redeem_total_balance.innerHTML = "Rp. {{$franchise->amount}}";
+          redeem_amount.innerHTML = "Rp 0";
+          redeem_total_balance.innerHTML = "Rp {{number_format($franchise->amount,2,',','.')}}";
           redeem_input.value = 0;
         }else{
           redeem_input.value = parseInt(redeem_input.value);
-          redeem_amount.innerHTML = "Rp. "+redeem_input.value;
+          redeem_amount.innerHTML = "Rp "+number_format(redeem_input.value,2,',','.');
         }
+      }
+
+      function number_format (number, decimals, decPoint, thousandsSep) {
+
+        number = (number + '').replace(/[^0-9+\-Ee.]/g, '')
+        var n = !isFinite(+number) ? 0 : +number
+        var prec = !isFinite(+decimals) ? 0 : Math.abs(decimals)
+        var sep = (typeof thousandsSep === 'undefined') ? ',' : thousandsSep
+        var dec = (typeof decPoint === 'undefined') ? '.' : decPoint
+        var s = ''
+
+        var toFixedFix = function (n, prec) {
+          if (('' + n).indexOf('e') === -1) {
+            return +(Math.round(n + 'e+' + prec) + 'e-' + prec)
+          } else {
+            var arr = ('' + n).split('e')
+            var sig = ''
+            if (+arr[1] + prec > 0) {
+              sig = '+'
+            }
+            return (+(Math.round(+arr[0] + 'e' + sig + (+arr[1] + prec)) + 'e-' + prec)).toFixed(prec)
+          }
+        }
+
+        // @todo: for IE parseFloat(0.55).toFixed(0) = 0;
+        s = (prec ? toFixedFix(n, prec).toString() : '' + Math.round(n)).split('.')
+        if (s[0].length > 3) {
+          s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep)
+        }
+        if ((s[1] || '').length < prec) {
+          s[1] = s[1] || ''
+          s[1] += new Array(prec - s[1].length + 1).join('0')
+        }
+
+        return s.join(dec)
       }
 
       redeem_input.addEventListener('input', inputHandler);
