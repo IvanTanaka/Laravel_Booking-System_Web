@@ -1,4 +1,4 @@
-## Membee
+# Membee
 Membee is a system for making a reservation. It is created with the thought of helping office worker and student to order a food in their short lunchbreak.
 
 ## Membee Web
