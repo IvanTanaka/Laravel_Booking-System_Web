@@ -1,6 +1,5 @@
 <?php
 
-//adding comment
 
 return [
 
