@@ -26,8 +26,6 @@ class CashierController extends Controller
             })
             ->where('is_deleted', false)
             ->latest()->get();
-            
-            
             return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('branch_name', function($row){
@@ -59,7 +57,6 @@ class CashierController extends Controller
             ->make(true);
         }
         return view('owner.cashiers.index');
-        
     }
 
     /**

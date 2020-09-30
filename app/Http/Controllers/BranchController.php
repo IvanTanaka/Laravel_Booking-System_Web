@@ -91,7 +91,6 @@ class BranchController extends Controller
         return redirect()->route('stores.index')
                         ->with('success','Store added successfully.');
     }
-    
     /**
      * Show the form for editing the specified resource.
      *

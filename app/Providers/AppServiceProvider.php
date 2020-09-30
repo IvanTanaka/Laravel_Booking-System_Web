@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Observers\TableObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Table;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
+        Table::observe(TableObserver::class);
     }
 }

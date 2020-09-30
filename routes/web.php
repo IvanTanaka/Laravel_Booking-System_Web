@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Models\Table;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
+
+Route::get('test','TableController@index');
 
 Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm');
 Route::get('/login/cashier', 'Auth\LoginController@showCashierLoginForm');

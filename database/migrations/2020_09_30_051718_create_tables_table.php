@@ -15,10 +15,13 @@ class CreateTablesTable extends Migration
     {
         Schema::create('tables', function (Blueprint $table) {
             $table->id();
+            $table->string('branch_id');
             $table->string('number');
             $table->integer('size');
             $table->string('created_by');
+            $table->string('updated_by');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

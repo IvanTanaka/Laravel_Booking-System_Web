@@ -1,10 +1,19 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Table extends Model
 {
-    // table model
+    protected $fillable = ['number','size','branch_id'];
+    protected $dates = ['deleted_at'];
+    use SoftDeletes;
+
+    public function branch(){
+        return $this->belongsTo('App\Models\Branch');
+    }
+
+
 }
