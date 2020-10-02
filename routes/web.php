@@ -14,9 +14,12 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Auth::routes();
 
+
+Auth::routes();
+Route::resource('table', 'TableController');
 Route::get('test','TableController@index');
+
 
 Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm');
 Route::get('/login/cashier', 'Auth\LoginController@showCashierLoginForm');

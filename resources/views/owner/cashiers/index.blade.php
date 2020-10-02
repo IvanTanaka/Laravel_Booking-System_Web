@@ -78,7 +78,7 @@
                     </div>
                     <!-- /.card -->
                 </div>
-                
+
             </div>
             <!-- /.row -->
           </div>
@@ -133,9 +133,9 @@
             {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
-        
+
     });
-    
+
     $('#deleteConfirmation').on('shown.bs.modal', function(event) {
         var link     = $(event.relatedTarget),
         modal    = $(this),

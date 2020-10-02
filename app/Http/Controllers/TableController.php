@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Table;
 use App\Models\Branch;
 use App\Models\Franchise;
+use DataTables;
+use Illuminate\Database\Eloquent\Builder;
 
 class TableController extends Controller
 {
@@ -17,8 +19,14 @@ class TableController extends Controller
      */
     public function index()
     {
-        $tables = Table::all();
-        return view('table.index',compact('tables'));
+        $user = Auth::user();
+        $branch_id = Branch::find();
+        Table::whereHas('branch', function($query) use( $branch_id ){ $query->where('id',$branch_id);})->get();
+        $branches = $franchise->branches;
+        $tables = Table::whereHas('branch_id',$branches->id);
+        // return $franchise;
+        return $tables;
+        // return view('table.index',compact('tables','branches'));
     }
 
     /**
@@ -28,7 +36,8 @@ class TableController extends Controller
      */
     public function create()
     {
-        return view();
+        $tables = Table::all();
+        return view('table.create',compact('tables'));
     }
 
     /**
@@ -39,8 +48,8 @@ class TableController extends Controller
      */
     public function store(Request $request)
     {
-        $table = new Table(['number'=>$request->number, 'size'=> $request->size, 'branch_id'=> $request->branch_id]);
-        // $table = new Table(['branch_id'=>'30fdfb50-02ef-11eb-819a-6fef213b2d4b', 'number'=>'A3', 'size'=>'11' ]);
+        // $table = new Table(['number'=>$request->number, 'size'=> $request->size, 'branch_id'=> $request->branch_id]);
+        $table = new Table(['branch_id'=>'30fdfb50-02ef-11eb-819a-6fef213b2d4b', 'number'=>'A5', 'size'=>'5' ]);
         $table->save();
     }
 
@@ -64,7 +73,7 @@ class TableController extends Controller
     public function edit($id)
     {
         $table = Table::findOrFail($id);
-        return view('',compact('table'));
+        return view('table.edit',compact('table'));
     }
 
     /**
@@ -93,7 +102,7 @@ class TableController extends Controller
     {
         $tables = Table::findOrFail($id);
         $tables->delete();
-        return redirect()->route('/')
+        return redirect()->route('table.index')
                         ->with('success', 'Table deleted successfully.');
     }
 }
