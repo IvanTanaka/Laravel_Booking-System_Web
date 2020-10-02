@@ -17,16 +17,24 @@ class TableController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        // Table::whereHas('branch', function($query) use( $branch_id ){ $query->where('id',$branch_id);})->get();
+        // $branches = $franchise->branches;
+        // $tables = Table::whereHas('branch_id',$branches->id);
         $user = Auth::user();
-        $branch_id = Branch::find();
-        Table::whereHas('branch', function($query) use( $branch_id ){ $query->where('id',$branch_id);})->get();
+
+        $branch_id = Branch::all();
+        $franchise = Franchise::where('owner_id',$user->id)->with([
+            'branches' => function ($query){
+                $query->where('is_deleted',false);
+            }
+        ])
+        ->get()
+        ->first();
         $branches = $franchise->branches;
-        $tables = Table::whereHas('branch_id',$branches->id);
-        // return $franchise;
-        return $tables;
-        // return view('table.index',compact('tables','branches'));
+        $tables = Table::all();
+        return view('table.index',compact('tables','branches'));
     }
 
     /**
@@ -61,7 +69,8 @@ class TableController extends Controller
      */
     public function show($id)
     {
-        //
+        $tables = Table::all()->where('branch_id',$id);
+        return view('table.show',compact('tables'));
     }
 
     /**
@@ -105,4 +114,5 @@ class TableController extends Controller
         return redirect()->route('table.index')
                         ->with('success', 'Table deleted successfully.');
     }
+
 }
