@@ -21,6 +21,7 @@
     <div class="row mb-2">
       <div class="col-sm-12">
         <h1 class="m-0 text-dark">Table Management</h1>
+        <a href="{{route('table.create')}}" class="btn btn-info" >Create New Table</a>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
@@ -46,7 +47,7 @@
                     <td>{{$table->size}}</td>
                     <td>
                     <div >
-                        <a href="table/{{{$table->id}}}/edit" class="btn btn-info">edit</a>
+                        <a href="{{{$table->id}}}/edit" class="btn btn-info">edit</a>
                             <form method ="POST" action="{{route( 'table.destroy', $table->id) }}">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">

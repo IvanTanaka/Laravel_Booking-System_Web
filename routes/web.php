@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 Route::resource('table', 'TableController');
+Route::get('/create','TableController@store');
 
 Route::get('test','TableController@index');
 

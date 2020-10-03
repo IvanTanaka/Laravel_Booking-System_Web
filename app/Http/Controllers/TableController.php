@@ -23,7 +23,6 @@ class TableController extends Controller
         // $branches = $franchise->branches;
         // $tables = Table::whereHas('branch_id',$branches->id);
         $user = Auth::user();
-
         $branch_id = Branch::all();
         $franchise = Franchise::where('owner_id',$user->id)->with([
             'branches' => function ($query){
@@ -44,8 +43,16 @@ class TableController extends Controller
      */
     public function create()
     {
-        $tables = Table::all();
-        return view('table.create',compact('tables'));
+        $user = Auth::user();
+        $franchise = Franchise::where('owner_id',$user->id)->with([
+            'branches' => function ($query){
+                $query->where('is_deleted',false);
+            }
+        ])
+        ->get()
+        ->first();
+        $branches = $franchise->branches;
+        return view('table.create',compact('branches'));
     }
 
     /**
@@ -56,9 +63,11 @@ class TableController extends Controller
      */
     public function store(Request $request)
     {
-        // $table = new Table(['number'=>$request->number, 'size'=> $request->size, 'branch_id'=> $request->branch_id]);
-        $table = new Table(['branch_id'=>'30fdfb50-02ef-11eb-819a-6fef213b2d4b', 'number'=>'A5', 'size'=>'5' ]);
+        $selectedBranch = $request->get('branches');
+        $table = new Table(['branch_id'=> $selectedBranch,'number'=>$request->number, 'size'=> $request->size]);
+        // $table = new Table(['branch_id'=>'30fdfb50-02ef-11eb-819a-6fef213b2d4b', 'number'=>'A5', 'size'=>'5' ]);
         $table->save();
+        return redirect(route('table.index'));
     }
 
     /**
@@ -96,8 +105,8 @@ class TableController extends Controller
     {
         $tables = Table::findOrFail($id);
         // $tables->update(['number'=>$request->number, 'size'=>$request->size]);
-        $tables->update(['number'=>'A2', 'size'=>5]);
-        return redirect()->route('/')
+        $tables->update(['number'=>$request->number, 'size'=>$request->size]);
+        return redirect()->route('table.index')
                         ->with('success','Table updated successfully.');
     }
 
