@@ -22,18 +22,25 @@ class TableController extends Controller
         // Table::whereHas('branch', function($query) use( $branch_id ){ $query->where('id',$branch_id);})->get();
         // $branches = $franchise->branches;
         // $tables = Table::whereHas('branch_id',$branches->id);
-        $user = Auth::user();
-        $branch_id = Branch::all();
-        $franchise = Franchise::where('owner_id',$user->id)->with([
-            'branches' => function ($query){
-                $query->where('is_deleted',false);
-            }
-        ])
-        ->get()
-        ->first();
-        $branches = $franchise->branches;
-        $tables = Table::all();
-        return view('table.index',compact('tables','branches'));
+        if($request->branch_id==null){
+
+            $user = Auth::user();
+            $branch_id = Branch::all();
+            $franchise = Franchise::where('owner_id',$user->id)->with([
+                'branches' => function ($query){
+                    $query->where('is_deleted',false);
+                }
+            ])
+            ->get()
+            ->first();
+            $branches = $franchise->branches;
+            $tables = Table::all();
+            return view('table.index',compact('tables','branches'));
+        }else{
+
+            $tables = Table::all()->where('branch_id',$request->branch_id);
+            return view('table.show',compact('tables'));
+        }
     }
 
     /**
@@ -41,9 +48,10 @@ class TableController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $user = Auth::user();
+        $branch_id = $request->branch_id;
         $franchise = Franchise::where('owner_id',$user->id)->with([
             'branches' => function ($query){
                 $query->where('is_deleted',false);
@@ -52,7 +60,7 @@ class TableController extends Controller
         ->get()
         ->first();
         $branches = $franchise->branches;
-        return view('table.create',compact('branches'));
+        return view('table.create',compact('branches','branch_id'));
     }
 
     /**
@@ -78,8 +86,6 @@ class TableController extends Controller
      */
     public function show($id)
     {
-        $tables = Table::all()->where('branch_id',$id);
-        return view('table.show',compact('tables'));
     }
 
     /**

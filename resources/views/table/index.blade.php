@@ -32,7 +32,7 @@
       @foreach ($branches as $branch)
       <label value ="{{$branch->id}}">Branch Store</label> <br>
       <p>
-      <a class="btn btn-primary" href="{{route('table.show',$branch->id)}}" >
+      <a class="btn btn-primary" href="{{route('table.index',['branch_id'=>$branch->id])}}" >
             {{$branch->name}}
         </a>
       </p>

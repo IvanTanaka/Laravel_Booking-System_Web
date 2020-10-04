@@ -32,17 +32,16 @@
     <div class="row mb-2">
       <div class="col-sm-12">
         <form method="POST" action="{{route('table.store')}}">
-
             @csrf
-
             <div class="form-group">
                     <label for="cashier_branch">Branch Name</label><br>
                     <select class="custom-select" name ="branches">
-                        <option selected></option>
                     @foreach ($branches as $branch)
-                    <div class="container">
-                            <option value="{{$branch->id}}"> {{$branch->name}} </option>
-                    </div>
+                        @if ( $branch->id == $branch_id)
+                            <div class="container">
+                                <option value="{{$branch->id}}" selected> {{$branch->name}} </option>
+                            </div>
+                        @endif
                     @endforeach
                     </select>
             </div>

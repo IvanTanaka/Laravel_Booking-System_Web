@@ -21,7 +21,11 @@
     <div class="row mb-2">
       <div class="col-sm-12">
         <h1 class="m-0 text-dark">Table Management</h1>
-        <a href="{{route('table.create')}}" class="btn btn-info" >Create New Table</a>
+            <form action="{{route('table.create')}}">
+                <input type ="hidden" value="{{request()->get('branch_id')}}" name ="branch_id">
+                <input type="submit" value="create new table" class="btn btn-info">
+            </form>
+        {{-- <a href="{{route('table.create',$var)}}" class="btn btn-info" >Create New Table</a> --}}
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
