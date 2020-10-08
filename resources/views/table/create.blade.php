@@ -56,10 +56,61 @@
               <input name ="size" type="number" class="form-control" id="exampleInputPassword1" placeholder="Table Size">
             </div>
 
-            <input type="submit" value="Create">
-
+            <button type="submit" class="btn btn-success"></i> Save</button>
+            <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Discard</button>
           </form>
+
+          <div class="card" margin="1">
+          @if(count($errors) > 0)
+                <div class="alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        </div>
       </div>
     </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="card">
+    <div class="row mb-2">
+      <div class="col-sm-12">
+        <table class = "table">
+            <thead>
+                <th scope="col">No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Size</th>
+                <th scope="col">Action</th>
+            </thead>
+            <tbody>
+                <?php $number = 1; ?>
+                @foreach ($tables as $table)
+                <tr>
+                    <th  scope="row">{{ $number++ }}</th>
+                    <td>{{$table->number}}</td>
+                    <td>{{$table->size}}</td>
+                    <td>
+                    <div >
+                        <a href="/table/{{$table->id}}/edit" class="btn btn-info">edit</a>
+                            <form method ="POST" action="{{route( 'table.destroy', $table->id) }}">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <button class = "btn btn-danger">Delete table</button>
+                            </form>
+                    </div>
+                    </td>
+                </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+      </div>
+    </div>
+</div>
 </div>
       @endsection

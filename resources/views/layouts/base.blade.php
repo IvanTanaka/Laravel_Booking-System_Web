@@ -8,7 +8,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
+
   <title>Membee | Store</title>
   @yield('head')
   @include('layouts.head')
@@ -34,14 +34,14 @@
         </li>
       </ul>
     </nav>
-    
+
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-primary elevation-4 sidebar-light-orange">
       <!-- Brand Logo -->
       <a href="{{url('/')}}" class="brand-link">
         <span class="brand-text logo" style="text-align:center; display:block;">membee</span>
       </a>
-      
+
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
@@ -70,7 +70,7 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
               with font-awesome or any other icon font library -->
-              
+
               <li class="nav-item">
                 <a href="{{url('/')}}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">
                   <i class="fas fa-tachometer-alt nav-icon"></i>
@@ -121,7 +121,16 @@
               </li>
 
               <li class="nav-item">
-                
+                <a href="{{url('table')}}" class="{{ request()->is('table*') ? 'active' : '' }} nav-link">
+                  <i class="fas fa-table nav-icon"></i>
+                  <p>Table Management</p>
+                </a>
+              </li>
+
+
+
+              <li class="nav-item">
+
                 <a class="nav-link" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
@@ -130,7 +139,7 @@
                   Log Out
                 </p>
               </a>
-              
+
               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
               </form>
@@ -141,13 +150,13 @@
       </div>
       <!-- /.sidebar -->
     </aside>
-    
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       @yield('content')
     </div>
     <!-- /.content-wrapper -->
-    
+
     <!-- Main Footer -->
     <footer class="main-footer">
       {{-- <!-- To the right -->
@@ -159,7 +168,7 @@
       </footer>
     </div>
     <!-- ./wrapper -->
-    
+
     <!-- REQUIRED SCRIPTS -->
     @include('layouts.script')
     @yield('script')

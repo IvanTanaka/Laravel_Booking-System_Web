@@ -15,5 +15,8 @@ class Table extends Model
         return $this->belongsTo('App\Models\Branch');
     }
 
+    public function setNumberAttribute($value){
+        $this->attributes['number'] = trim(strtoupper($value));
+    }
 
 }
