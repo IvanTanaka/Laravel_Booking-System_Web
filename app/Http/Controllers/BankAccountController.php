@@ -114,8 +114,11 @@ class BankAccountController extends Controller
         $bank_account = BankAccount::where('owner_id',$user->id)
         ->where('is_deleted', false)
         ->latest()
-        ->first()
-        ->update(['is_default'=>true]);
+        ->first();
+        if($bank_account != null){
+            $bank_account->is_default = true;
+            $bank_account->update();
+        }
         return redirect()->route('bank-account.index');
     }
 
