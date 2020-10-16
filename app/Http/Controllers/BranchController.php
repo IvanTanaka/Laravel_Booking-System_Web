@@ -154,7 +154,6 @@ class BranchController extends Controller
                 $message = 'Some cashier might still connected to this store';
             }
         }
-        return redirect()->route('stores.index')
-                        ->with($messageType, $message);
+        return redirect()->back();
     }
 }

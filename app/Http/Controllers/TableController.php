@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateTableRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Table;
@@ -22,12 +21,9 @@ class TableController extends Controller
      */
     public function index(Request $request)
     {
-        // Table::whereHas('branch', function($query) use( $branch_id ){ $query->where('id',$branch_id);})->get();
-        // $branches = $franchise->branches;
-        // $tables = Table::whereHas('branch_id',$branches->id);
         if($request->branch_id==null){
+            if($request->ajax()){
             $user = Auth::user();
-            $branch_id = Branch::all();
             $franchise = Franchise::where('owner_id',$user->id)->with([
                 'branches' => function ($query){
                     $query->where('is_deleted',false);
@@ -36,12 +32,45 @@ class TableController extends Controller
             ->get()
             ->first();
             $branches = $franchise->branches;
-            $tables = Table::all();
-            return view('table.index',compact('tables','branches'));
+                return DataTables::of($branches)
+                    ->addIndexColumn()
+                    ->addColumn('name',function($row){
+                                $showBtn = '<a href="'.route('table.index',['branch_id'=>$row->id]).'" class="p-1">'
+                                .'<button class="btn btn-small">'
+                                .$row->name
+                                .'</button>'
+                                .'</a>';
+                                return $showBtn;
+                    })->rawColumns(['name'])->make(true);
+            }
+            return view('table.index');
         }else{
+            if($request->ajax()){
 
-            $tables = Table::all()->where('branch_id',$request->branch_id);
-            return view('table.show',compact('tables'));
+            // $tables = Table::all()->where('branch_id',$request->branch_id);
+            $tables = Table::where('branch_id',$request->branch_id)->latest()->get();
+            return DataTables::of($tables)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                            $deleteBtn = '<a class="p-1">'
+                            .'<button class="btn btn-danger btn-small" data-target="#deleteConfirmation" data-toggle="modal" data-id="'.$row->id.'" data-name="'.$row->name.'">'
+                            .'<i class="fas fa-trash" style="width:20px"></i>'
+                            .' Delete'
+                            .'</button>'
+                            .'</a>';
+                            $editBtn = '<a href="'.url('table/' . $row->id . '/edit').'" class="p-1">'
+                            .'<button class="btn btn-small btn-info">'
+                            .'<i class="fas fa-edit" style="width:20px"x></i>'
+                            .' Edit'
+                            .'</button>'
+                            .'</a>';
+                            $action = $editBtn.$deleteBtn;
+                            return $action;
+                })
+                    ->rawColumns(['action'])
+                    ->make(true);
+            }
+        return view('table.show');
         }
     }
 
@@ -89,7 +118,7 @@ class TableController extends Controller
         $table = new Table(['branch_id'=> $selectedBranch,'number'=>$request->number, 'size'=> $request->size]);
         // $table = new Table(['branch_id'=>'30fdfb50-02ef-11eb-819a-6fef213b2d4b', 'number'=>'A5', 'size'=>'5' ]);
         $table->save();
-        return redirect(route('table.index'));
+        return redirect(route('table.index',['branch_id'=>$selectedBranch]));
     }
 
     /**
@@ -159,7 +188,7 @@ class TableController extends Controller
     {
         $tables = Table::findOrFail($id);
         $tables->delete();
-        return redirect()->route('table.index')
+        return redirect()->route('table.index',['branch_id'=>$tables->branch_id])
                         ->with('success', 'Table deleted successfully.');
     }
 
