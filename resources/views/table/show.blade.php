@@ -68,23 +68,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        {{-- @foreach ($tables as $table)
-                                        <tr>
-                                            <th  scope="row">{{ $number++ }}</th>
-                                            <td>{{$table->number}}</td>
-                                            <td>{{$table->size}}</td>
-                                            <td>
-                                                <a href="/table/{{$table->id}}/edit" class="btn btn-info">Edit Table</a>
-                                            </td>
-                                            <td>
-                                                <form method ="POST" action="{{route( 'table.destroy', $table->id) }}">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <button class ="btn btn-danger" onclick="return confirm('Are you sure?')">Delete table</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        @endforeach --}}
                                         </tbody>
                                     </table>
                                 </div>

@@ -82,47 +82,8 @@
                 </div>
                 <!-- /.card -->
               </div>
-
-
             </div>
-
-
           </form>
-
-
-
-
-
-
-        {{-- <form method="POST" action="{{route('table.store')}}">
-            @csrf
-            <div class="form-group">
-                    <label for="cashier_branch">Branch Name</label><br>
-                    <select class="custom-select" name ="branches">
-                    @foreach ($branches as $branch)
-                        @if ( $branch->id == $branch_id)
-                            <div class="container">
-                                <option value="{{$branch->id}}" selected> {{$branch->name}} </option>
-                            </div>
-                        @endif
-                    @endforeach
-                    </select>
-            </div>
-
-            <div class="form-group">
-              <label for="Number">Table Number</label>
-              <input name ="number"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Table Number">
-            </div>
-
-            <div class="form-group">
-              <label for="exampleInputPassword1">Table Size</label>
-              <input name ="size" type="number" class="form-control" id="exampleInputPassword1" placeholder="Table Size">
-            </div>
-
-            <button type="submit" class="btn btn-success"></i> Save</button>
-            <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Discard</button>
-          </form> --}}
-
 
           @if(count($errors) > 0)
                 <div class="alert">
@@ -133,7 +94,6 @@
                     </ul>
                 </div>
             @endif
-
       </div>
     </div>
 </div>

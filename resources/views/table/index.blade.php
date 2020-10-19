@@ -44,15 +44,6 @@
                                                 </thead>
                                                 <tbody></tbody>
                                                 <tfoot></tfoot>
-                                                {{-- @foreach ($branches as $branch)
-                                                    <tbody>
-                                                        <th scope="row">{{$number++}}</th>
-                                                        <td scope="row"><a class="btn btn-outline-secondary" href="{{route('table.index',['branch_id'=>$branch->id])}}" >
-                                                            {{$branch->name}}</td>  </a>
-                                                        <td> <a class="btn" href="{{route('table.index',['branch_id'=>$branch->id])}}" >
-                                                            {{$branch->address}}</td> </a>
-                                                    </tbody>
-                                                @endforeach --}}
                                             </table>
                                     </div>
                                 </div>
@@ -72,18 +63,6 @@
 
 @section('script')
     <script type="text/javascript">
-    //     $('select').on('change', function() {
-    //         alert( this.value );
-    //         selectedVal = this.value;
-    //         alert(selectedVal);
-
-    //         $.ajax({
-    //             type: "POST",
-    //         cache: false,
-    //         url : "{{url('table.index')}}",
-    //         data: { sem : selectedVal },
-    //         });
-    // });
     $(function () {
         var table = $('#index_table').DataTable({
             processing: true,
@@ -95,8 +74,6 @@
             {data: 'address', name: 'address'},
             ]
         });
-
     });
-
     </script>
 @endsection

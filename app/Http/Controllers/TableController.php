@@ -47,7 +47,6 @@ class TableController extends Controller
         }else{
             if($request->ajax()){
 
-            // $tables = Table::all()->where('branch_id',$request->branch_id);
             $tables = Table::where('branch_id',$request->branch_id)->latest()->get();
             return DataTables::of($tables)
                 ->addIndexColumn()
@@ -116,7 +115,6 @@ class TableController extends Controller
         ])->validate();
 
         $table = new Table(['branch_id'=> $selectedBranch,'number'=>$request->number, 'size'=> $request->size]);
-        // $table = new Table(['branch_id'=>'30fdfb50-02ef-11eb-819a-6fef213b2d4b', 'number'=>'A5', 'size'=>'5' ]);
         $table->save();
         return redirect(route('table.index',['branch_id'=>$selectedBranch]))->with('success','Table created succesfully.');
     }
@@ -172,7 +170,6 @@ class TableController extends Controller
             ])->validate();
         }
 
-        // $tables->update(['number'=>$request->number, 'size'=>$request->size]);
         $tables->update(['number'=>$request->number, 'size'=>$request->size]);
         return redirect(route('table.index',['branch_id'=>$request->branch_id]))->with('success','Table updated succesfully.');
 
