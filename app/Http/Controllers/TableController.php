@@ -118,7 +118,7 @@ class TableController extends Controller
         $table = new Table(['branch_id'=> $selectedBranch,'number'=>$request->number, 'size'=> $request->size]);
         // $table = new Table(['branch_id'=>'30fdfb50-02ef-11eb-819a-6fef213b2d4b', 'number'=>'A5', 'size'=>'5' ]);
         $table->save();
-        return redirect(route('table.index',['branch_id'=>$selectedBranch]));
+        return redirect(route('table.index',['branch_id'=>$selectedBranch]))->with('success','Table created succesfully.');
     }
 
     /**
@@ -174,7 +174,7 @@ class TableController extends Controller
 
         // $tables->update(['number'=>$request->number, 'size'=>$request->size]);
         $tables->update(['number'=>$request->number, 'size'=>$request->size]);
-        return redirect(route('table.index',['branch_id'=>$request->branch_id]))->with('message','update success');
+        return redirect(route('table.index',['branch_id'=>$request->branch_id]))->with('success','Table updated succesfully.');
 
     }
 

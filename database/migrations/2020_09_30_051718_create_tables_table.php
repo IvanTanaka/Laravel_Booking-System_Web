@@ -14,12 +14,12 @@ class CreateTablesTable extends Migration
     public function up()
     {
         Schema::create('tables', function (Blueprint $table) {
-            $table->id();
+            $table->char('id',36)->primary();
             $table->string('branch_id');
             $table->string('number');
             $table->integer('size');
             $table->string('created_by');
-            $table->string('updated_by');
+            $table->string('updated_by');   
             $table->timestamps();
             $table->softDeletes();
         });

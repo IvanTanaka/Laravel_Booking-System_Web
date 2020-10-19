@@ -25,12 +25,28 @@
 <div class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
+        @if ($message = Session::get('success'))
+        <div class="col-lg-12">
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-check"></i> Success!</h5>
+                {{$message}}
+            </div>
+        </div>
+        @endif
+        @if ($message = Session::get('error'))
+          <div class="col-lg-12">
+              <div class="alert alert-danger alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                  <h5><i class="icon fas fa-ban"></i> Error!</h5>
+                  {{$message}}
+              </div>
+          </div>
+        @endif
       <div class="col-sm-12">
           <div class="card">
                 <div class="card-header">
                     <h3 class="m-0 text-dark">Table Management</h3>
-                    {{-- <a href="{{route('table.create')}}" class = "btn btn-info" value="{{$request()->get('branch_id')}}" name="branch_id">
-                    Create New Table</a> --}}
                     <form action="{{route('table.create')}}">
                         <input type ="hidden" value="{{request()->get('branch_id')}}" name ="branch_id">
                         <input type="submit" value="Create new table" class="btn btn-info">

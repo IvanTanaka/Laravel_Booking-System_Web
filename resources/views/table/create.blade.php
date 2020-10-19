@@ -55,7 +55,6 @@
                             @endforeach
                             </select>
 
-
                             <div class="form-group">
                             <label for="Number">Table Number</label>
                             <input name ="number"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Table Number">
@@ -124,7 +123,7 @@
             <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Discard</button>
           </form> --}}
 
-          <div class="card" margin="1">
+
           @if(count($errors) > 0)
                 <div class="alert">
                     <ul>
@@ -134,7 +133,7 @@
                     </ul>
                 </div>
             @endif
-        </div>
+
       </div>
     </div>
 </div>

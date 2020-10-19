@@ -17,15 +17,6 @@ use Illuminate\Support\Facades\Auth;
 
 
 Auth::routes();
-Route::group(['middleware'=>'auth'],function(){
-    Route::resource('table', 'TableController');
-});
-
-
-
-Route::get('/create','TableController@store');
-Route::get('test','TableController@index');
-
 Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm');
 Route::get('/login/cashier', 'Auth\LoginController@showCashierLoginForm');
 
@@ -68,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('redeem/cancel', 'RedeemController@cancel');
         Route::resource('bank-account', 'BankAccountController',['except' => ['show']]);
         Route::post('bank-account/default','BankAccountController@setDefault');
+        Route::resource('table', 'TableController');
     });
     Route::get('/register/franchise', 'RegisterFranchiseController@create');
     Route::post('/register/franchise', 'RegisterFranchiseController@store');
