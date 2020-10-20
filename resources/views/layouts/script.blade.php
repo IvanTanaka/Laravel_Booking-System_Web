@@ -75,7 +75,7 @@
     $('#store_close_time').datetimepicker({
       format: 'LT'
     })
-    
+
     //Bootstrap Duallistbox
     $('.duallistbox').bootstrapDualListbox()
 

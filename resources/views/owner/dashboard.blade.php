@@ -8,7 +8,7 @@
     </style>
 @endsection
 @section('content')
-    
+
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -21,9 +21,9 @@
     </div>
     <!-- /.content-header -->
 
-    
 
-  
+
+
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
@@ -40,7 +40,7 @@
                       <div class="card bg-gradient-warning">
                         <div class="card-header">
                           <h3 class="card-title">Warning there's a branch without cashier appointed yet</h3>
-          
+
                           <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                             </button>
@@ -66,7 +66,7 @@
                       <div class="card bg-gradient-warning">
                         <div class="card-header">
                           <h3 class="card-title">Warning No Menu Registered.</h3>
-          
+
                           <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                             </button>
@@ -88,7 +88,7 @@
                     <div class="col-12 col-sm-6 col-md-3">
                       <div class="info-box">
                         <span class="info-box-icon bg-membee elevation-1"><i class="fas fa-star"></i></span>
-          
+
                         <div class="info-box-content">
                           <span class="info-box-text">Rating</span>
                           <span class="info-box-number">
@@ -104,7 +104,7 @@
                     <div class="col-12 col-sm-6 col-md-3">
                       <div class="info-box">
                         <span class="info-box-icon bg-membee elevation-1"><i class="fas fa-dollar-sign"></i></span>
-          
+
                         <div class="info-box-content">
                           <span class="info-box-text">Total Amount</span>
                           <span class="info-box-number">
@@ -120,7 +120,7 @@
                     <div class="col-12 col-sm-6 col-md-3">
                       <div class="info-box">
                         <span class="info-box-icon bg-membee elevation-1"><i class="fas fa-user-friends"></i></span>
-          
+
                         <div class="info-box-content">
                           <span class="info-box-text">Today's Sales</span>
                           <span class="info-box-number">
@@ -135,7 +135,7 @@
                     <div class="col-12 col-sm-6 col-md-3">
                       <div class="info-box">
                         <span class="info-box-icon bg-membee elevation-1"><i class="fas fa-utensils"></i></span>
-          
+
                         <div class="info-box-content">
                           <span class="info-box-text">Menu</span>
                           <span class="info-box-number">
@@ -148,7 +148,7 @@
                     </div>
 
                     <div class="col-12">
-                    
+
                       <!-- LINE CHART -->
                       <div class="card card-membee">
                         <div class="card-header">
@@ -161,11 +161,11 @@
                         </div>
                         <!-- /.card-body -->
                       </div>
-                      <!-- /.card -->  
+                      <!-- /.card -->
                     </div>
 
                     <div class="col-md-6">
-          
+
                       <!-- PIE CHART -->
                       <div class="card card-membee">
                         <div class="card-header">
@@ -177,11 +177,11 @@
                         <!-- /.card-body -->
                       </div>
                       <!-- /.card -->
-          
+
                     </div>
                     <!-- /.col (LEFT) -->
                     <div class="col-md-6">
-          
+
                       <!-- BAR CHART -->
                       <div class="card card-membee">
                         <div class="card-header">
@@ -195,13 +195,13 @@
                         <!-- /.card-body -->
                       </div>
                       <!-- /.card -->
-          
+
                     </div>
                     <!-- /.col (RIGHT) -->
 
 
                     <div class="col-12">
-                    
+
                       <!-- LINE CHART -->
                       <div class="card card-membee">
                         <div class="card-header">
@@ -214,9 +214,9 @@
                         </div>
                         <!-- /.card-body -->
                       </div>
-                      <!-- /.card -->  
+                      <!-- /.card -->
                     </div>
-                    
+
                   </div>
                 </div>
               </div>
@@ -254,7 +254,7 @@
        * -------
        * Here we will create a few charts using ChartJS
        */
-  
+
       var monthlySalesData = {
         labels  : [
         @foreach($monthlyArr as $key => $salesData)
@@ -270,7 +270,7 @@
             pointStrokeColor    : 'rgba(60,141,188,1)',
             pointHighlightFill  : '#fff',
             pointHighlightStroke: 'rgba(60,141,188,1)',
-            lineTension         : 0,   
+            lineTension         : 0,
             data                : [
         @foreach($monthlyArr as $salesData)
           {{$salesData}},
@@ -295,7 +295,7 @@
             pointStrokeColor    : 'rgba(60,141,188,1)',
             pointHighlightFill  : '#fff',
             pointHighlightStroke: 'rgba(60,141,188,1)',
-            lineTension         : 0,   
+            lineTension         : 0,
             data                : [
         @foreach($monthlyTotalArr as $salesTotalData)
           {{$salesTotalData}},
@@ -303,7 +303,7 @@
           }
         ]
       }
-  
+
       var monthlySalesOption = {
         maintainAspectRatio : false,
         responsive : true,
@@ -361,7 +361,7 @@
             }
         }
       }
-  
+
       //-------------
       //- LINE CHART -
       //--------------
@@ -370,10 +370,10 @@
       var lineChartData = jQuery.extend(true, {}, monthlySalesData)
       lineChartData.datasets[0].fill = false;
       lineChartOptions.datasetFill = false
-  
-      var lineChart = new Chart(lineChartCanvas, { 
+
+      var lineChart = new Chart(lineChartCanvas, {
         type: 'line',
-        data: lineChartData, 
+        data: lineChartData,
         options: lineChartOptions
       })
 
@@ -382,10 +382,10 @@
       var lineChartData = jQuery.extend(true, {}, monthlySalesTotalData)
       lineChartData.datasets[0].fill = false;
       lineChartOptions.datasetFill = false
-  
-      var lineChart = new Chart(lineChartCanvas, { 
+
+      var lineChart = new Chart(lineChartCanvas, {
         type: 'line',
-        data: lineChartData, 
+        data: lineChartData,
         options: lineChartOptions
       })
 
@@ -413,7 +413,7 @@
         maintainAspectRatio : false,
         responsive : true,
       }
-  
+
       // Get context with jQuery - using jQuery's .get() method.
       var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
       //Create pie or douhnut chart
@@ -421,9 +421,9 @@
       var pieChart = new Chart(pieChartCanvas, {
         type: 'pie',
         data: topTenSalesData,
-        options: topTenSalesOptions      
+        options: topTenSalesOptions
       })
-  
+
       //-------------
       //- BAR CHART -
       //-------------
@@ -443,7 +443,7 @@
             pointStrokeColor    : 'rgba(60,141,188,1)',
             pointHighlightFill  : '#fff',
             pointHighlightStroke: 'rgba(60,141,188,1)',
-            lineTension         : 0,   
+            lineTension         : 0,
             data                : [
         @foreach($bestBranch as $salesData)
           {{$salesData}},
@@ -458,7 +458,7 @@
       var temp0 = branchSalesData.datasets[0]
       barChartData.datasets[0] = temp0
     //   barChartData.datasets[1] = temp0
-  
+
       var barChartOptions = {
         responsive              : true,
         maintainAspectRatio     : false,
@@ -472,9 +472,9 @@
             }]
         }
       }
-  
+
       var barChart = new Chart(barChartCanvas, {
-        type: 'bar', 
+        type: 'bar',
         data: barChartData,
         options: barChartOptions
       })

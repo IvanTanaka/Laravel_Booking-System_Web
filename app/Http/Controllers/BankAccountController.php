@@ -125,6 +125,5 @@ class BankAccountController extends Controller
         $bank_account = BankAccount::find($request->bank_account_id);
         $bank_account->is_default = true;
         $bank_account->update();
-        
     }
 }
